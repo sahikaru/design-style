@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<!--
+  Style reference replicating github.com/features/copilot — GitHub's premium AI product page.
+  Images/videos hot-linked to GitHub/Contentful CDN. Not affiliated with GitHub Inc.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Copilot — GitHub (Design Style Reference)</title>
+<link rel="preconnect" href="https://github.githubassets.com" crossorigin/>
+<link rel="preconnect" href="https://images.ctfassets.net" crossorigin/>
+<link rel="preconnect" href="https://videos.ctfassets.net" crossorigin/>
+<link rel="preload" as="font" href="https://github.githubassets.com/assets/mona-sans-8b1fb7b74e59.woff2" type="font/woff2" crossorigin/>
+<style>
+  /* ============================================================
+     Primer brand tokens — Copilot flagship palette
+     (Shared with sibling preview.html :root; duplicated here
+      so this file is fully self-contained.)
+  ============================================================ */
+  :root {
+    /* Brand canvas & surfaces */
+    --gh-canvas: #000000;
+    --gh-canvas-subtle: #0d1117;
+    --gh-canvas-inset: #151b23;
+
+    /* Text */
+    --gh-fg: #ffffff;
+    --gh-fg-muted: #9198a1;
+    --gh-fg-subtle: #656d76;
+
+    /* Accent — neon mint (Copilot signature) */
+    --gh-accent: #5fed83;
+    --gh-accent-strong: #7cffa0;
+    --gh-accent-deep: #1a7f37;
+    --gh-accent-wash: rgba(95, 237, 131, 0.15);
+
+    /* Primer blue (secondary) */
+    --gh-blue: #1f6feb;
+
+    /* Borders & glass */
+    --gh-border: rgba(255, 255, 255, 0.08);
+    --gh-border-strong: rgba(255, 255, 255, 0.16);
+    --gh-glass: rgba(21, 27, 35, 0.6);
+    --gh-glass-strong: rgba(21, 27, 35, 0.82);
+
+    /* Shadow-border */
+    --gh-shadow-border: 0 0 0 1px var(--gh-border);
+    --gh-shadow-bloom:  0 0 0 1px var(--gh-border), 0 0 80px rgba(95, 237, 131, 0.10);
+    --gh-shadow-bloom-lg: 0 0 0 1px var(--gh-border-strong), 0 40px 120px rgba(95, 237, 131, 0.18);
+
+    /* Motion */
+    --gh-ease: cubic-bezier(0.33, 1, 0.68, 1);
+    --gh-dur-fast: 0.2s;
+    --gh-dur-reveal: 0.4s;
+
+    /* Type */
+    --gh-font-sans: "Mona Sans VF", "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --gh-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--gh-font-sans);
+    font-feature-settings: "ss01", "ss02", "cv01";
+    background: var(--gh-canvas);
+    color: var(--gh-fg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img, video { display: block; max-width: 100%; }
+  button { font-family: inherit; }
+
+  /* ============================================================
+     Layout helpers
+  ============================================================ */
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gh-accent);
+  }
+
+  .h-hero { font-size: 56px; font-weight: 440; line-height: 1.1; letter-spacing: -0.01em; color: var(--gh-fg); }
+  .h-section { font-size: 40px; font-weight: 460; line-height: 1.2; letter-spacing: -0.005em; color: var(--gh-fg); }
+  .h-card { font-size: 24px; font-weight: 440; line-height: 1.3; color: var(--gh-fg); }
+  .p-lead { font-size: 20px; font-weight: 400; line-height: 1.5; color: var(--gh-fg-muted); }
+  .p-body { font-size: 16px; font-weight: 400; line-height: 1.6; color: var(--gh-fg-muted); }
+
+  /* ============================================================
+     Buttons
+  ============================================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color var(--gh-dur-fast) var(--gh-ease),
+                color var(--gh-dur-fast) var(--gh-ease),
+                transform var(--gh-dur-fast) var(--gh-ease),
+                box-shadow var(--gh-dur-fast) var(--gh-ease),
+                border-color var(--gh-dur-fast) var(--gh-ease);
+    border: 1px solid transparent;
+    user-select: none;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--gh-accent);
+    color: #041c0b;
+    box-shadow: 0 0 0 1px rgba(95, 237, 131, 0.4), 0 8px 40px rgba(95, 237, 131, 0.25);
+  }
+  .btn-primary:hover { background: var(--gh-accent-strong); box-shadow: 0 0 0 1px rgba(124, 255, 160, 0.6), 0 10px 50px rgba(95, 237, 131, 0.35); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--gh-fg);
+    border-color: var(--gh-border-strong);
+  }
+  .btn-ghost:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.28); }
+
+  /* ============================================================
+     Globalnav — transparent over hero, glass on scroll
+  ============================================================ */
+  .gnav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 14px 0;
+    background: transparent;
+    transition: background-color var(--gh-dur-fast) var(--gh-ease),
+                backdrop-filter var(--gh-dur-fast) var(--gh-ease),
+                border-color var(--gh-dur-fast) var(--gh-ease);
+    border-bottom: 1px solid transparent;
+  }
+  .gnav.is-scrolled {
+    background: rgba(13, 17, 23, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom-color: var(--gh-border);
+  }
+  .gnav__inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .gnav__logo {
+    display: inline-flex;
+    align-items: center;
+    color: var(--gh-fg);
+    cursor: pointer;
+  }
+  .gnav__logo svg { width: 32px; height: 32px; }
+  .gnav__links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    flex: 1;
+  }
+  .gnav__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gh-fg-muted);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color var(--gh-dur-fast) var(--gh-ease),
+                background-color var(--gh-dur-fast) var(--gh-ease);
+  }
+  .gnav__link:hover { color: var(--gh-fg); background: rgba(255, 255, 255, 0.06); }
+  .gnav__link.is-active { color: var(--gh-fg); }
+  .gnav__link.is-active::after {
+    content: "";
+    display: inline-block;
+    width: 6px; height: 6px;
+    margin-left: 8px;
+    background: var(--gh-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--gh-accent);
+  }
+  .gnav__actions { display: flex; align-items: center; gap: 8px; }
+  .gnav__actions .btn { padding: 8px 16px; font-size: 14px; border-radius: 8px; }
+
+  /* ============================================================
+     Hero
+  ============================================================ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 160px 0 80px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(95, 237, 131, 0.22), transparent 55%),
+      url("https://github.githubassets.com/assets/hero-bg-desktop-3043dc2aac662165.webp") center top / cover no-repeat,
+      var(--gh-canvas);
+  }
+  .hero__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 75%, var(--gh-canvas) 100%);
+    pointer-events: none;
+  }
+  .hero__copy { max-width: 760px; text-align: center; margin: 0 auto; }
+  .hero__title { margin: 16px 0 20px; }
+  .hero__sub { margin-bottom: 36px; }
+  .hero__cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .hero__media {
+    margin: 72px auto 0;
+    max-width: 1080px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--gh-glass);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    box-shadow: var(--gh-shadow-bloom-lg);
+    aspect-ratio: 16 / 9;
+  }
+  .hero__media video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ============================================================
+     Editor bar
+  ============================================================ */
+  .editors {
+    padding: 80px 0 40px;
+    text-align: center;
+    position: relative;
+  }
+  .editors__label {
+    font-size: 14px;
+    color: var(--gh-fg-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .editors__logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 56px;
+    flex-wrap: wrap;
+    opacity: 0.7;
+  }
+  .editors__logos img {
+    height: 48px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    transition: opacity var(--gh-dur-fast) var(--gh-ease);
+  }
+  .editors__logos img:hover { opacity: 1; }
+
+  /* ============================================================
+     Ambient halo — reusable pseudo
+  ============================================================ */
+  .halo {
+    position: relative;
+    isolation: isolate;
+  }
+  .halo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(95, 237, 131, 0.15), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ============================================================
+     Feature cards section (Code, command, collaborate)
+  ============================================================ */
+  .features {
+    padding: 120px 0;
+    position: relative;
+  }
+  .features__head {
+    text-align: center;
+    margin-bottom: 72px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .features__head .h-section { margin: 12px 0 18px; }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .feature-card {
+    background: var(--gh-glass);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--gh-shadow-bloom);
+    transition: transform var(--gh-dur-fast) var(--gh-ease),
+                box-shadow var(--gh-dur-fast) var(--gh-ease);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 1px var(--gh-border-strong), 0 0 120px rgba(95, 237, 131, 0.22);
+  }
+  .feature-card:active { transform: translateY(-2px) scale(0.99); }
+  .feature-card__media {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    object-fit: cover;
+    background: #0d1117;
+  }
+  .feature-card__body { padding: 28px 28px 32px; }
+  .feature-card__title { margin-bottom: 10px; }
+  .feature-card__badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gh-accent);
+    margin-bottom: 12px;
+  }
+
+  /* ============================================================
+     4-up org-tailored grid
+  ============================================================ */
+  .org {
+    padding: 120px 0;
+    position: relative;
+  }
+  .org__head {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 64px;
+  }
+  .org-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .org-card {
+    background: var(--gh-glass);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: var(--gh-shadow-bloom);
+    transition: transform var(--gh-dur-fast) var(--gh-ease), box-shadow var(--gh-dur-fast) var(--gh-ease);
+    cursor: pointer;
+  }
+  .org-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1px var(--gh-border-strong), 0 0 100px rgba(95, 237, 131, 0.18);
+  }
+  .org-card:active { transform: translateY(-1px) scale(0.99); }
+  .org-card__icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(95, 237, 131, 0.12);
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    color: var(--gh-accent);
+    margin-bottom: 20px;
+  }
+  .org-card__icon svg { width: 22px; height: 22px; }
+  .org-card__title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--gh-fg);
+  }
+  .org-card__body {
+    font-size: 14px;
+    color: var(--gh-fg-muted);
+    line-height: 1.55;
+  }
+
+  /* ============================================================
+     Take flight showcase
+  ============================================================ */
+  .flight {
+    padding: 120px 0;
+    min-height: 80vh;
+    position: relative;
+  }
+  .flight__head {
+    text-align: center;
+    margin-bottom: 72px;
+    max-width: 760px;
+    margin-left: auto; margin-right: auto;
+  }
+  .flight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .flight-panel {
+    background: var(--gh-glass);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-radius: 20px;
+    padding: 36px 32px 32px;
+    box-shadow: var(--gh-shadow-bloom);
+    cursor: pointer;
+    transition: transform var(--gh-dur-fast) var(--gh-ease), box-shadow var(--gh-dur-fast) var(--gh-ease);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .flight-panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 1px var(--gh-border-strong), 0 0 110px rgba(95, 237, 131, 0.22);
+  }
+  .flight-panel:active { transform: translateY(-2px) scale(0.99); }
+  .flight-panel__inset {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px var(--gh-border);
+  }
+  .flight-panel__inset--a { background: radial-gradient(circle at 30% 20%, rgba(95,237,131,0.35), transparent 55%), linear-gradient(135deg, #0d1117, #151b23); }
+  .flight-panel__inset--b { background: radial-gradient(circle at 70% 30%, rgba(31,111,235,0.35), transparent 55%), linear-gradient(135deg, #0d1117, #151b23); }
+  .flight-panel__inset--c { background: radial-gradient(circle at 50% 80%, rgba(130,80,223,0.3), transparent 55%), linear-gradient(135deg, #0d1117, #151b23); }
+  .flight-panel__eyebrow { font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gh-accent); }
+  .flight-panel__title { font-size: 32px; font-weight: 440; line-height: 1.2; color: var(--gh-fg); }
+  .flight-panel__body { font-size: 16px; color: var(--gh-fg-muted); line-height: 1.6; }
+
+  /* ============================================================
+     Customer case
+  ============================================================ */
+  .case {
+    padding: 120px 0;
+    position: relative;
+  }
+  .case__head { text-align: center; margin-bottom: 56px; }
+  .case-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--gh-glass);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: var(--gh-shadow-bloom-lg);
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .case-card__image {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--gh-border);
+  }
+  .case-card__image img { width: 100%; height: 100%; object-fit: cover; }
+  .case-card__quote {
+    font-size: 26px;
+    font-weight: 440;
+    line-height: 1.35;
+    color: var(--gh-fg);
+    margin: 20px 0 24px;
+  }
+  .case-card__attr { font-size: 14px; color: var(--gh-fg-muted); }
+  .case-card__attr strong { color: var(--gh-fg); font-weight: 600; }
+
+  /* ============================================================
+     Pricing
+  ============================================================ */
+  .pricing {
+    padding: 120px 0;
+    position: relative;
+  }
+  .pricing__head { text-align: center; max-width: 760px; margin: 0 auto 64px; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .price-card {
+    background: var(--gh-glass);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: var(--gh-shadow-bloom);
+    cursor: pointer;
+    transition: transform var(--gh-dur-fast) var(--gh-ease), box-shadow var(--gh-dur-fast) var(--gh-ease);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .price-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 1px var(--gh-border-strong), 0 0 120px rgba(95, 237, 131, 0.2);
+  }
+  .price-card:active { transform: translateY(-2px) scale(0.99); }
+  .price-card--popular {
+    box-shadow: 0 0 0 1px rgba(95,237,131,0.45), 0 0 120px rgba(95, 237, 131, 0.25);
+  }
+  .price-card__badge {
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gh-accent);
+    color: #041c0b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .price-card__name { font-size: 20px; font-weight: 500; color: var(--gh-fg); }
+  .price-card__price { font-size: 44px; font-weight: 440; line-height: 1.1; color: var(--gh-fg); }
+  .price-card__price small { font-size: 14px; font-weight: 400; color: var(--gh-fg-muted); }
+  .price-card__list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .price-card__list li {
+    font-size: 14px;
+    color: var(--gh-fg-muted);
+    display: flex;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .price-card__list li::before {
+    content: "";
+    flex-shrink: 0;
+    width: 16px; height: 16px;
+    margin-top: 3px;
+    background: var(--gh-accent);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'/></svg>") center/contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'/></svg>") center/contain no-repeat;
+  }
+  .price-card .btn { margin-top: auto; }
+
+  /* ============================================================
+     Take flight CTA rail
+  ============================================================ */
+  .cta-rail {
+    padding: 140px 0 160px;
+    text-align: center;
+    position: relative;
+  }
+  .cta-rail::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(95, 237, 131, 0.18), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .cta-rail h2 {
+    font-size: 80px;
+    font-weight: 440;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 auto 28px;
+    max-width: 900px;
+  }
+  .cta-rail p {
+    font-size: 20px;
+    color: var(--gh-fg-muted);
+    margin-bottom: 36px;
+    max-width: 640px;
+    margin-left: auto; margin-right: auto;
+  }
+  .cta-rail__row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ============================================================
+     Footer
+  ============================================================ */
+  .footer {
+    border-top: 1px solid var(--gh-border);
+    padding: 72px 0 48px;
+    background: var(--gh-canvas);
+  }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.3fr repeat(4, 1fr);
+    gap: 48px;
+    margin-bottom: 56px;
+  }
+  .footer__brand .gh-mark { width: 36px; height: 36px; color: var(--gh-fg); }
+  .footer__brand p { font-size: 13px; color: var(--gh-fg-muted); margin-top: 16px; max-width: 260px; line-height: 1.6; }
+  .footer__col h4 { font-size: 13px; font-weight: 600; color: var(--gh-fg); margin-bottom: 14px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer__col a {
+    font-size: 13px;
+    color: var(--gh-fg-muted);
+    cursor: pointer;
+    transition: color var(--gh-dur-fast) var(--gh-ease);
+  }
+  .footer__col a:hover { color: var(--gh-fg); }
+  .footer__bottom {
+    border-top: 1px solid var(--gh-border);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--gh-fg-subtle);
+  }
+  .footer__disclaimer {
+    max-width: 860px;
+    font-size: 11px;
+    color: var(--gh-fg-subtle);
+    line-height: 1.6;
+    margin-top: 24px;
+  }
+
+  /* ============================================================
+     Reveal animation
+  ============================================================ */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity var(--gh-dur-reveal) var(--gh-ease),
+                transform var(--gh-dur-reveal) var(--gh-ease);
+  }
+  [data-reveal].is-in { opacity: 1; transform: translateY(0); }
+  [data-reveal-delay="1"].is-in { transition-delay: 0.08s; }
+  [data-reveal-delay="2"].is-in { transition-delay: 0.16s; }
+  [data-reveal-delay="3"].is-in { transition-delay: 0.24s; }
+
+  /* ============================================================
+     Responsive
+  ============================================================ */
+  @media (max-width: 960px) {
+    .h-hero { font-size: 40px; }
+    .h-section { font-size: 30px; }
+    .cta-rail h2 { font-size: 48px; }
+    .feature-grid, .flight-grid, .pricing-grid { grid-template-columns: 1fr; }
+    .org-grid { grid-template-columns: repeat(2, 1fr); }
+    .case-card { grid-template-columns: 1fr; padding: 32px; }
+    .footer__grid { grid-template-columns: 1fr 1fr; }
+    .gnav__links { display: none; }
+    .editors__logos { gap: 28px; }
+    .editors__logos img { height: 36px; }
+  }
+
+  /* ============================================================
+     Reduced motion
+  ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    [data-reveal] { opacity: 1; transform: none; }
+    .btn:active, .feature-card:active, .org-card:active, .flight-panel:active, .price-card:active { transform: none; }
+  }
+
+/* GH CURSOR RULE (design-system.md Section 11.2) — every interactive surface shows hand */
+.pillar-card, .glass-card, .pricing-card, .price-card, .feature-card,
+.org-card, .flight-panel, .accordion-trigger, .accordion__trigger,
+.faq-trigger, .faq-item, .nav-pill, .btn, .cta,
+[role="button"], [data-clickable] {
+  cursor: pointer;
+}
+.pillar-card:active, .glass-card:active, .pricing-card:active,
+.price-card:active, .feature-card:active, .org-card:active {
+  transform: scale(0.98);
+  transition: transform 0.12s cubic-bezier(0.33, 1, 0.68, 1);
+}
+</style>
+</head>
+<body>
+
+<!-- ================== GLOBALNAV ================== -->
+<header class="gnav" id="gnav" role="banner">
+  <div class="container gnav__inner">
+    <a class="gnav__logo" href="preview.html" aria-label="GitHub home">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+      </svg>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="gnav__links">
+        <li><a class="gnav__link is-active" aria-current="page" href="#">Copilot</a></li>
+        <li><a class="gnav__link" href="preview-enterprise.html">Enterprise</a></li>
+        <li><a class="gnav__link" href="#">Security</a></li>
+        <li><a class="gnav__link" href="#">Pricing</a></li>
+        <li><a class="gnav__link" href="#">Resources</a></li>
+      </ul>
+    </nav>
+    <div class="gnav__actions">
+      <a class="btn btn-ghost" href="#">Sign in</a>
+      <a class="btn btn-primary" href="#">Try Copilot</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================== HERO ================== -->
+<section class="hero" aria-label="Copilot hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero__copy">
+      <span class="eyebrow" data-reveal>Copilot</span>
+      <h1 class="h-hero hero__title" data-reveal data-reveal-delay="1">Your AI pair,<br/>everywhere you code.</h1>
+      <p class="p-lead hero__sub" data-reveal data-reveal-delay="2">
+        From first keystroke to final deploy — Copilot sits alongside every tool in your stack, writing, reviewing, and shipping with the judgment of your best engineer.
+      </p>
+      <div class="hero__cta" data-reveal data-reveal-delay="3">
+        <a class="btn btn-primary" href="#pricing">Try Copilot</a>
+        <a class="btn btn-ghost" href="#pricing">See plans</a>
+      </div>
+    </div>
+
+    <div class="hero__media" data-reveal data-reveal-delay="3" aria-label="Copilot product animation">
+      <video
+        autoplay muted loop playsinline preload="metadata"
+        poster="https://images.ctfassets.net/8aevphvgewt8/7xenBC7iqpKfe5tXk9TKby/caf78ec4e1918cf82681613fcb7e9468/hero-poster-lg.webp"
+        aria-label="Copilot interface animation showcasing code completion and chat"
+      >
+        <source src="https://videos.ctfassets.net/8aevphvgewt8/5R57iyx96ENtWp4nOHBsAl/f935b264e79099bd8ed54e2d74db7ab5/hero-animation-lg.mp4" type="video/mp4"/>
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- ================== EDITOR BAR ================== -->
+<section class="editors" aria-label="Editor integrations">
+  <div class="container">
+    <p class="editors__label" data-reveal>Works with your favorite tools</p>
+    <div class="editors__logos" data-reveal data-reveal-delay="1">
+      <img src="https://github.githubassets.com/assets/github-c0c17d77f4fbcb94.svg?v=1" alt="GitHub" height="48"/>
+      <img src="https://github.githubassets.com/assets/vscode-b38f74d392d9e962.svg?v=1" alt="Visual Studio Code" height="48"/>
+      <img src="https://github.githubassets.com/assets/visualstudio-60eafb56655354e6.webp?v=1" alt="Visual Studio" height="48"/>
+    </div>
+  </div>
+</section>
+
+<!-- ================== FEATURE CARDS ================== -->
+<section class="features halo" aria-label="Copilot capabilities">
+  <div class="container">
+    <header class="features__head">
+      <span class="eyebrow" data-reveal>Build faster</span>
+      <h2 class="h-section" data-reveal data-reveal-delay="1">Code, command, and collaborate.</h2>
+      <p class="p-lead" data-reveal data-reveal-delay="2">
+        Three surfaces, one assistant. Copilot lives where work happens — your editor, your terminal, and the pull request review.
+      </p>
+    </header>
+
+    <div class="feature-grid">
+      <article class="feature-card" data-reveal tabindex="0">
+        <img
+          class="feature-card__media"
+          src="https://images.ctfassets.net/8aevphvgewt8/36rqLbFzJsdRRFHNM4TXIU/afdb59a69ee38661aed3e66f73970ce2/github-copilot-agent-mode.png?w=640&fm=webp&q=90"
+          srcset="https://images.ctfassets.net/8aevphvgewt8/36rqLbFzJsdRRFHNM4TXIU/afdb59a69ee38661aed3e66f73970ce2/github-copilot-agent-mode.png?w=640&fm=webp&q=90 1x,
+                  https://images.ctfassets.net/8aevphvgewt8/36rqLbFzJsdRRFHNM4TXIU/afdb59a69ee38661aed3e66f73970ce2/github-copilot-agent-mode.png?w=1280&fm=webp&q=90 2x"
+          alt="Copilot agent mode executing a multi-file task"
+          loading="lazy"/>
+        <div class="feature-card__body">
+          <span class="feature-card__badge">Agent mode</span>
+          <h3 class="h-card feature-card__title">Plan. Edit. Verify.</h3>
+          <p class="p-body">Hand off multi-file tasks to Copilot and watch it propose, execute, and test a full change set — with you in the loop.</p>
+        </div>
+      </article>
+
+      <article class="feature-card" data-reveal data-reveal-delay="1" tabindex="0">
+        <img
+          class="feature-card__media"
+          src="https://images.ctfassets.net/8aevphvgewt8/rWJGAKp7aOM97B6d9xqvM/c906d0f3d02ec086ec9e91fb216e3210/github-cca-3p-agents.webp?w=640&fm=webp&q=90"
+          srcset="https://images.ctfassets.net/8aevphvgewt8/rWJGAKp7aOM97B6d9xqvM/c906d0f3d02ec086ec9e91fb216e3210/github-cca-3p-agents.webp?w=640&fm=webp&q=90 1x,
+                  https://images.ctfassets.net/8aevphvgewt8/rWJGAKp7aOM97B6d9xqvM/c906d0f3d02ec086ec9e91fb216e3210/github-cca-3p-agents.webp?w=1280&fm=webp&q=90 2x"
+          alt="Third-party agent integrations inside Copilot Chat"
+          loading="lazy"/>
+        <div class="feature-card__body">
+          <span class="feature-card__badge">Third-party agents</span>
+          <h3 class="h-card feature-card__title">The agents you trust, together.</h3>
+          <p class="p-body">Call Sentry, Figma, Atlassian, Stripe and more from inside Copilot — context flows between them without the context-switching.</p>
+        </div>
+      </article>
+
+      <article class="feature-card" data-reveal data-reveal-delay="2" tabindex="0">
+        <img
+          class="feature-card__media"
+          src="https://images.ctfassets.net/8aevphvgewt8/2Zamxo7a7F9K9jsTAl2EGA/bce1f04a40536e89ef543cb311f2968b/github-copilot-cli.png?w=640&fm=webp&q=90"
+          srcset="https://images.ctfassets.net/8aevphvgewt8/2Zamxo7a7F9K9jsTAl2EGA/bce1f04a40536e89ef543cb311f2968b/github-copilot-cli.png?w=640&fm=webp&q=90 1x,
+                  https://images.ctfassets.net/8aevphvgewt8/2Zamxo7a7F9K9jsTAl2EGA/bce1f04a40536e89ef543cb311f2968b/github-copilot-cli.png?w=1280&fm=webp&q=90 2x"
+          alt="Copilot in the command line suggesting git and shell commands"
+          loading="lazy"/>
+        <div class="feature-card__body">
+          <span class="feature-card__badge">Command line</span>
+          <h3 class="h-card feature-card__title">Ship from the shell.</h3>
+          <p class="p-body">Copilot translates intent into commands, explains flags, and drafts commit messages — all without leaving your terminal.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================== ORG — tailor-made ================== -->
+<section class="org halo" aria-label="Tailored for organizations">
+  <div class="container">
+    <header class="org__head">
+      <span class="eyebrow" data-reveal>Built for teams</span>
+      <h2 class="h-section" data-reveal data-reveal-delay="1">Tailor-made for your organization.</h2>
+      <p class="p-lead" data-reveal data-reveal-delay="2">
+        Guardrails, governance, and velocity — designed together, so Copilot scales with your policies instead of around them.
+      </p>
+    </header>
+
+    <div class="org-grid">
+      <article class="org-card" data-reveal tabindex="0">
+        <div class="org-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.467.133a1.748 1.748 0 0 1 1.066 0l5.25 1.68A1.75 1.75 0 0 1 15 3.48V7c0 1.566-.32 3.182-1.303 4.682-.983 1.498-2.585 2.813-5.032 3.855a1.697 1.697 0 0 1-1.33 0c-2.447-1.042-4.049-2.357-5.032-3.855C1.32 10.182 1 8.566 1 7V3.48a1.75 1.75 0 0 1 1.217-1.667Z"/></svg>
+        </div>
+        <h3 class="org-card__title">Policy-aware</h3>
+        <p class="org-card__body">Enforce allowed models, content filters, and scope by team or repository — all from a single admin console.</p>
+      </article>
+
+      <article class="org-card" data-reveal data-reveal-delay="1" tabindex="0">
+        <div class="org-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14.064 0a8.75 8.75 0 0 0-6.187 2.563l-.459.458c-.314.314-.616.641-.904.979H3.31a1.75 1.75 0 0 0-1.49.833L.11 7.607a.75.75 0 0 0 .418 1.11l3.102.954c.037.051.079.1.124.145l2.429 2.428c.046.046.094.088.145.125l.954 3.102a.75.75 0 0 0 1.11.418l2.774-1.707a1.75 1.75 0 0 0 .833-1.49V9.485c.338-.288.665-.59.979-.904l.458-.459A8.749 8.749 0 0 0 16 1.936V1.75A1.75 1.75 0 0 0 14.25 0Z"/></svg>
+        </div>
+        <h3 class="org-card__title">Lift-off velocity</h3>
+        <p class="org-card__body">Standardize on best practices. Copilot learns your house style, tests patterns, and code conventions across every repo.</p>
+      </article>
+
+      <article class="org-card" data-reveal data-reveal-delay="2" tabindex="0">
+        <div class="org-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 3.5a3.5 3.5 0 1 1 6.765 1.26 6.505 6.505 0 0 1 3.132 4.733.75.75 0 1 1-1.49.167 5 5 0 0 0-9.814 0 .75.75 0 1 1-1.49-.167 6.505 6.505 0 0 1 3.132-4.733A3.493 3.493 0 0 1 5.5 3.5Zm8 7.75a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-1.23 1.691a3 3 0 1 0-1.54 0 4.001 4.001 0 0 0-2.845 2.845.75.75 0 0 0 1.458.333 2.5 2.5 0 0 1 4.313 0 .75.75 0 0 0 1.458-.333 4.001 4.001 0 0 0-2.844-2.845Z"/></svg>
+        </div>
+        <h3 class="org-card__title">Made for teams</h3>
+        <p class="org-card__body">Shared prompts, reusable workflows, and reviewable agent sessions — so the whole team levels up together.</p>
+      </article>
+
+      <article class="org-card" data-reveal data-reveal-delay="3" tabindex="0">
+        <div class="org-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1a.75.75 0 0 1 .75.75v11.5c0 .138.112.25.25.25h11.5a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75A.75.75 0 0 1 1.75 1Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 6.06 4.28 8.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 6.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"/></svg>
+        </div>
+        <h3 class="org-card__title">Measurable ROI</h3>
+        <p class="org-card__body">Track accepted suggestions, agent interventions, and cycle-time impact with analytics you can share with finance.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================== FLIGHT — signature panels ================== -->
+<section class="flight halo" aria-label="Take flight with Copilot">
+  <div class="container">
+    <header class="flight__head">
+      <span class="eyebrow" data-reveal>Signature</span>
+      <h2 class="h-section" data-reveal data-reveal-delay="1">Take flight with GitHub Copilot.</h2>
+      <p class="p-lead" data-reveal data-reveal-delay="2">Three ways Copilot changes what it means to be a developer in 2026 — from your first line of code to your team's hundredth deploy of the day.</p>
+    </header>
+
+    <div class="flight-grid">
+      <article class="flight-panel" data-reveal tabindex="0">
+        <div class="flight-panel__inset flight-panel__inset--a" aria-hidden="true"></div>
+        <span class="flight-panel__eyebrow">Chat</span>
+        <h3 class="flight-panel__title">Ask like a teammate.</h3>
+        <p class="flight-panel__body">Copilot sees the same repo you do. Ask why a test is flaky, or how to refactor a module, and get an answer grounded in your code.</p>
+      </article>
+
+      <article class="flight-panel" data-reveal data-reveal-delay="1" tabindex="0">
+        <div class="flight-panel__inset flight-panel__inset--b" aria-hidden="true"></div>
+        <span class="flight-panel__eyebrow">Review</span>
+        <h3 class="flight-panel__title">First reviewer, always.</h3>
+        <p class="flight-panel__body">Every pull request lands with an expert pre-review — catching regressions, missing tests, and logic gaps before humans weigh in.</p>
+      </article>
+
+      <article class="flight-panel" data-reveal data-reveal-delay="2" tabindex="0">
+        <div class="flight-panel__inset flight-panel__inset--c" aria-hidden="true"></div>
+        <span class="flight-panel__eyebrow">Spaces</span>
+        <h3 class="flight-panel__title">Context on tap.</h3>
+        <p class="flight-panel__body">Bundle docs, issues, and code into a Copilot Space so every answer carries the right background — no re-explaining required.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================== CUSTOMER CASE ================== -->
+<section class="case halo" aria-label="Customer case study">
+  <div class="container">
+    <header class="case__head">
+      <span class="eyebrow" data-reveal>Proof at scale</span>
+      <h2 class="h-section" data-reveal data-reveal-delay="1">Trusted by teams shipping at scale.</h2>
+    </header>
+
+    <div class="case-card" data-reveal data-reveal-delay="2">
+      <div class="case-card__image">
+        <img
+          src="https://images.ctfassets.net/8aevphvgewt8/6jSViLh8ayZAFNBmXROGUI/1907ccc0be4b73f5d21ec0dce76d25c0/groupo-boticario.png?w=600&fm=webp&q=90"
+          srcset="https://images.ctfassets.net/8aevphvgewt8/6jSViLh8ayZAFNBmXROGUI/1907ccc0be4b73f5d21ec0dce76d25c0/groupo-boticario.png?w=600&fm=webp&q=90 1x,
+                  https://images.ctfassets.net/8aevphvgewt8/6jSViLh8ayZAFNBmXROGUI/1907ccc0be4b73f5d21ec0dce76d25c0/groupo-boticario.png?w=1200&fm=webp&q=90 2x"
+          alt="Grupo Boticário engineering team photo"
+          loading="lazy"/>
+      </div>
+      <div>
+        <span class="eyebrow">Grupo Boticário</span>
+        <p class="case-card__quote">“Copilot compressed our review cycle from days to hours. Engineers spend more time designing systems and less time waiting for feedback.”</p>
+        <p class="case-card__attr"><strong>Maria Alves</strong> &middot; VP of Engineering, Grupo Boticário</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== PRICING ================== -->
+<section class="pricing halo" id="pricing" aria-label="Copilot pricing">
+  <div class="container">
+    <header class="pricing__head">
+      <span class="eyebrow" data-reveal>Plans</span>
+      <h2 class="h-section" data-reveal data-reveal-delay="1">Find the altitude that fits.</h2>
+      <p class="p-lead" data-reveal data-reveal-delay="2">Start free, scale when you're ready. Every plan includes chat, completions, and the agent surface.</p>
+    </header>
+
+    <div class="pricing-grid">
+      <article class="price-card" data-reveal tabindex="0">
+        <h3 class="price-card__name">Free</h3>
+        <div class="price-card__price">$0 <small>/ month</small></div>
+        <ul class="price-card__list">
+          <li>Up to 2,000 completions per month</li>
+          <li>50 chat messages per month</li>
+          <li>Access to the agent surface (preview)</li>
+          <li>For individuals getting started</li>
+        </ul>
+        <a class="btn btn-ghost" href="#">Get started</a>
+      </article>
+
+      <article class="price-card price-card--popular" data-reveal data-reveal-delay="1" tabindex="0">
+        <span class="price-card__badge">Most popular</span>
+        <h3 class="price-card__name">Pro</h3>
+        <div class="price-card__price">$10 <small>/ month</small></div>
+        <ul class="price-card__list">
+          <li>Unlimited completions and chat</li>
+          <li>Frontier model access, agent mode</li>
+          <li>Premium CLI &amp; review experience</li>
+          <li>Priority support</li>
+        </ul>
+        <a class="btn btn-primary" href="#">Upgrade to Pro</a>
+      </article>
+
+      <article class="price-card" data-reveal data-reveal-delay="2" tabindex="0">
+        <h3 class="price-card__name">Business</h3>
+        <div class="price-card__price">$19 <small>/ user / month</small></div>
+        <ul class="price-card__list">
+          <li>Everything in Pro</li>
+          <li>Org policies &amp; content exclusions</li>
+          <li>Audit logs, SSO, SCIM</li>
+          <li>IP indemnity</li>
+        </ul>
+        <a class="btn btn-ghost" href="#">Talk to sales</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================== CTA RAIL ================== -->
+<section class="cta-rail" aria-label="Get started with Copilot">
+  <div class="container">
+    <h2 data-reveal>Take flight.</h2>
+    <p data-reveal data-reveal-delay="1">Copilot is free to try. Bring it to your editor in under a minute — and decide for yourself how much altitude it adds.</p>
+    <div class="cta-rail__row" data-reveal data-reveal-delay="2">
+      <a class="btn btn-primary" href="#">Try Copilot free</a>
+      <a class="btn btn-ghost" href="#">Contact sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================== FOOTER ================== -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <svg class="gh-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+        </svg>
+        <p>Design-style reference replicating the look and feel of github.com/features/copilot. Not affiliated with GitHub Inc.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#">Copilot</a></li>
+          <li><a href="#">Spark</a></li>
+          <li><a href="#">Actions</a></li>
+          <li><a href="#">Codespaces</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="preview-enterprise.html">Enterprise</a></li>
+          <li><a href="#">Security</a></li>
+          <li><a href="#">API</a></li>
+          <li><a href="#">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Docs</a></li>
+          <li><a href="#">Skills</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Style reference page. Built for design exploration only.</span>
+      <span>Primer brand tokens · Mona Sans VF · Neon mint accent #5fed83</span>
+    </div>
+    <p class="footer__disclaimer">
+      Disclaimer: this page is a single-file design-style study replicating the visual language of github.com/features/copilot.
+      All images, videos, and fonts are hot-linked directly to GitHub and Contentful CDN endpoints and remain the property of their owners.
+      Marketing copy on this page is original and is not verbatim from GitHub. This reference is not affiliated with, endorsed by, or sponsored by GitHub, Inc.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ====== Globalnav scroll state ======
+  var gnav = document.getElementById('gnav');
+  var onScroll = function(){
+    if (window.scrollY > 24) gnav.classList.add('is-scrolled');
+    else gnav.classList.remove('is-scrolled');
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ====== Reveal observer ======
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window && !reduceMotion){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-in'); });
+  }
+
+  // ====== Scroll-triggered video playback ======
+  // Pattern borrowed from apple/preview-vision-pro.html — videos play when
+  // in view, pause when not. Hero video is exempt (autoplay).
+  var videos = document.querySelectorAll('video[data-scroll-play]');
+  if (reduceMotion){
+    videos.forEach(function(v){ try { v.pause(); } catch(_){} v.removeAttribute('autoplay'); });
+    // Also stop the hero autoplay for reduced motion
+    document.querySelectorAll('.hero__media video').forEach(function(v){
+      try { v.pause(); } catch(_){} v.removeAttribute('autoplay');
+    });
+  } else if ('IntersectionObserver' in window){
+    var vidObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var v = entry.target;
+        if (entry.isIntersecting){
+          var p = v.play();
+          if (p && typeof p.catch === 'function') p.catch(function(){});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+    videos.forEach(function(v){ vidObserver.observe(v); });
+  }
+})();
+</script>
+
+</body>
+</html>

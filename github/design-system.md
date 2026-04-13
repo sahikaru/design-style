@@ -1,4 +1,13 @@
-# Design System: GitHub Primer
+# Design System: GitHub — Primer + Primer Brand
+
+GitHub ships **two design languages under one roof**, and knowing which one to use is half the job:
+
+- **Primer** (this doc's original focus) — the **product UI** system: light canvas `#ffffff`, blue accent `#0969da`, Mona Sans, dense information architecture. Used across all logged-in product surfaces — repos, issues, PRs, settings, dashboards.
+- **Primer Brand** (marketing) — the **marketing/brand** system: **dark canvas `#000000` / `#0d1117`**, **neon mint accent `#5fed83`**, variable-weight Mona Sans at unusual weights (425/440/460). Used on github.com home, /features/*, /enterprise, /pricing, /copilot.
+
+The product system optimizes for 8-hour reading sessions; the brand system optimizes for 30-second cinematic first impressions. Design tokens and motion curves differ on purpose — **don't mix**.
+
+Sections 1–9 below describe Primer (product). Section 10 ("Primer Brand") describes the marketing variant. Section 11 covers page archetypes and cross-cutting HARD RULES (cursor, retina) that apply to both.
 
 ## 1. Visual Theme & Atmosphere
 
@@ -676,3 +685,207 @@ a:hover { text-decoration: underline; }
 - "Build a status label pill: font-size 12px weight 600, border-radius 100vh, padding 2px 8px, background #1f883d, text white."
 - "Create a code block: background #f6f8fa, font-family monospace, font-size 13px, padding 16px, border-radius 6px, border 1px solid #d1d9e0."
 - "Design a floating dropdown: white background, border 1px solid #d1d9e080, border-radius 6px, box-shadow 0 8px 16px -4px #25292e14 with multiple layers."
+
+---
+
+## 10. Primer Brand (Marketing Variant)
+
+Primer Brand is the design system powering github.com marketing surfaces — homepage, /features/*, /enterprise, /copilot, /pricing. It is **not** a dark-mode version of Primer; it is a separate brand expression with its own canvas, accent, font weights, and motion DNA.
+
+### 10.1 Brand Canvas & Accent
+
+| Token | Hex | Role |
+|-------|-----|------|
+| `--brand-bg` | `#000000` | Primary marketing canvas — pure black, cinematic |
+| `--brand-bg-subtle` | `#0d1117` | Section alternation, muted panels |
+| `--brand-bg-raised` | `#151b23` | Raised cards, glass card base |
+| `--brand-fg` | `#ffffff` | Primary text on brand canvas |
+| `--brand-fg-muted` | `#9198a1` | Secondary text, descriptions |
+| `--brand-border` | `#3d444d` | Card borders, dividers |
+| `--brand-accent-primary` | `#5fed83` | **Neon mint** — the new brand accent, reserved for key CTAs and eyebrows |
+| `--brand-accent-muted` | `#1a7f37` | Deeper mint for hover/pressed states |
+
+**Core rule**: neon mint `#5fed83` is the ONLY chromatic accent. All other color is black/white/gray. Workflow-specific colors (open-green, closed-red, merged-purple from Primer) do NOT cross over — those belong to the product UI.
+
+### 10.2 Mona Sans VF — Variable Weight Axis
+
+Primer Brand uses Mona Sans as a **variable font** and hits weights that static fonts can't reach:
+
+| Role | Size | Weight | Tracking | Use |
+|------|-----:|-------:|---------:|-----|
+| Hero Mega | 64px | **425** | -2.24px | github.com homepage hero — the compressed billboard |
+| Hero Large | 56px | **440** | normal | /copilot hero — flagship product page |
+| Hero Enterprise | 48px | **440** | normal | /enterprise hero — authoritative, slightly smaller |
+| Section H2 | 40px | **460** | normal | Feature section headings across all brand pages |
+| Feature Title | 32px | **440** | normal | Card titles, callouts |
+| Body Large | 20px | 400 | normal | Subtitle paragraphs below hero |
+| Body | 16px | 400 | normal | Standard reading text |
+| Eyebrow | 14px | 600 | `0.1em` uppercase | Small label above hero ("COPILOT", "ENTERPRISE") — often tinted neon mint |
+
+**Weight 425/440/460 are not typos.** Mona Sans VF exposes arbitrary numeric weights along its axis. Static-font fallbacks (system-ui, Inter) will snap to 500 — that's acceptable degradation but loses the "just-past-regular" feel that gives GitHub marketing its signature tone.
+
+```css
+@font-face {
+  font-family: "Mona Sans VF";
+  src: url("https://github.githubassets.com/assets/mona-sans.woff2") format("woff2-variations");
+  font-weight: 200 900;  /* variable axis */
+  font-style: normal;
+  font-display: swap;
+}
+
+.brand-hero { font-family: "Mona Sans VF", "Mona Sans", -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 425; letter-spacing: -0.035em; }
+```
+
+### 10.3 Glass & Ambient Glow
+
+Flagship product pages (especially /copilot) use two compositing techniques rarely seen in Primer product UI:
+
+- **Glass cards**: `background: rgba(21, 27, 35, 0.6); backdrop-filter: blur(40px) saturate(180%);` — heavier blur than Apple's 20px. Feels like frosted glass over a dark canvas.
+- **Ambient gradient halo**: `::before { background: radial-gradient(circle at 50% 0%, rgba(95, 237, 131, 0.15), transparent 55%); pointer-events: none; }` — a mint bloom behind hero/feature sections. Never directly animated; it lives in the background layer.
+- **Shadow-border + bloom**: `box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 80px rgba(95, 237, 131, 0.1);` — combines Vercel's shadow-as-border with a soft neon outer glow.
+
+### 10.4 Motion DNA
+
+| Property | Value |
+|----------|-------|
+| Easing | `cubic-bezier(0.33, 1, 0.68, 1)` — ease-out quad, punchier than Apple's `0.4, 0, 0.6, 1` |
+| Hover duration | `0.2s` |
+| Reveal duration | `0.4s` |
+| Reveal pattern | `translateY(16px) → 0` + `opacity 0 → 1`, `IntersectionObserver` threshold `0.2` |
+
+```css
+:root {
+  --gh-ease: cubic-bezier(0.33, 1, 0.68, 1);
+  --gh-dur-fast: 0.2s;
+  --gh-dur-medium: 0.4s;
+}
+
+[data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 0.4s var(--gh-ease), transform 0.4s var(--gh-ease); }
+[data-reveal].is-in { opacity: 1; transform: none; }
+```
+
+Unlike Apple, GitHub Brand does **not** use scroll-pinned scenes or scroll-scrubbed video. Motion is reveal-on-enter and hover-only. Metrics count-up animations (big numbers rolling from 0 to target) are the one signature enterprise-marketing move.
+
+### 10.5 Primer Brand Component Stylings
+
+**Primary CTA (neon)**
+- Background: `#5fed83`, text: `#000`, padding: `12px 24px`, radius: `6px`
+- Font: Mona Sans VF 16px/500
+- Hover: background `#7fff9c` (slight brighten), scale(1.01)
+- Active: scale(0.98), background `#1a7f37`
+- `cursor: pointer` (always)
+
+**Ghost CTA (outline)**
+- Background: `transparent`, text: `#ffffff`, border: `1px solid #3d444d`, padding: `12px 24px`, radius: `6px`
+- Hover: border `#ffffff`, background `rgba(255,255,255,0.04)`
+
+**Glass feature card**
+- Background: `rgba(21,27,35,0.6)` + `backdrop-filter: blur(40px) saturate(180%)`
+- Radius: `16px`
+- Shadow-border: `0 0 0 1px rgba(255,255,255,0.08)`
+- Hover: `translateY(-4px)` + bloom `0 0 80px rgba(95,237,131,0.15)`
+- `cursor: pointer`
+
+**Comparison table (enterprise)**
+- Header row: `background: #151b23`, `font-weight: 600`, sticky on scroll
+- Data row hover: `background: rgba(95,237,131,0.05)`
+- Dividers: `border-bottom: 1px solid #3d444d`
+- Check marks: ✓ in neon mint; em-dash — in `#3d444d` for absent features
+
+---
+
+## 11. Page Archetypes & HARD RULES
+
+### 11.1 Page Archetypes (observed on github.com marketing)
+
+GitHub runs three marketing archetypes that map cleanly to Apple's three:
+
+**Archetype A — Brand Landing** (github.com homepage)
+- Purpose: brand presence + funnel visitors to signup or specific products
+- Hero: 64px/425/-2.24px compressed mega wordmark with a muted-green eyebrow, autoplay hero video below in a rounded container with mint bloom
+- Section cadence: hero → logo trust bar → 3-pillar feature strip → accordion workflows → quote moment → pricing tease → footer
+- Motion: fade-up reveals only. NO scroll-pinned scenes. Hero video auto-plays on load.
+
+**Archetype B — Flagship Product** (github.com/copilot, github.com/features/*)
+- Purpose: sell one specific product with cinematic intensity
+- Hero: 56px/440 headline, full-viewport hero background image/video, glass-card wrapper around auto-playing demo
+- Signature: glass cards + ambient gradient halos + mint bloom shadow-borders everywhere
+- Section cadence: hero → integrations strip → feature cards (glass) → tailor-made feature grid → signature scroll showcase → customer case → pricing → bottom CTA
+- Motion: `data-scroll-play` video playback (copied from Apple Vision Pro pattern, but without scroll-scrubbing), staggered reveals
+
+**Archetype C — Enterprise/B2B** (github.com/enterprise, /pricing)
+- Purpose: sell to procurement / IT buyers — authoritative, dense, tables-heavy
+- Hero: 48px/440 headline (deliberately smaller than Copilot — more restrained), enterprise hero-bg image with dark gradient overlay for text legibility
+- **Key structural element**: feature comparison table (Free / Team / Enterprise / Enterprise Cloud) — 10+ rows grouped by category, sticky header, row hover highlight
+- Section cadence: hero → logo wall (90% of Fortune 100) → 3 pillar cards → **comparison table** → metrics strip (count-up numbers) → customer story → FAQ accordion → CTA rail
+- Motion: restrained reveals, metrics count-up from 0 to target in 1.2s. NO glass excess — glass is for product pages.
+
+### 11.2 Cursor (HARD RULE)
+
+**Every element that triggers an action on click MUST set `cursor: pointer`.** This is non-negotiable.
+
+The native browser adds `cursor: pointer` automatically ONLY for `<a href>`, `<button>`, `<input type="submit">`, and `<select>`. The moment you attach click behavior to a `<div>`, `<li>`, or wrap a card in an anchor whose child uses its own `cursor` rule, the pointer is your responsibility.
+
+**Apply to, at minimum:**
+- Feature cards, pillar cards, glass cards
+- Accordion triggers / FAQ headers
+- Pricing tier cards
+- Table rows that are clickable
+- Color / theme switchers
+- Any hover-animated surface (`translateY`, `scale`, bloom) — hover animation implies clickability
+- Tab-like toggles, filter chips
+
+```css
+.pillar-card, .glass-card, .pricing-card, .accordion-trigger,
+.faq-item, [role="button"], [data-clickable] {
+  cursor: pointer;
+}
+
+.pillar-card:active, .glass-card:active, .pricing-card:active {
+  transform: scale(0.98);
+  transition: transform 0.12s var(--gh-ease);
+}
+```
+
+**Exceptions** (keep default cursor): decorative surfaces that animate but don't respond to click. Disabled → `cursor: not-allowed`. Loading → `cursor: wait`.
+
+**Anti-pattern**: don't rely solely on `<a href="#">` to carry pointer — if the anchor's child has `cursor: default` or the anchor is wrapped in something that overrides it, you lose the cursor. Always set it explicitly on the interactive container.
+
+### 11.3 Retina Image Resolution (HARD RULE)
+
+**Every product/marketing image MUST ship 1x and 2x variants via `srcset`.** GitHub marketing uses two CDN conventions:
+
+- **Contentful CDN** (`images.ctfassets.net`): append `?w=<width>&fm=webp&q=90`. Double `w` for 2x density. Example:
+  ```html
+  <img src="https://images.ctfassets.net/.../hero.webp?w=720&fm=webp&q=90"
+       srcset="https://images.ctfassets.net/.../hero.webp?w=720&fm=webp&q=90 1x,
+               https://images.ctfassets.net/.../hero.webp?w=1440&fm=webp&q=90 2x"
+       width="720" height="420" loading="lazy" alt="..."/>
+  ```
+- **GitHub assets CDN** (`github.githubassets.com`): hashed filenames, no density variants — the file IS the asset. Use as-is. SVGs don't need srcset.
+
+Without the `2x` entry, retina displays render images soft, instantly breaking the "premium brand" feel Primer Brand rests on. **Blurry marketing images = failed execution.**
+
+### 11.4 Video Rules
+
+| Context | Behavior |
+|---------|----------|
+| Hero demo | `playsinline muted loop preload="metadata"` + poster, `autoplay` on load (the hero video is the first thing seen — always plays immediately) |
+| Decorative/section videos | `playsinline muted loop preload="metadata"` + poster + `data-scroll-play` — play only when scrolled into view (IntersectionObserver threshold 0.35) |
+| `prefers-reduced-motion` | All videos pause; posters stay visible |
+
+```js
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    const v = entry.target;
+    if (entry.isIntersecting) v.play().catch(() => {});
+    else v.pause();
+  });
+}, { threshold: 0.35 });
+
+document.querySelectorAll("video[data-scroll-play]").forEach((v) => videoObserver.observe(v));
+
+if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  document.querySelectorAll("video").forEach((v) => { v.autoplay = false; v.pause(); });
+}
+```

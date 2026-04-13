@@ -18,21 +18,41 @@
 - Anthropic Serif 衬线标题 + 全暖色调中性色
 - 适合：内容型产品、文档站、AI 产品落地页、阅读类应用
 
-### `github/` — GitHub Primer 风格
+### `github/` — GitHub Primer + Primer Brand 双风格
 
-冷静、密集、为开发者而生的工具型界面。
+GitHub 实际上运营两套并行的设计语言：
 
+**Primer（产品 UI）** —— 冷静、密集、为开发者而生的工具型界面：
 - 纯白画布 `#ffffff` + 冷灰 `#f6f8fa`，蓝色主交互 `#0969da`
 - Mona Sans 变量字体，语义化状态色（成功/危险/警告/完成）
-- 适合：开发者工具、dashboard、管理后台、技术文档
+- 适合：登录后产品界面、repo/issue/PR、dashboard、管理后台
+
+**Primer Brand（营销门面）** —— 深色戏剧化画布 + 霓虹薄荷：
+- 纯黑画布 `#000000` / `#0d1117`，**霓虹薄荷 `#5fed83`** 作为唯一强调色
+- Mona Sans VF **可变字重 425 / 440 / 460**（"just-past-regular"——静态字体达不到的微妙字重）
+- 签名手法：玻璃卡 `backdrop-filter: blur(40px) saturate(180%)` + 径向薄荷光晕 + shadow-border + neon bloom
+- 动效：`cubic-bezier(0.33, 1, 0.68, 1)` ease-out quad，比 Apple 更干脆；metrics count-up 动画
+- **三个页面范式（对应 Apple 的 iPhone/Mac/Vision Pro）**：
+  - `preview.html` → github.com 首页 —— 品牌 landing（64px/425/-2.24px 压缩 hero + autoplay 视频 + 手风琴）
+  - `preview-copilot.html` → github.com/features/copilot —— 旗舰产品（玻璃卡 + 光晕 + scroll-play 视频）
+  - `preview-enterprise.html` → github.com/enterprise —— B2B 权威（20 行功能对比表 + metrics 滚数 + FAQ）
+- 适合：开发者工具营销、SaaS 落地页、AI 产品高端叙事、企业级信息架构
 
 ### `apple/` — Apple 风格
 
 电影化、克制到极致的"消费电子美学"——产品即主角，UI 退隐至不可见。
 
 - 二元节奏：纯黑 `#000000` 与浅灰 `#f5f5f7` 交替，唯一点缀色 Apple Blue `#0071e3`
-- SF Pro Display/Text 光学尺寸切换，负字距贯穿所有字号（-0.28px → -0.12px）
-- 信号组件：980px 胶囊 CTA、半透明玻璃导航（blur 20px + saturate 180%）、单柔和阴影
+- SF Pro Display/Text 光学尺寸切换，负字距贯穿所有字号（-1.2px → -0.12px）；**分类 eyebrow 24px/700 用 +0.216px 正字距**（Apple 排版中唯一的正字距用法）
+- Apple Intelligence 四色渐变（108deg 蓝→紫→红→橙 + `background-clip: text`）
+- 双层导航：透明 globalnav 44px + 玻璃 localnav `rgba(18,18,18,0.8) blur(20px)`
+- 动效 DNA：`cubic-bezier(0.4, 0, 0.6, 1)` + `IntersectionObserver` 分层 fade-up + sticky-pinned 场景 + scroll-triggered video
+- **Apple 页面范式全集（四页 preview 覆盖三种原型）**：
+  - `preview.html` → apple.com/iphone — **Archetype A 品类 landing**（80px 巨字 + chapter-nav 选机器）
+  - `preview-mac.html` → apple.com/mac — **Archetype A 变体**（浅色极简 hero + 2-up 黑色 banner card）
+  - `preview-iphone-17-pro.html` → apple.com/iphone-17-pro — **Archetype B 旗舰详情页**（sticky-pinned 相机/显示场景 + 颜色切换 + 芯片跑分条动画）
+  - `preview-vision-pro.html` → apple.com/apple-vision-pro — **Archetype C 体验型页面**（34px 低调 hero + scroll-triggered 视频自动播放，14 个 Apple CDN 视频）
+- **硬规则**：所有图片 `srcset` 带 `_2x` 变体（否则视网膜屏下失清）；所有可点击元素显式 `cursor: pointer`（浏览器只对 `<a>/<button>` 默认加手型）
 - 适合：产品发布页、影视化营销站、奢品/硬件、单色高端品牌
 
 ### `vercel/` — Vercel Geist 风格

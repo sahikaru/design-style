@@ -1,0 +1,1237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>iPhone 17 Pro — Style Reference</title>
+<!--
+  Style reference replicating apple.com/iphone-17-pro,
+  flagship-product-page archetype. Images hot-linked to Apple's
+  public CDN at 2x resolution for retina sharpness.
+  Not affiliated with Apple Inc. Marketing copy is original / inspired-by only.
+-->
+<style>
+/* =========================================================
+   iPhone 17 Pro — Flagship Product Page (Archetype B)
+   Inherits the token system, typography utilities, nav, and
+   IntersectionObserver reveal pattern from preview.html.
+   Adds: scroll-pinned scenes, color-swatch crossfade, and
+   benchmark bars that animate via requestAnimationFrame on enter.
+   ========================================================= */
+:root{
+  /* Color */
+  --black:#000; --near-black:#1d1d1f; --light-gray:#f5f5f7; --white:#fff;
+  --dark-surface-1:#272729; --dark-surface-2:#262628; --dark-surface-3:#28282a;
+  --dark-surface-4:#2a2a2d; --dark-surface-5:#242426;
+  --apple-blue:#0071e3; --link-blue:#0066cc; --bright-blue:#2997ff;
+  --text-secondary-light:rgba(0,0,0,0.8); --text-tertiary-light:rgba(0,0,0,0.48);
+  --hairline:#d2d2d7;
+
+  /* Nav */
+  --globalnav-height:44px;
+  --localnav-height:52px;
+  --localnav-glass:rgba(18,18,18,0.8);
+  --menu-curtain:rgba(0,0,0,0.4);
+  --glass-blur:saturate(180%) blur(20px);
+
+  /* Elevation */
+  --card-shadow:rgba(0,0,0,0.22) 3px 5px 30px 0px;
+
+  /* Radius */
+  --r-std:8px; --r-comfy:11px; --r-large:12px; --r-media:24px; --r-pill:980px;
+
+  /* Type */
+  --font-display:"SF Pro Display","SF Pro Icons","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-text:"SF Pro Text","SF Pro Icons","Helvetica Neue",Helvetica,Arial,sans-serif;
+
+  /* Motion */
+  --apple-ease:cubic-bezier(0.4, 0, 0.6, 1);
+  --dur-fast:0.32s;
+  --dur-medium:0.5s;
+  --dur-slow:0.8s;
+  --dur-long:1.2s;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-text);
+  background:var(--white);
+  color:var(--near-black);
+  font-size:17px; line-height:1.47; letter-spacing:-0.374px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+a{color:var(--link-blue); text-decoration:none; transition:color var(--dur-fast) var(--apple-ease);}
+a:hover{text-decoration:underline;}
+:focus-visible{outline:2px solid var(--apple-blue); outline-offset:2px;}
+img{display:block; max-width:100%; height:auto;}
+
+/* ============ TYPOGRAPHY UTILITIES ============ */
+.t-mega      { font-family:var(--font-display); font-size:80px; font-weight:600; line-height:1.05; letter-spacing:-1.2px; }
+.t-hero      { font-family:var(--font-display); font-size:56px; font-weight:600; line-height:1.07; letter-spacing:-0.28px; }
+.t-large     { font-family:var(--font-display); font-size:48px; font-weight:600; line-height:1.08; letter-spacing:-0.4px; }
+.t-section   { font-family:var(--font-display); font-size:40px; font-weight:600; line-height:1.10; }
+.t-tile      { font-family:var(--font-display); font-size:28px; font-weight:400; line-height:1.14; letter-spacing:0.196px; }
+.t-card      { font-family:var(--font-display); font-size:21px; font-weight:700; line-height:1.19; letter-spacing:0.231px; }
+.t-sub       { font-family:var(--font-display); font-size:21px; font-weight:400; line-height:1.19; letter-spacing:0.231px; }
+.t-body      { font-family:var(--font-text); font-size:17px; font-weight:400; line-height:1.47; letter-spacing:-0.374px; }
+.t-caption   { font-family:var(--font-text); font-size:14px; line-height:1.29; letter-spacing:-0.224px; }
+.t-eyebrow   { font-family:var(--font-text); font-size:14px; font-weight:600; line-height:1.29; letter-spacing:-0.224px; }
+.t-micro     { font-family:var(--font-text); font-size:12px; line-height:1.33; letter-spacing:-0.12px; }
+
+/* ============ GLOBALNAV ============ */
+.globalnav{
+  position:sticky; top:0; z-index:9999;
+  height:var(--globalnav-height);
+  background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  transition:background-color var(--dur-fast) var(--apple-ease),
+             backdrop-filter var(--dur-fast) var(--apple-ease),
+             color var(--dur-fast) var(--apple-ease);
+  color:#f5f5f7;
+}
+.globalnav--scrolled{
+  background:rgba(22,22,23,0.72);
+  -webkit-backdrop-filter:var(--glass-blur);
+          backdrop-filter:var(--glass-blur);
+}
+.globalnav__inner{
+  width:100%; max-width:1024px; padding:0 22px;
+  display:flex; align-items:center; gap:32px;
+}
+.globalnav__logo{ color:inherit; display:inline-flex; }
+.globalnav__links{ display:flex; gap:28px; flex:1; justify-content:center; }
+.globalnav__links a,
+.globalnav__right a{
+  font-family:var(--font-text);
+  font-size:12px; font-weight:400; letter-spacing:-0.12px;
+  color:inherit; opacity:0.82; text-decoration:none;
+  transition:opacity var(--dur-fast) var(--apple-ease);
+  cursor:pointer;
+}
+.globalnav__links a:hover,
+.globalnav__right a:hover{ opacity:1; text-decoration:none; }
+.globalnav__links a[aria-current="page"]{ opacity:1; font-weight:500; }
+.globalnav__right{ display:flex; gap:16px; }
+
+/* ============ LOCALNAV ============ */
+.localnav{
+  position:sticky; top:var(--globalnav-height); z-index:9000;
+  height:var(--localnav-height);
+  background:var(--localnav-glass);
+  -webkit-backdrop-filter:var(--glass-blur);
+          backdrop-filter:var(--glass-blur);
+  color:var(--white);
+  display:flex; align-items:center; justify-content:center;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.localnav__inner{
+  width:100%; max-width:1024px; padding:0 22px;
+  display:flex; align-items:center; gap:32px;
+}
+.localnav__title{
+  font-family:var(--font-text); font-size:17px; font-weight:600; letter-spacing:-0.374px;
+  color:var(--white); cursor:pointer;
+}
+.localnav__links{ display:flex; gap:24px; flex:1; }
+.localnav__links a{
+  font-size:12px; font-weight:400; letter-spacing:-0.12px;
+  color:rgba(255,255,255,0.88); text-decoration:none;
+  cursor:pointer;
+}
+.localnav__cta{
+  font-size:12px; font-weight:400; color:var(--bright-blue);
+  text-decoration:none; cursor:pointer;
+}
+.localnav__cta:hover{ text-decoration:underline; }
+
+/* ============ BUTTONS & PILLS ============ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:var(--font-text); font-size:17px; font-weight:400;
+  border-radius:var(--r-pill);
+  padding:12px 24px;
+  text-decoration:none;
+  transition:background-color var(--dur-fast) var(--apple-ease),
+             color var(--dur-fast) var(--apple-ease),
+             transform var(--dur-fast) var(--apple-ease);
+  cursor:pointer; border:1px solid transparent;
+}
+.btn:active{ transform:scale(0.96); }
+.btn--primary{ background:var(--apple-blue); color:var(--white); }
+.btn--primary:hover{ background:#0077ed; text-decoration:none; }
+.btn--ghost-dark{ background:transparent; color:var(--white); border-color:var(--white); }
+.btn--ghost-dark:hover{ background:rgba(255,255,255,0.08); text-decoration:none; }
+
+.pill{
+  display:inline-flex; align-items:center; gap:4px;
+  font-family:var(--font-text); font-size:17px; font-weight:400; letter-spacing:-0.374px;
+  padding:8px 20px;
+  border-radius:var(--r-pill);
+  cursor:pointer;
+  transition:background-color var(--dur-fast) var(--apple-ease),
+             color var(--dur-fast) var(--apple-ease);
+}
+.pill--blue{ color:var(--link-blue); }
+.pill--blue:hover{ text-decoration:underline; }
+.pill--blue-bright{ color:var(--bright-blue); }
+.pill--blue-bright:hover{ text-decoration:underline; }
+.pill--outline-light{ color:var(--link-blue); border:1px solid var(--link-blue); }
+.pill--outline-light:hover{ background:var(--link-blue); color:var(--white); text-decoration:none; }
+.pill--outline-dark{ color:var(--white); border:1px solid var(--white); }
+.pill--outline-dark:hover{ background:var(--white); color:var(--near-black); text-decoration:none; }
+.pill svg{ width:10px; height:10px; }
+
+/* ============ SECTIONS ============ */
+.section{ width:100%; padding:120px 22px; text-align:center; position:relative; overflow:hidden; }
+.section--dark{ background:var(--black); color:#fff; }
+.section--surface{ background:var(--dark-surface-1); color:#fff; }
+.section--light{ background:var(--light-gray); color:var(--near-black); }
+.section--white{ background:var(--white); color:var(--near-black); }
+.section__inner{ max-width:980px; margin:0 auto; }
+.section__wide{ max-width:1200px; margin:0 auto; }
+
+/* ============ HERO ============ */
+.hero{
+  background:var(--black); color:var(--white);
+  padding:80px 22px 40px;
+  text-align:center;
+  position:relative; overflow:hidden;
+}
+.hero__inner{ max-width:980px; margin:0 auto; position:relative; z-index:1; }
+.hero__small{
+  font-family:var(--font-text); font-size:17px; font-weight:600; letter-spacing:-0.374px;
+  color:rgba(255,255,255,0.88);
+  margin-bottom:14px;
+}
+.hero__headline{ margin-bottom:8px; }
+.hero__headline--muted{ color:rgba(255,255,255,0.58); }
+.hero__subhead{
+  font-family:var(--font-display); font-size:21px; font-weight:400; line-height:1.19;
+  letter-spacing:0.231px;
+  color:rgba(255,255,255,0.86);
+  margin:24px auto 32px; max-width:600px;
+}
+.hero__ctas{ display:inline-flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-bottom:48px; }
+.hero::before{
+  content:""; position:absolute; left:0; right:0; bottom:-30%; height:80%;
+  background:radial-gradient(ellipse at 50% 0%, rgba(41,151,255,0.16), transparent 60%);
+  pointer-events:none;
+}
+.hero__media{
+  margin:8px auto 0;
+  width:100%; max-width:820px;
+  aspect-ratio: 820 / 560;
+  opacity:0;
+  transform:translateY(40px) scale(1.03);
+  transition:opacity var(--dur-long) var(--apple-ease),
+             transform var(--dur-long) var(--apple-ease);
+}
+.hero__media.is-in{ opacity:1; transform:translateY(0) scale(1); }
+.hero__media img{ width:100%; height:100%; object-fit:contain; }
+
+/* ============ SCROLL REVEAL ============ */
+[data-reveal]{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity var(--dur-slow) var(--apple-ease),
+             transform var(--dur-slow) var(--apple-ease);
+  will-change:opacity, transform;
+}
+[data-reveal].is-in{ opacity:1; transform:none; }
+[data-reveal-delay="1"]{ transition-delay:0.08s; }
+[data-reveal-delay="2"]{ transition-delay:0.16s; }
+[data-reveal-delay="3"]{ transition-delay:0.24s; }
+[data-reveal-delay="4"]{ transition-delay:0.32s; }
+[data-reveal-delay="5"]{ transition-delay:0.40s; }
+
+/* ============ AI GRADIENT TEXT ============ */
+.ai-word{
+  background:linear-gradient(108deg, #0894ff 0%, #c959dd 34%, #ff2e54 68%, #ff9004 100%);
+  -webkit-background-clip:text;
+          background-clip:text;
+  -webkit-text-fill-color:transparent;
+          color:transparent;
+  background-size:200% 100%;
+  animation:ai-shift 8s var(--apple-ease) infinite alternate;
+}
+@keyframes ai-shift{
+  0%   { background-position:0% 50%; }
+  100% { background-position:100% 50%; }
+}
+
+/* ============ SCENE — sticky-pinned scroll storytelling ============ */
+.scene{
+  background:var(--black);
+  color:#fff;
+  padding:120px 22px 80px;
+}
+.scene__heading{
+  text-align:center;
+  max-width:820px; margin:0 auto 80px;
+}
+.scene__grid{
+  max-width:1180px; margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:start;
+}
+.scene__media{
+  position:sticky; top:18vh;
+  height:64vh;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:var(--r-media);
+  overflow:hidden;
+}
+.scene__media img{
+  width:100%; height:100%; object-fit:contain;
+}
+.scene__beats{
+  display:flex; flex-direction:column;
+  gap:48vh;
+  padding-top:6vh;
+}
+.scene__beat{
+  text-align:left;
+}
+.scene__beat-eyebrow{
+  font-family:var(--font-text); font-size:14px; font-weight:600;
+  letter-spacing:-0.224px;
+  color:var(--bright-blue);
+  margin-bottom:14px;
+}
+.scene__beat-title{
+  font-family:var(--font-display); font-size:48px; font-weight:600;
+  line-height:1.08; letter-spacing:-0.4px;
+  margin-bottom:18px;
+  color:#fff;
+}
+.scene__beat-body{
+  font-family:var(--font-text); font-size:17px; line-height:1.47; letter-spacing:-0.374px;
+  color:rgba(255,255,255,0.78);
+  max-width:480px;
+}
+
+/* ============ COLOR PICKER ============ */
+.colors{
+  background:var(--light-gray);
+  color:var(--near-black);
+  padding:120px 22px;
+  text-align:center;
+}
+.colors__heading{ margin-bottom:24px; }
+.colors__sub{
+  font-family:var(--font-text); font-size:17px; line-height:1.47;
+  color:var(--text-secondary-light);
+  max-width:520px; margin:0 auto 56px;
+}
+.colors__stage{
+  position:relative;
+  width:100%; max-width:560px;
+  aspect-ratio: 560 / 460;
+  margin:0 auto 40px;
+}
+.colors__img{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:contain;
+  opacity:0;
+  transition:opacity var(--dur-medium) var(--apple-ease);
+}
+.colors__img.is-active{ opacity:1; }
+.colors__name{
+  font-family:var(--font-text); font-size:14px; font-weight:600;
+  letter-spacing:-0.224px;
+  color:var(--near-black);
+  margin-bottom:24px;
+  min-height:1.29em;
+}
+.colors__swatches{
+  display:inline-flex; gap:18px;
+  padding:12px 18px;
+  background:var(--white);
+  border-radius:var(--r-pill);
+  box-shadow:rgba(0,0,0,0.08) 0 2px 12px 0;
+}
+.swatch{
+  width:24px; height:24px;
+  border-radius:50%;
+  cursor:pointer;
+  background:#777;
+  border:none;
+  padding:0;
+  position:relative;
+  transition:box-shadow var(--dur-fast) var(--apple-ease),
+             transform var(--dur-fast) var(--apple-ease);
+}
+.swatch:hover{ transform:scale(1.06); }
+.swatch.is-active{
+  box-shadow:0 0 0 2px var(--apple-blue), 0 0 0 4px var(--white) inset;
+}
+.swatch[data-color="natural"]   { background:#c8c2b4; }
+.swatch[data-color="desert"]    { background:#b9966c; }
+.swatch[data-color="cosmic"]    { background:#3a3a52; }
+.swatch[data-color="silver"]    { background:#e3e4e0; }
+.swatch[data-color="black"]     { background:#1c1c20; }
+
+/* ============ CHIP — dark surface, animated benchmark bars ============ */
+.chip{
+  background:var(--dark-surface-1);
+  color:#fff;
+  padding:140px 22px;
+  text-align:center;
+}
+.chip__heading{ margin-bottom:18px; }
+.chip__sub{
+  font-family:var(--font-display); font-size:21px; font-weight:400;
+  line-height:1.19; letter-spacing:0.231px;
+  color:rgba(255,255,255,0.66);
+  max-width:600px; margin:0 auto 72px;
+}
+.chip__bars{
+  max-width:760px; margin:0 auto;
+  display:flex; flex-direction:column; gap:32px;
+  text-align:left;
+}
+.bar{
+  display:grid;
+  grid-template-columns:120px 1fr 80px;
+  gap:20px;
+  align-items:center;
+}
+.bar__label{
+  font-family:var(--font-text); font-size:14px; font-weight:600;
+  letter-spacing:-0.224px;
+  color:rgba(255,255,255,0.92);
+}
+.bar__track{
+  height:14px;
+  background:var(--dark-surface-4);
+  border-radius:var(--r-pill);
+  overflow:hidden;
+  position:relative;
+}
+.bar__fill{
+  height:100%;
+  background:linear-gradient(90deg, var(--bright-blue), var(--apple-blue));
+  border-radius:var(--r-pill);
+  transform-origin:left center;
+  transform:scaleX(0);
+  transition:transform var(--dur-slow) var(--apple-ease);
+  width:100%;
+}
+.bar__value{
+  font-family:var(--font-text); font-size:14px; font-weight:600;
+  letter-spacing:-0.224px;
+  color:var(--bright-blue);
+  text-align:right;
+}
+
+/* ============ DISPLAY scene (uses .scene with light-on-dark variations) ============ */
+.display-scene{ background:#0a0a0c; }
+
+/* ============ AI INTELLIGENCE STRIP ============ */
+.ai-strip{
+  background:var(--white);
+  padding:96px 22px;
+  text-align:center;
+  border-top:1px solid var(--hairline);
+  border-bottom:1px solid var(--hairline);
+}
+.ai-strip__eyebrow{ color:var(--text-tertiary-light); margin-bottom:14px; }
+.ai-strip__title{
+  font-family:var(--font-display); font-size:48px; font-weight:600;
+  line-height:1.08; letter-spacing:-0.4px;
+}
+.ai-strip__body{
+  margin:20px auto 24px; max-width:560px;
+  color:var(--text-secondary-light);
+}
+.ai-strip__cta{ display:inline-flex; }
+
+/* ============ COMPARE — 3-up cards ============ */
+.compare{
+  background:var(--white);
+  padding:120px 22px;
+  text-align:center;
+}
+.compare__heading{ margin-bottom:64px; color:var(--near-black); }
+.compare__grid{
+  max-width:1080px; margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
+}
+.compare-card{
+  background:var(--light-gray);
+  border-radius:var(--r-large);
+  padding:36px 28px 40px;
+  text-align:center;
+  display:flex; flex-direction:column; align-items:center;
+  cursor:pointer;
+  transition:transform var(--dur-medium) var(--apple-ease),
+             box-shadow var(--dur-medium) var(--apple-ease);
+}
+.compare-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--card-shadow);
+}
+.compare-card__media{
+  width:100%; aspect-ratio:1 / 1;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:24px;
+  overflow:hidden;
+  border-radius:var(--r-std);
+}
+.compare-card__media img{
+  width:88%; height:88%; object-fit:contain;
+  transition:transform var(--dur-medium) var(--apple-ease);
+}
+.compare-card:hover .compare-card__media img{ transform:scale(1.04); }
+.compare-card__name{
+  font-family:var(--font-display); font-size:24px; font-weight:600;
+  line-height:1.16; letter-spacing:0.004em;
+  color:var(--near-black);
+  margin-bottom:6px;
+}
+.compare-card__price{
+  font-family:var(--font-text); font-size:14px; font-weight:400;
+  letter-spacing:-0.224px;
+  color:var(--text-secondary-light);
+  margin-bottom:18px;
+}
+.compare-card__specs{
+  list-style:none;
+  font-family:var(--font-text); font-size:14px; line-height:1.5;
+  color:var(--text-secondary-light);
+  margin-bottom:20px;
+  text-align:left;
+  width:100%;
+  padding-left:6px;
+}
+.compare-card__specs li{
+  padding:6px 0;
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+.compare-card__specs li:last-child{ border-bottom:none; }
+.compare-card__cta{ display:inline-flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+
+/* ============ DARK CTA RAIL ============ */
+.cta-rail{
+  background:var(--black); color:#fff;
+  padding:120px 22px;
+  text-align:center;
+}
+.cta-rail__inner{ max-width:820px; margin:0 auto; }
+.cta-rail__heading{ margin-bottom:32px; }
+.cta-rail__actions{ display:inline-flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:center; }
+
+/* ============ TECH SPECS FOOTER STRIP ============ */
+.specs{
+  background:var(--light-gray);
+  color:var(--near-black);
+  padding:96px 22px;
+}
+.specs__inner{ max-width:1080px; margin:0 auto; }
+.specs__heading{
+  text-align:center;
+  margin-bottom:56px;
+  color:var(--near-black);
+}
+.specs__grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:48px 32px;
+}
+.specs__col h4{
+  font-family:var(--font-display); font-size:21px; font-weight:600;
+  line-height:1.19; letter-spacing:0.011em;
+  color:var(--near-black);
+  margin-bottom:16px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--hairline);
+}
+.specs__col dl{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:6px 16px;
+  font-family:var(--font-text); font-size:14px; line-height:1.4;
+  letter-spacing:-0.224px;
+  color:var(--text-secondary-light);
+}
+.specs__col dt{ font-weight:600; color:var(--near-black); }
+.specs__col dd{ color:var(--text-secondary-light); }
+
+/* ============ FOOTER ============ */
+.footer{
+  background:var(--light-gray);
+  color:var(--text-secondary-light);
+  padding:40px 22px 24px;
+  font-size:12px; line-height:1.33; letter-spacing:-0.12px;
+  border-top:1px solid var(--hairline);
+}
+.footer__inner{ max-width:980px; margin:0 auto; }
+.footer__top{ padding-bottom:20px; border-bottom:1px solid var(--hairline); margin-bottom:24px; }
+.footer__sitemap{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:40px;
+  padding-bottom:24px;
+  border-bottom:1px solid var(--hairline);
+  margin-bottom:24px;
+  text-align:left;
+}
+.footer__col h4{
+  font-family:var(--font-text); font-size:12px; font-weight:600;
+  color:var(--near-black);
+  margin-bottom:10px;
+}
+.footer__col ul{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+.footer__col a{ color:var(--text-secondary-light); font-size:12px; cursor:pointer; }
+.footer__links{ display:flex; gap:28px; flex-wrap:wrap; }
+.footer__links a{ color:var(--text-secondary-light); cursor:pointer; }
+.footer__legal{ margin-top:16px; color:var(--text-tertiary-light); max-width:680px; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1024px){
+  .scene__grid{ gap:40px; }
+  .scene__media{ height:54vh; }
+}
+@media (max-width:834px){
+  .t-mega{ font-size:56px; letter-spacing:-0.56px; line-height:1.07; }
+  .t-hero{ font-size:40px; letter-spacing:-0.2px; }
+  .t-large{ font-size:36px; }
+  .t-section{ font-size:32px; }
+  .scene{ padding:80px 22px 60px; }
+  .scene__grid{ grid-template-columns:1fr; gap:0; }
+  .scene__media{ position:relative; top:0; height:48vh; margin-bottom:32px; }
+  .scene__beats{ gap:80px; padding-top:0; }
+  .scene__beat-title{ font-size:32px; }
+  .compare__grid{ grid-template-columns:1fr; }
+  .specs__grid{ grid-template-columns:1fr 1fr; }
+  .footer__sitemap{ grid-template-columns:1fr 1fr; }
+  .ai-strip__title{ font-size:36px; }
+}
+@media (max-width:600px){
+  .section{ padding:72px 22px; }
+  .hero{ padding:64px 22px 40px; }
+  .t-mega{ font-size:44px; line-height:1.08; letter-spacing:-0.44px; }
+  .globalnav__links{ gap:16px; }
+  .globalnav__links a:nth-child(n+5){ display:none; }
+  .localnav__links a:nth-child(n+3){ display:none; }
+  .specs__grid{ grid-template-columns:1fr; }
+  .footer__sitemap{ grid-template-columns:1fr; gap:24px; }
+  .bar{ grid-template-columns:96px 1fr 64px; gap:12px; }
+  .colors__swatches{ gap:14px; padding:10px 14px; }
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    transition-duration:0.01s !important;
+    animation-duration:0.01s !important;
+    animation-iteration-count:1 !important;
+  }
+  [data-reveal]{ opacity:1 !important; transform:none !important; }
+  .hero__media{ opacity:1 !important; transform:none !important; }
+  .ai-word{ animation:none; }
+  .bar__fill{ transform:scaleX(var(--target, 1)) !important; }
+  .scene__media{ position:relative; top:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ GLOBALNAV ============ -->
+<nav class="globalnav" id="globalnav" aria-label="Apple">
+  <div class="globalnav__inner">
+    <a href="#" class="globalnav__logo" aria-label="Apple">
+      <svg width="14" height="18" viewBox="0 0 14 18" fill="currentColor"><path d="M11.624 9.58c-.02-2.067 1.687-3.062 1.764-3.11-.962-1.405-2.46-1.598-2.99-1.618-1.273-.13-2.484.75-3.13.75-.643 0-1.643-.73-2.7-.71-1.388.02-2.67.805-3.384 2.046-1.443 2.497-.368 6.203 1.04 8.234.688.998 1.507 2.12 2.58 2.08 1.037-.04 1.427-.67 2.68-.67 1.253 0 1.603.67 2.696.65 1.113-.02 1.82-1.016 2.5-2.02.79-1.157 1.114-2.28 1.133-2.338-.024-.01-2.175-.833-2.195-3.304zM9.55 3.56c.573-.69.96-1.65.853-2.606-.826.034-1.824.55-2.417 1.24-.533.61-1 1.584-.875 2.523.92.072 1.868-.47 2.44-1.157z"/></svg>
+    </a>
+    <div class="globalnav__links">
+      <a href="#">Store</a>
+      <a href="preview-mac.html">Mac</a>
+      <a href="#">iPad</a>
+      <a href="preview.html" aria-current="page">iPhone</a>
+      <a href="#">Watch</a>
+      <a href="preview-vision-pro.html">Vision</a>
+      <a href="#">AirPods</a>
+      <a href="#">TV &amp; Home</a>
+    </div>
+    <div class="globalnav__right">
+      <a href="#" aria-label="Search">
+        <svg width="15" height="18" viewBox="0 0 15 44" fill="currentColor"><path d="M14.298 27.202l-3.87-3.87a6.75 6.75 0 1 0-.701.701l3.87 3.87a.495.495 0 1 0 .7-.7zM7.2 24a5.7 5.7 0 1 1 0-11.4 5.7 5.7 0 0 1 0 11.4z"/></svg>
+      </a>
+      <a href="#" aria-label="Bag">
+        <svg width="14" height="18" viewBox="0 0 14 44" fill="currentColor"><path d="M13.404 11.65c-.76 0-1.512.106-2.212.316v-.263c0-2.553-2.078-4.632-4.634-4.632-2.554 0-4.63 2.08-4.63 4.632v.263a7.65 7.65 0 0 0-2.212-.316c-.32 0-.58.26-.58.58v17.576c0 .32.26.58.58.58h13.688c.32 0 .58-.26.58-.58V12.23a.58.58 0 0 0-.58-.58zM3.987 11.702c0-1.898 1.545-3.442 3.444-3.442s3.444 1.544 3.444 3.442v.476a7.68 7.68 0 0 0-2.222-.264H6.21a7.68 7.68 0 0 0-2.223.264v-.476z"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ LOCALNAV ============ -->
+<nav class="localnav" aria-label="iPhone 17 Pro">
+  <div class="localnav__inner">
+    <a href="preview.html" class="localnav__title">iPhone 17 Pro</a>
+    <div class="localnav__links">
+      <a href="#overview">Overview</a>
+      <a href="#switch">Switch from Android</a>
+      <a href="#specs">Tech Specs</a>
+      <a href="#buy">Buy</a>
+    </div>
+    <a href="#buy" class="localnav__cta">Buy</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="overview">
+  <div class="hero__inner">
+    <p class="hero__small" data-reveal>iPhone 17 Pro</p>
+    <h1 class="t-mega hero__headline" data-reveal data-reveal-delay="1">A big zoom forward.</h1>
+    <h2 class="t-mega hero__headline hero__headline--muted" data-reveal data-reveal-delay="2">Built to capture more.</h2>
+    <p class="hero__subhead" data-reveal data-reveal-delay="3">
+      Pro-level imaging, the all-new A19 Pro chip, and a Super Retina XDR display
+      tuned to perform when the lights go down.
+    </p>
+    <div class="hero__ctas" data-reveal data-reveal-delay="4">
+      <a href="#buy" class="btn btn--primary">Buy</a>
+      <a href="#" class="pill pill--blue-bright">Learn more
+        <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hero__media" data-reveal-hero aria-hidden="false">
+      <img
+        src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg"
+        srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg 1x,
+                https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large_2x.jpg 2x"
+        alt="iPhone 17 Pro"
+        width="820" height="560" loading="eager"/>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SCENE 1 — Camera (sticky-pinned) ============ -->
+<section class="scene" id="camera" aria-label="Camera">
+  <header class="scene__heading">
+    <h2 class="t-mega" data-reveal>A big zoom forward.</h2>
+    <p class="t-body" data-reveal data-reveal-delay="1" style="color:rgba(255,255,255,0.72); margin-top:24px; max-width:620px; margin-left:auto; margin-right:auto;">
+      Three pro lenses. One Fusion sensor system. The longest optical reach ever on iPhone — and the quietest shutter the studio has ever heard.
+    </p>
+  </header>
+
+  <div class="scene__grid">
+    <div class="scene__media" aria-hidden="true">
+      <img
+        src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg"
+        srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg 1x,
+                https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large_2x.jpg 2x"
+        alt="iPhone 17 Pro camera system" width="640" height="640" loading="lazy"/>
+    </div>
+    <div class="scene__beats">
+      <article class="scene__beat" data-reveal>
+        <p class="scene__beat-eyebrow">48MP Fusion main</p>
+        <h3 class="scene__beat-title">Every shot a hero shot.</h3>
+        <p class="scene__beat-body">
+          The new 48MP Fusion main camera resolves the smallest details in any light. Capture
+          portraits at 24MP, 48MP, or 12MP — without ever switching modes.
+        </p>
+      </article>
+      <article class="scene__beat" data-reveal>
+        <p class="scene__beat-eyebrow">4× Telephoto reach</p>
+        <h3 class="scene__beat-title">Get closer than close.</h3>
+        <p class="scene__beat-body">
+          A redesigned 4× Telephoto lens, paired with a sensor-shift stabilizer, brings distant
+          subjects forward without losing a single pixel of definition.
+        </p>
+      </article>
+      <article class="scene__beat" data-reveal>
+        <p class="scene__beat-eyebrow">Night mode, redrawn</p>
+        <h3 class="scene__beat-title">Low light. High art.</h3>
+        <p class="scene__beat-body">
+          Photonic Engine 4 fuses 12 frames in under a second. Skin tones stay true,
+          highlights stay restrained, and the noise just isn't there anymore.
+        </p>
+      </article>
+      <article class="scene__beat" data-reveal>
+        <p class="scene__beat-eyebrow">ProRes Log 2</p>
+        <h3 class="scene__beat-title">Color graded on set.</h3>
+        <p class="scene__beat-body">
+          Capture ProRes Log 2 at 4K 60 directly to external SSD. The color science your
+          finishing team already speaks — now native to your pocket.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLOR PICKER ============ -->
+<section class="colors" id="finishes" aria-label="Finishes">
+  <h2 class="t-large colors__heading" data-reveal>Pick your Pro.</h2>
+  <p class="colors__sub" data-reveal data-reveal-delay="1">
+    Five finishes, all in aerospace-grade titanium. Each one polished, brushed, and
+    anodized to feel as deliberate as it looks.
+  </p>
+
+  <div class="colors__stage" data-reveal data-reveal-delay="2">
+    <img
+      class="colors__img is-active"
+      data-color="natural"
+      src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg"
+      srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg 1x,
+              https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large_2x.jpg 2x"
+      alt="iPhone 17 Pro in Natural Titanium" width="560" height="460"/>
+    <img
+      class="colors__img"
+      data-color="desert"
+      src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17__fb1277oq3eaa_large.jpg"
+      srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17__fb1277oq3eaa_large.jpg 1x,
+              https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17__fb1277oq3eaa_large_2x.jpg 2x"
+      alt="iPhone 17 Pro in Desert Titanium" width="560" height="460" loading="lazy"/>
+    <img
+      class="colors__img"
+      data-color="cosmic"
+      src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17e__cq5ygzct314y_large.jpg"
+      srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17e__cq5ygzct314y_large.jpg 1x,
+              https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17e__cq5ygzct314y_large_2x.jpg 2x"
+      alt="iPhone 17 Pro in Cosmic Blue" width="560" height="460" loading="lazy"/>
+    <img
+      class="colors__img"
+      data-color="silver"
+      src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_air__b5qmgl05ojyq_large.jpg"
+      srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_air__b5qmgl05ojyq_large.jpg 1x,
+              https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_air__b5qmgl05ojyq_large_2x.jpg 2x"
+      alt="iPhone 17 Pro in Silver Titanium" width="560" height="460" loading="lazy"/>
+    <img
+      class="colors__img"
+      data-color="black"
+      src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_16__b6tkv86m2gc2_large.jpg"
+      srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_16__b6tkv86m2gc2_large.jpg 1x,
+              https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_16__b6tkv86m2gc2_large_2x.jpg 2x"
+      alt="iPhone 17 Pro in Black Titanium" width="560" height="460" loading="lazy"/>
+  </div>
+
+  <p class="colors__name" id="colorName" data-reveal data-reveal-delay="3">Natural Titanium</p>
+
+  <div class="colors__swatches" role="radiogroup" aria-label="Choose a finish" data-reveal data-reveal-delay="4">
+    <button class="swatch is-active" data-color="natural" data-name="Natural Titanium" aria-label="Natural Titanium" role="radio" aria-checked="true"></button>
+    <button class="swatch" data-color="desert" data-name="Desert Titanium" aria-label="Desert Titanium" role="radio" aria-checked="false"></button>
+    <button class="swatch" data-color="cosmic" data-name="Cosmic Blue Titanium" aria-label="Cosmic Blue Titanium" role="radio" aria-checked="false"></button>
+    <button class="swatch" data-color="silver" data-name="Silver Titanium" aria-label="Silver Titanium" role="radio" aria-checked="false"></button>
+    <button class="swatch" data-color="black" data-name="Black Titanium" aria-label="Black Titanium" role="radio" aria-checked="false"></button>
+  </div>
+</section>
+
+<!-- ============ CHIP — A19 Pro, dark surface ============ -->
+<section class="chip" id="chip" aria-label="A19 Pro chip">
+  <h2 class="t-mega chip__heading" data-reveal style="color:#fff;">A19 Pro chip.</h2>
+  <p class="chip__sub" data-reveal data-reveal-delay="1">
+    A new 3-nanometer architecture with a 6-core CPU, 6-core GPU, and a 16-core Neural Engine.
+    Built to handle the next generation of pro workflows — and barely break a thermal sweat.
+  </p>
+  <div class="chip__bars" id="chipBars" data-reveal data-reveal-delay="2">
+    <div class="bar">
+      <span class="bar__label">CPU</span>
+      <div class="bar__track"><div class="bar__fill" data-target="0.92" style="--target:0.92;"></div></div>
+      <span class="bar__value">+38%</span>
+    </div>
+    <div class="bar">
+      <span class="bar__label">GPU</span>
+      <div class="bar__track"><div class="bar__fill" data-target="1.00" style="--target:1.00;"></div></div>
+      <span class="bar__value">+45%</span>
+    </div>
+    <div class="bar">
+      <span class="bar__label">Neural Engine</span>
+      <div class="bar__track"><div class="bar__fill" data-target="0.86" style="--target:0.86;"></div></div>
+      <span class="bar__value">+32%</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DISPLAY scene ============ -->
+<section class="scene display-scene" id="display" aria-label="Display">
+  <header class="scene__heading">
+    <h2 class="t-mega" data-reveal>The display, dialed in.</h2>
+    <p class="t-body" data-reveal data-reveal-delay="1" style="color:rgba(255,255,255,0.72); margin-top:24px; max-width:620px; margin-left:auto; margin-right:auto;">
+      Always-On. ProMotion 120Hz. And outdoor brightness so bright the sun stops squinting.
+    </p>
+  </header>
+
+  <div class="scene__grid">
+    <div class="scene__media" aria-hidden="true">
+      <img
+        src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17__fb1277oq3eaa_large.jpg"
+        srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17__fb1277oq3eaa_large.jpg 1x,
+                https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17__fb1277oq3eaa_large_2x.jpg 2x"
+        alt="iPhone 17 Pro display" width="560" height="640" loading="lazy"/>
+    </div>
+    <div class="scene__beats">
+      <article class="scene__beat" data-reveal>
+        <p class="scene__beat-eyebrow">Always-On</p>
+        <h3 class="scene__beat-title">Glance, don't tap.</h3>
+        <p class="scene__beat-body">
+          A subtle, dimmed Lock Screen keeps your widgets, time, and Live Activities in
+          view — and somehow uses almost no battery.
+        </p>
+      </article>
+      <article class="scene__beat" data-reveal>
+        <p class="scene__beat-eyebrow">ProMotion 120Hz</p>
+        <h3 class="scene__beat-title">Scrolling that disappears.</h3>
+        <p class="scene__beat-body">
+          Adaptive refresh rates from 1 to 120Hz make every gesture feel instant — and
+          every paused frame feel painted on the panel.
+        </p>
+      </article>
+      <article class="scene__beat" data-reveal>
+        <p class="scene__beat-eyebrow">3000 nits outdoor</p>
+        <h3 class="scene__beat-title">Readable in daylight. Cinema in the dark.</h3>
+        <p class="scene__beat-body">
+          Peak outdoor brightness of 3000 nits, with HDR content that holds reference-grade
+          color all the way down to 1 nit at midnight.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AI INTELLIGENCE STRIP ============ -->
+<section class="ai-strip" id="intelligence">
+  <p class="t-eyebrow ai-strip__eyebrow" data-reveal>Built for</p>
+  <h2 class="ai-strip__title" data-reveal data-reveal-delay="1">
+    <span class="ai-word">Apple Intelligence.</span>
+  </h2>
+  <p class="t-body ai-strip__body" data-reveal data-reveal-delay="2">
+    Personal, on-device models that summarize your inbox, refine your prose, and help you
+    create — all without your data ever leaving the phone.
+  </p>
+  <div class="ai-strip__cta" data-reveal data-reveal-delay="3">
+    <a href="#" class="pill pill--blue">Learn more
+      <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============ COMPARE — 3-up cards ============ -->
+<section class="compare" id="compare" aria-label="Compare iPhone models">
+  <h2 class="t-large compare__heading" data-reveal>Which iPhone is right for you?</h2>
+
+  <div class="compare__grid">
+    <article class="compare-card" data-reveal data-reveal-delay="1" tabindex="0">
+      <div class="compare-card__media">
+        <img
+          src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg"
+          srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg 1x,
+                  https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large_2x.jpg 2x"
+          alt="iPhone 17 Pro Max" width="280" height="280" loading="lazy"/>
+      </div>
+      <h3 class="compare-card__name">iPhone 17 Pro Max</h3>
+      <p class="compare-card__price">From $1,199</p>
+      <ul class="compare-card__specs">
+        <li>6.9&Prime; Super Retina XDR with ProMotion</li>
+        <li>A19 Pro chip</li>
+        <li>48MP Fusion + 4× Telephoto</li>
+        <li>Up to 33 hours video playback</li>
+      </ul>
+      <div class="compare-card__cta">
+        <a href="#" class="pill pill--blue">Learn more
+          <svg viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="pill pill--outline-light">Buy</a>
+      </div>
+    </article>
+
+    <article class="compare-card" data-reveal data-reveal-delay="2" tabindex="0">
+      <div class="compare-card__media">
+        <img
+          src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg"
+          srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large.jpg 1x,
+                  https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_17pro__t1j902iw6kya_large_2x.jpg 2x"
+          alt="iPhone 17 Pro" width="280" height="280" loading="lazy"/>
+      </div>
+      <h3 class="compare-card__name">iPhone 17 Pro</h3>
+      <p class="compare-card__price">From $999</p>
+      <ul class="compare-card__specs">
+        <li>6.3&Prime; Super Retina XDR with ProMotion</li>
+        <li>A19 Pro chip</li>
+        <li>48MP Fusion + 4× Telephoto</li>
+        <li>Up to 27 hours video playback</li>
+      </ul>
+      <div class="compare-card__cta">
+        <a href="#" class="pill pill--blue">Learn more
+          <svg viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="pill pill--outline-light">Buy</a>
+      </div>
+    </article>
+
+    <article class="compare-card" data-reveal data-reveal-delay="3" tabindex="0">
+      <div class="compare-card__media">
+        <img
+          src="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_air__b5qmgl05ojyq_large.jpg"
+          srcset="https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_air__b5qmgl05ojyq_large.jpg 1x,
+                  https://www.apple.com/v/iphone/home/cj/images/overview/select/iphone_air__b5qmgl05ojyq_large_2x.jpg 2x"
+          alt="iPhone Air" width="280" height="280" loading="lazy"/>
+      </div>
+      <h3 class="compare-card__name">iPhone Air</h3>
+      <p class="compare-card__price">From $999</p>
+      <ul class="compare-card__specs">
+        <li>6.6&Prime; Super Retina XDR with ProMotion</li>
+        <li>A19 chip</li>
+        <li>48MP Fusion main camera</li>
+        <li>The thinnest iPhone ever, at 5.5 mm</li>
+      </ul>
+      <div class="compare-card__cta">
+        <a href="#" class="pill pill--blue">Learn more
+          <svg viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="pill pill--outline-light">Buy</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ DARK CTA RAIL ============ -->
+<section class="cta-rail" id="buy">
+  <div class="cta-rail__inner">
+    <h2 class="t-large cta-rail__heading" data-reveal>Buy iPhone 17 Pro.</h2>
+    <div class="cta-rail__actions" data-reveal data-reveal-delay="1">
+      <a href="#" class="btn btn--primary">Buy iPhone 17 Pro</a>
+      <a href="#" class="pill pill--blue-bright">Shop all iPhone
+        <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECH SPECS STRIP ============ -->
+<section class="specs" id="specs" aria-label="Tech specs">
+  <div class="specs__inner">
+    <h2 class="t-section specs__heading" data-reveal>Tech specs at a glance.</h2>
+    <div class="specs__grid">
+      <div class="specs__col" data-reveal data-reveal-delay="1">
+        <h4>Display</h4>
+        <dl>
+          <dt>Size</dt><dd>6.3&Prime; Super Retina XDR</dd>
+          <dt>Refresh</dt><dd>ProMotion, 1–120Hz</dd>
+          <dt>Brightness</dt><dd>3000 nits outdoor peak</dd>
+        </dl>
+      </div>
+      <div class="specs__col" data-reveal data-reveal-delay="2">
+        <h4>Chip</h4>
+        <dl>
+          <dt>Name</dt><dd>A19 Pro</dd>
+          <dt>CPU</dt><dd>6 cores</dd>
+          <dt>GPU</dt><dd>6 cores w/ hardware ray tracing</dd>
+        </dl>
+      </div>
+      <div class="specs__col" data-reveal data-reveal-delay="3">
+        <h4>Camera</h4>
+        <dl>
+          <dt>Main</dt><dd>48MP Fusion</dd>
+          <dt>Telephoto</dt><dd>12MP, 4× optical</dd>
+          <dt>Video</dt><dd>4K60 ProRes Log 2</dd>
+        </dl>
+      </div>
+      <div class="specs__col" data-reveal data-reveal-delay="1">
+        <h4>Battery</h4>
+        <dl>
+          <dt>Video</dt><dd>Up to 27 hours playback</dd>
+          <dt>Charging</dt><dd>USB-C, MagSafe 25W</dd>
+          <dt>Standby</dt><dd>Multi-day with Always-On</dd>
+        </dl>
+      </div>
+      <div class="specs__col" data-reveal data-reveal-delay="2">
+        <h4>Connectivity</h4>
+        <dl>
+          <dt>Cellular</dt><dd>5G (sub-6, mmWave)</dd>
+          <dt>Wi-Fi</dt><dd>Wi-Fi 7</dd>
+          <dt>Port</dt><dd>USB-C with USB 3 (10Gb/s)</dd>
+        </dl>
+      </div>
+      <div class="specs__col" data-reveal data-reveal-delay="3">
+        <h4>In the box</h4>
+        <dl>
+          <dt>Cable</dt><dd>USB-C charging cable, 1m</dd>
+          <dt>SIM</dt><dd>eSIM only (US)</dd>
+          <dt>Docs</dt><dd>Quick start guide</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <p class="t-caption">More ways to shop: <a href="#">Find an Apple Store</a> or
+        <a href="#">other retailer</a> near you. Or call 1-800-MY-APPLE.</p>
+    </div>
+    <div class="footer__sitemap">
+      <div class="footer__col">
+        <h4>Shop &amp; Learn</h4>
+        <ul>
+          <li><a href="#">Store</a></li>
+          <li><a href="preview-mac.html">Mac</a></li>
+          <li><a href="#">iPad</a></li>
+          <li><a href="preview.html">iPhone</a></li>
+          <li><a href="preview-vision-pro.html">Vision Pro</a></li>
+          <li><a href="#">Accessories</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Apple Wallet</h4>
+        <ul>
+          <li><a href="#">Wallet</a></li>
+          <li><a href="#">Apple Card</a></li>
+          <li><a href="#">Apple Pay</a></li>
+          <li><a href="#">Apple Cash</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>For Business</h4>
+        <ul>
+          <li><a href="#">Apple and Business</a></li>
+          <li><a href="#">Shop for Business</a></li>
+          <li><a href="#">Financing</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Sales and Refunds</a>
+      <a href="#">Legal</a>
+      <a href="#">Site Map</a>
+    </div>
+    <p class="t-micro footer__legal">
+      Copyright © 2026 Apple-style Preview. Not affiliated with Apple Inc.
+      Trademarks are the property of their respective owners.
+      iPhone images are hot-linked from Apple's public CDN for fidelity reference only.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ====== Globalnav scroll glass ======
+  const nav = document.getElementById('globalnav');
+  const onScroll = () => {
+    if (window.scrollY > 8) nav.classList.add('globalnav--scrolled');
+    else nav.classList.remove('globalnav--scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // ====== Reveal on enter (IntersectionObserver) ======
+  if (reduceMotion){
+    document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('is-in'));
+    document.querySelector('[data-reveal-hero]')?.classList.add('is-in');
+  } else if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting){
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.2, rootMargin:'0px 0px -10% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+    // Hero media — fade in shortly after load
+    const heroMedia = document.querySelector('[data-reveal-hero]');
+    if (heroMedia){
+      requestAnimationFrame(() => requestAnimationFrame(() => heroMedia.classList.add('is-in')));
+    }
+  } else {
+    document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('is-in'));
+    document.querySelector('[data-reveal-hero]')?.classList.add('is-in');
+  }
+
+  // ====== Scroll-triggered video playback (preserved pattern from preview-vision-pro) ======
+  const videos = document.querySelectorAll('video[data-scroll-play]');
+  if (videos.length){
+    if (reduceMotion){
+      videos.forEach(v => { try { v.pause(); } catch(_){} v.removeAttribute('autoplay'); });
+    } else if ('IntersectionObserver' in window){
+      const vidObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const v = entry.target;
+          if (entry.isIntersecting){
+            const p = v.play();
+            if (p && typeof p.catch === 'function') p.catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold:0.35 });
+      videos.forEach(v => vidObserver.observe(v));
+    }
+  }
+
+  // ====== Color picker — crossfade + active swatch ======
+  const swatches = document.querySelectorAll('.swatch');
+  const images   = document.querySelectorAll('.colors__img');
+  const nameEl   = document.getElementById('colorName');
+  swatches.forEach((sw) => {
+    sw.addEventListener('click', () => {
+      const target = sw.dataset.color;
+      swatches.forEach(s => {
+        const on = s === sw;
+        s.classList.toggle('is-active', on);
+        s.setAttribute('aria-checked', on ? 'true' : 'false');
+      });
+      images.forEach(img => {
+        img.classList.toggle('is-active', img.dataset.color === target);
+      });
+      if (nameEl) nameEl.textContent = sw.dataset.name || '';
+    });
+  });
+
+  // ====== Benchmark bars — animate scaleX via rAF on enter ======
+  const bars = document.querySelectorAll('.bar__fill');
+  if (bars.length){
+    if (reduceMotion){
+      bars.forEach(b => {
+        const t = parseFloat(b.dataset.target || '1');
+        b.style.transform = 'scaleX(' + t + ')';
+      });
+    } else if ('IntersectionObserver' in window){
+      const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const fill = entry.target;
+          barObserver.unobserve(fill);
+          const target = parseFloat(fill.dataset.target || '1');
+          const start = performance.now();
+          const duration = 800; // 0.8s
+          // Approximate cubic-bezier(0.4, 0, 0.6, 1) with a smoothstep-ish curve
+          const ease = (t) => {
+            // Hermite interpolation that matches the signature curve closely enough
+            return t < 0.5
+              ? 2 * t * t
+              : 1 - Math.pow(-2 * t + 2, 2) / 2;
+          };
+          const tick = (now) => {
+            const elapsed = Math.min(1, (now - start) / duration);
+            const v = ease(elapsed) * target;
+            fill.style.transform = 'scaleX(' + v.toFixed(4) + ')';
+            if (elapsed < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      }, { threshold:0.4 });
+      bars.forEach(b => barObserver.observe(b));
+    } else {
+      bars.forEach(b => {
+        const t = parseFloat(b.dataset.target || '1');
+        b.style.transform = 'scaleX(' + t + ')';
+      });
+    }
+  }
+})();
+</script>
+</body>
+</html>

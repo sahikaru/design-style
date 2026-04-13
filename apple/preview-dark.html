@@ -233,6 +233,19 @@ body{
   .nav__links{gap:14px;}
   .cta-section .section-heading{font-size:32px;}
 }
+
+/* CURSOR RULE (design-system.md Section 7) — every interactive surface shows hand */
+.tile, .lineup-card, .compare-card, .chapter-nav__item, .carousel__item,
+.swatch, .color-dot, .banner-card, .scene__beat, .drawer-card,
+.spec-card, [role="button"], [data-clickable] {
+  cursor: pointer;
+}
+.tile:active, .lineup-card:active, .compare-card:active,
+.chapter-nav__item:active, .carousel__item:active,
+.swatch:active, .banner-card:active, .drawer-card:active {
+  transform: scale(0.98);
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.6, 1);
+}
 </style>
 </head>
 <body>

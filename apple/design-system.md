@@ -48,6 +48,13 @@ neutrals gives every clickable element unmistakable visibility.
   buttons
 - Generous whitespace between sections allowing each product moment to
   breathe
+- Scroll as cinematography — sticky-pinned sections, parallax product
+  reveals, autoplay muted video loops, and gentle opacity/transform
+  fades on enter (`IntersectionObserver`-driven)
+- Universal easing curve `cubic-bezier(0.4, 0, 0.6, 1)` at ~0.32s for
+  color/opacity transitions — Apple's signature motion DNA
+- Apple Intelligence four-stop gradient reserved for AI/on-device
+  intelligence brand moments, applied via `background-clip: text`
 
 ## 2. Color Palette & Roles
 
@@ -69,6 +76,21 @@ neutrals gives every clickable element unmistakable visibility.
   Slightly darker than Apple Blue for text-level readability.
 - **Bright Blue** (`#2997ff`): Links on dark backgrounds. Higher
   luminance for contrast on black sections.
+
+### Apple Intelligence Gradient (AI Brand Moment)
+
+A four-stop diagonal gradient reserved for Apple Intelligence /
+AI-branded text and surfaces — never for general UI. Applied to text via
+`background-clip: text; -webkit-text-fill-color: transparent;`.
+
+- **Gradient**:
+  `linear-gradient(108deg, #0894ff 0%, #c959dd 34%, #ff2e54 68%, #ff9004 100%)`
+- **Stops**: Blue `#0894ff` → Purple `#c959dd` → Red `#ff2e54` →
+  Orange `#ff9004`
+- **Use**: "Apple Intelligence" wordmark, Genmoji/Image Playground
+  brand moments, section titles that specifically introduce AI features
+- **Never**: for body copy, buttons, icons, or decorative text unrelated
+  to AI
 
 ### Text
 
@@ -120,8 +142,13 @@ neutrals gives every clickable element unmistakable visibility.
 
 | Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
 |----|----|----|----|----|----|----|
-| Display Hero | SF Pro Display | 56px (3.50rem) | 600 | 1.07 (tight) | -0.28px | Product launch headlines, maximum impact |
+| Display Mega | SF Pro Display | 80px (5.00rem) | 600 | 1.05 (tight) | -1.2px | Flagship product reveal headlines (iPhone 17 Pro, Mac landing) — the billboard |
+| Display Hero | SF Pro Display | 56px (3.50rem) | 600 | 1.07 (tight) | -0.28px | Standard product section headings ("Take a closer look.") |
+| Display Large | SF Pro Display | 48px (3.00rem) | 600 | 1.08 (tight) | -0.4px | Feature reveals within long-form product pages |
+| Category Section | SF Pro Display | 48px (3.00rem) | 600 | 1.10 (tight) | -0.144px | Mac-landing-style section titles ("Explore the lineup.") |
+| Product Hero Small | SF Pro Display | 34px (2.13rem) | 600 | 1.14 (tight) | -0.374px | Deliberately understated hero (Apple Vision Pro) — lets product photography lead |
 | Section Heading | SF Pro Display | 40px (2.50rem) | 600 | 1.10 (tight) | normal | Feature section titles |
+| **Category Eyebrow** | SF Pro Display | 24px (1.50rem) | 700 | 1.17 (tight) | **+0.216px** | Uppercase category labels ("ENTERTAINMENT", "TECHNOLOGY", "APPS") — the ONE place Apple uses positive tracking |
 | Tile Heading | SF Pro Display | 28px (1.75rem) | 400 | 1.14 (tight) | 0.196px | Product tile headlines |
 | Card Title | SF Pro Display | 21px (1.31rem) | 700 | 1.19 (tight) | 0.231px | Bold card headings |
 | Sub-heading | SF Pro Display | 21px (1.31rem) | 400 | 1.19 (tight) | 0.231px | Regular card headings |
@@ -149,10 +176,14 @@ neutrals gives every clickable element unmistakable visibility.
   most text lives at 400 (regular) and 600 (semibold). Weight 300
   appears only on large decorative text. Weight 700 is rare, used only
   for bold card titles.
-- **Negative tracking at all sizes**: Unlike most systems that only
-  track headlines, Apple applies subtle negative letter-spacing even at
-  body sizes (-0.374px at 17px, -0.224px at 14px, -0.12px at 12px). This
-  creates universally tight, efficient text.
+- **Negative tracking at all sizes** — **except category eyebrows**:
+  Apple applies subtle negative letter-spacing at almost every size
+  (-0.374px at 17px, -0.224px at 14px, -0.12px at 12px). The single
+  deliberate exception is the **24px/700 category eyebrow**
+  (`ENTERTAINMENT`, `PRODUCTIVITY`, `TECHNOLOGY`, `APPS` on Vision Pro;
+  similar on AirPods/Mac Pro pages) which uses **positive +0.216px
+  tracking** to read as uppercase-ish section dividers. Learn to
+  recognize this — it's the signpost move that says "new chapter."
 - **Extreme line-height range**: Headlines compress to 1.07 while body
   text opens to 1.47, and some button contexts stretch to 2.41. This
   dramatic range creates clear visual hierarchy through rhythm alone.
@@ -226,15 +257,29 @@ neutrals gives every clickable element unmistakable visibility.
 
 ### Navigation
 
-- Background: `rgba(0, 0, 0, 0.8)` (translucent dark) with
+Apple's current site uses a two-layer navigation: the **globalnav** (top
+Apple-wide bar) and an optional **localnav** (product-specific subnav
+that docks below).
+
+**Globalnav (primary)**
+
+- Height: **44px** (compact, tighter than legacy 48px)
+- Background: transparent by default; menu-open state triggers a
+  full-screen curtain `rgba(0, 0, 0, 0.4)` +
   `backdrop-filter: saturate(180%) blur(20px)`
-- Height: 48px (compact)
-- Text: `#ffffff` at 12px, weight 400
-- Active: underline on hover
-- Logo: Apple logomark (SVG) centered or left-aligned, 17x48px viewport
-- Mobile: collapses to hamburger with full-screen overlay menu
-- The nav floats above content, maintaining its dark translucent glass
-  regardless of section background
+- Text: `#1d1d1f` at 12px/400 on light pages, `#f5f5f7` on dark pages
+- Color transitions: `color 0.32s cubic-bezier(0.4, 0, 0.6, 1)`
+- Logo: Apple logomark 17×44px, centered inside link padding
+
+**Localnav (product subnav)**
+
+- Background: `rgba(18, 18, 18, 0.8)` +
+  `backdrop-filter: saturate(180%) blur(20px)` — the canonical "frosted
+  glass" used on product pages
+- Height: 48–52px, sticky just below the globalnav
+- Product name left (17px/600), anchor links + primary CTA right
+- The localnav is what most people *think of* as the Apple nav — it
+  docks, blurs, and scrolls with the page
 
 ### Image Treatment
 
@@ -243,6 +288,31 @@ neutrals gives every clickable element unmistakable visibility.
 - Full-bleed section images that span the entire viewport width
 - Product photography at extremely high resolution with subtle shadows
 - Lifestyle images confined to rounded-corner containers (12px+ radius)
+
+### Retina Image Resolution (HARD RULE)
+
+**Every product/lifestyle image MUST ship 1x and 2x variants via
+`srcset`.** Apple serves crisp retina art via either:
+
+- Path-level density: `/v/.../image__hash_large.jpg` (1x) +
+  `/v/.../image__hash_large_2x.jpg` (2x) — `/v/` path tree,
+  deterministic `_2x` suffix
+- Hash-level density: `/assets-www/.../small/nav_mbn_1fa302e95.png`
+  (1x) + `/assets-www/.../small/nav_mbn_fcdfdf35f_2x.png` (2x) —
+  `/assets-www/` path tree, **different hash per density** (must scrape
+  from live `<picture><source srcset>`)
+
+```html
+<img src="https://www.apple.com/.../hero__xyz_large.jpg"
+     srcset="https://www.apple.com/.../hero__xyz_large.jpg 1x,
+             https://www.apple.com/.../hero__xyz_large_2x.jpg 2x"
+     width="800" height="480" alt="..." loading="lazy"/>
+```
+
+Without the `2x` entry, retina displays (Mac M-series, iPhone, iPad)
+will render images soft — instantly breaking the "premium" feel Apple's
+design rests on. **Blurry product photography is the single most
+obvious way to fail an Apple-style execution.**
 
 ### Distinctive Components
 
@@ -267,6 +337,57 @@ neutrals gives every clickable element unmistakable visibility.
 - Horizontal scroll of product variants
 - Each variant as a vertical card with image, name, and key specs
 - Minimal chrome — the products speak for themselves
+
+### Page Archetypes (Observed on apple.com)
+
+Apple runs three distinct marketing page archetypes. Each has a
+different hero philosophy and section rhythm — picking the right
+archetype is half the design decision.
+
+**Archetype A — Category Landing** (apple.com/iphone, apple.com/mac)
+
+- Purpose: help visitors choose a model
+- Hero: category name as a 80px Display Mega wordmark, no product
+  photo ("Mac" alone, "iPhone" alone) — the word IS the hero
+- Chapter Nav: horizontal scroll-snap strip of ~5–6 product tiles with
+  chapternav PNGs immediately under the hero — the page's primary
+  navigation tool
+- Section cadence: `Explore the lineup` → `Why Apple is the best place
+  to buy X` → `Get to know X` → `X essentials` → `Unlock the world of
+  Apple` → `footer`
+- Section heading size: **48px / 600 / -0.144px** (the "Mac landing
+  heading" — smaller than product-page 56px)
+- Dominant background: alternating `#ffffff` and `#f5f5f7`
+- Motion: fade-up reveals only. NO scroll-linked video. NO parallax.
+
+**Archetype B — Flagship Product Page** (iphone-17-pro, macbook-pro)
+
+- Purpose: sell the specific product as cinema
+- Hero: 80px Display Mega headline with a tagline ("iPhone 17 Pro. / A
+  big zoom forward."), product photo or autoplay video
+- Localnav docks immediately for in-page jumps
+- Section cadence: design → display → chip → camera → battery → AI →
+  connectivity → accessories → compare → buy
+- Motion: heavy scroll-pinned scenes, horizontal-snap carousels,
+  autoplay muted video loops, parallax product rotation
+- Backgrounds: black sections alternate with `#f5f5f7` — the "cinematic
+  reel"
+
+**Archetype C — Experiential Product Page** (apple-vision-pro,
+airpods-max)
+
+- Purpose: communicate a NEW paradigm the visitor has never tried
+- Hero: **deliberately SMALLER** 34px headline + massive product
+  photograph. Apple knows the product is unfamiliar, so the headline
+  shrinks and the photo does the talking.
+- **Category Eyebrow** (24px/700/+0.216px) becomes the primary
+  structural device — "ENTERTAINMENT", "PRODUCTIVITY", "TECHNOLOGY",
+  "APPS" — chaptering the experience into themed acts
+- Scroll-triggered video is SIGNATURE — each section reveals an
+  auto-playing video when it enters the viewport (via
+  `IntersectionObserver.play()/pause()`)
+- Mixed themes: light → light → light → **dark technology section** →
+  light again. The dark section is the "specs reveal" anchor.
 
 ## 5. Layout Principles
 
@@ -316,7 +437,9 @@ neutrals gives every clickable element unmistakable visibility.
 | Level | Treatment | Use |
 |----|----|----|
 | Flat (Level 0) | No shadow, solid background | Standard content sections, text blocks |
-| Navigation Glass | `backdrop-filter: saturate(180%) blur(20px)` on `rgba(0,0,0,0.8)` | Sticky navigation bar — the glass effect |
+| Globalnav (transparent) | No background by default; inherits section color | Apple-wide primary nav, 44px height |
+| Localnav Glass | `rgba(18, 18, 18, 0.8)` + `backdrop-filter: saturate(180%) blur(20px)` | Sticky product subnav — the canonical "Apple glass" |
+| Menu Curtain | `rgba(0, 0, 0, 0.4)` + `backdrop-filter: saturate(180%) blur(20px)` | Full-screen overlay when globalnav menus open |
 | Subtle Lift (Level 1) | `rgba(0, 0, 0, 0.22) 3px 5px 30px 0px` | Product cards, floating elements |
 | Media Control | `rgba(210, 210, 215, 0.64)` background with scale transforms | Play/pause buttons, carousel controls |
 | Focus (Accessibility) | `2px solid #0071e3` outline | Keyboard focus on all interactive elements |
@@ -339,7 +462,221 @@ light card on slightly different gray).
 - Product photography shadows: the products themselves cast shadows in
   their photography, so the UI doesn't need to add synthetic ones
 
-## 7. Do's and Don'ts
+## 7. Motion & Animation
+
+Motion is not decoration in Apple's system — it's the narrative device
+that sells products without exposition. A scrolling product page is a
+silent film: the user scrolls, and the product performs. Three core
+techniques dominate the current site (iPhone 17 Pro, Vision Pro, Mac,
+AirPods product pages).
+
+### Signature Easing
+
+- **Curve**: `cubic-bezier(0.4, 0, 0.6, 1)` — a slightly-asymmetric
+  ease-in-out, softer than material's standard. Present on every
+  hover/color transition site-wide.
+- **Duration**: 0.32s for color/opacity; 0.4–0.6s for transform/scale;
+  0.8–1.2s for section reveals.
+- **Rule of thumb**: never use the default `ease` keyword. Apple's curve
+  is `0.4, 0, 0.6, 1`.
+
+```css
+:root {
+  --apple-ease: cubic-bezier(0.4, 0, 0.6, 1);
+  --apple-dur-fast: 0.32s;
+  --apple-dur-medium: 0.5s;
+  --apple-dur-slow: 1s;
+}
+
+a, button { transition: color var(--apple-dur-fast) var(--apple-ease), background-color var(--apple-dur-fast) var(--apple-ease); }
+```
+
+### Scroll-Linked Reveal (the "fade-up-on-enter")
+
+The most common motion pattern: as a section scrolls into view, its
+headline and supporting copy fade up from `opacity: 0; translateY(24px)`
+to `opacity: 1; translateY(0)`. Driven by `IntersectionObserver`, not
+scroll position math.
+
+```js
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add("is-in");
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
+
+document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+```
+
+```css
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--apple-ease), transform 0.8s var(--apple-ease); }
+[data-reveal].is-in { opacity: 1; transform: none; }
+[data-reveal][data-reveal-delay="1"] { transition-delay: 0.12s; }
+[data-reveal][data-reveal-delay="2"] { transition-delay: 0.24s; }
+```
+
+### Sticky-Pinned Scroll Scenes
+
+A product image pins to center-viewport while text beside it rotates
+through multiple messages. Achieved with `position: sticky` on the
+image column and natural scroll height on the text column. The modern
+`animation-timeline: view()` enables this without JS in supported
+browsers; fall back to JS-driven scroll progress otherwise.
+
+```css
+.scene {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  min-height: 300vh; /* three messages tall */
+}
+.scene__media {
+  position: sticky;
+  top: 15vh;
+  height: 70vh;
+  align-self: start;
+}
+```
+
+### Parallax & Scale on Reveal
+
+Hero product images gently scale from 1.05 → 1.0 and shift from
+`translateY(40px) → 0` as they enter the viewport. Never exceed 1.08
+scale — Apple parallax is subtle, not carnival.
+
+### Autoplay Muted Video Loops
+
+Product reveals favor muted, looping, auto-playing short videos over
+static images. Always `playsinline muted loop` with
+`preload="metadata"`. Provide a poster frame that matches the first
+visible frame to eliminate pop-in.
+
+### Scroll-Triggered Video (Vision Pro Signature)
+
+On experiential product pages (Apple Vision Pro, AirPods Max), videos
+**do not autoplay on page load** — they play only when scrolled into
+view and pause when scrolled out. Saves bandwidth AND creates a
+"perform on demand" cinematic feel. Pair with `preload="metadata"` so
+only the poster and duration are fetched until the IntersectionObserver
+triggers playback.
+
+```js
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    const v = entry.target;
+    if (entry.isIntersecting) { v.play().catch(() => {}); }
+    else { v.pause(); }
+  });
+}, { threshold: 0.35 });
+
+document.querySelectorAll("video[data-scroll-play]").forEach((v) => videoObserver.observe(v));
+```
+
+```html
+<video data-scroll-play playsinline muted loop preload="metadata" poster="/poster.jpg">
+  <source src="/anim/scene.mp4" type="video/mp4" />
+</video>
+```
+
+```html
+<video class="reveal-media" playsinline muted autoplay loop preload="auto" poster="/hero-poster.jpg">
+  <source src="/hero.mp4" type="video/mp4" />
+</video>
+```
+
+### Hover & Press Feedback
+
+- **CTA buttons**: 0.32s background brighten (approx +8% lightness) on
+  hover; `transform: scale(0.96)` on `:active`
+- **Media controls**: `transform: scale(0.9)` on `:active`, plus
+  background opacity shift
+- **Tiles**: on hover, image scales to 1.04 inside a clipped container,
+  text remains still — "the product leans forward, the layout does not"
+
+### Cursor (HARD RULE)
+
+**Every element that triggers an action on click MUST set
+`cursor: pointer`.** This is non-negotiable — if the user's mouse lands
+on a clickable region and the cursor stays as the default arrow, the
+element fails the first affordance test.
+
+The native browser adds `cursor: pointer` automatically ONLY for `<a
+href>`, `<button>`, `<input type="submit">`, and `<select>`. The moment
+you attach click behavior to a `<div>`, `<li>`, or wrap a card in an
+anchor whose child uses its own `cursor` rule, the pointer is your
+responsibility.
+
+**Apply to, at minimum:**
+
+- Product tiles / chapter-nav tiles / lineup cards
+- Color swatches, finish pickers
+- Carousel items, compare cards
+- Any hover-animated surface (`translateY`, `scale`) — hover animation
+  implies clickability
+- Tab-like toggles, accordion headers, filter chips
+- Video play/pause overlay controls
+
+```css
+.tile,
+.carousel__item,
+.swatch,
+.compare-card,
+.chapter-nav__item,
+[role="button"],
+[data-clickable] {
+  cursor: pointer;
+}
+```
+
+**Exceptions** (keep default cursor):
+- Pure decorative surfaces that animate but don't respond to click
+- Disabled states — use `cursor: not-allowed`
+- Loading states — use `cursor: wait`
+
+**Anti-pattern**: don't rely solely on `<a href="#">` to carry pointer —
+if the anchor's child has `cursor: default` or the anchor is wrapped in
+something that overrides it, you lose the cursor. Always set it
+explicitly on the interactive container.
+
+### Horizontal Snap Carousels
+
+Feature comparison strips and color pickers use native CSS scroll-snap:
+
+```css
+.carousel { scroll-snap-type: x mandatory; overflow-x: auto; scroll-behavior: smooth; }
+.carousel > * { scroll-snap-align: center; }
+```
+
+### Reduced Motion
+
+Every scroll-linked animation MUST collapse under
+`@media (prefers-reduced-motion: reduce)`. Apple ships this correctly —
+the content still reveals, just without the transform or duration.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .reveal-media { animation: none; }
+}
+```
+
+### Motion Do's and Don'ts
+
+- **Do** use the signature easing `cubic-bezier(0.4, 0, 0.6, 1)` for
+  everything time-based.
+- **Do** drive reveals with `IntersectionObserver`, not scroll math.
+- **Do** autoplay muted, looping videos for product beauty shots.
+- **Do** keep transforms subtle — scale ≤1.08, translate ≤48px.
+- **Don't** parallax the whole page or use JS-driven scrolljacking.
+- **Don't** animate more than opacity/transform — never animate layout
+  properties (`width`, `height`, `margin`).
+- **Don't** loop animations indefinitely except for background video.
+- **Don't** skip `prefers-reduced-motion`.
+
+## 8. Do's and Don'ts
 
 ### Do
 
@@ -380,7 +717,7 @@ light card on slightly different gray).
 - Don't use rounded corners larger than 12px on rectangular elements
   (980px is for pills only)
 
-## 8. Responsive Behavior
+## 9. Responsive Behavior
 
 ### Breakpoints
 
@@ -423,7 +760,7 @@ light card on slightly different gray).
 - Lifestyle images may crop on mobile but maintain their rounded corners
 - Lazy loading for below-fold product images
 
-## 9. Agent Prompt Guide
+## 10. Agent Prompt Guide
 
 ### Quick Color Reference
 
@@ -437,6 +774,32 @@ light card on slightly different gray).
 - Link (dark bg): `#2997ff`
 - Focus ring: `#0071e3`
 - Card shadow: `rgba(0, 0, 0, 0.22) 3px 5px 30px 0px`
+- Localnav glass: `rgba(18, 18, 18, 0.8)` +
+  `backdrop-filter: saturate(180%) blur(20px)`
+- Menu curtain: `rgba(0, 0, 0, 0.4)` +
+  `backdrop-filter: saturate(180%) blur(20px)`
+
+### Quick Motion Reference
+
+- Easing: `cubic-bezier(0.4, 0, 0.6, 1)` (universal)
+- Hover/color duration: `0.32s`
+- Reveal duration: `0.8s` with `translateY(24px) → 0` +
+  `opacity: 0 → 1`
+- Section transform: `scale(1.05) → 1.0` on enter, never exceeds 1.08
+- Trigger: `IntersectionObserver` with `threshold: 0.2` and
+  `rootMargin: "0px 0px -10% 0px"`
+
+### Apple Intelligence Gradient Snippet
+
+```css
+.ai-word {
+  background: linear-gradient(108deg, #0894ff 0%, #c959dd 34%, #ff2e54 68%, #ff9004 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}
+```
 
 ### Example Component Prompts
 
