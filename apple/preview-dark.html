@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Apple Style — Preview (Dark)</title>
+<style>
+:root{
+  --black:#000; --near-black:#1d1d1f; --light-gray:#f5f5f7; --white:#fff;
+  --dark-surface-1:#272729; --dark-surface-2:#262628; --dark-surface-3:#28282a;
+  --dark-surface-4:#2a2a2d; --dark-surface-5:#242426;
+  --apple-blue:#0071e3; --link-blue:#0066cc; --bright-blue:#2997ff;
+  --text-on-dark:#fff;
+  --text-secondary-dark:rgba(255,255,255,0.72);
+  --text-tertiary-dark:rgba(255,255,255,0.48);
+  --nav-glass:rgba(0,0,0,0.8); --nav-blur:saturate(180%) blur(20px);
+  --card-shadow:rgba(0,0,0,0.22) 3px 5px 30px 0px;
+  --r-std:8px; --r-pill:980px;
+  --font-display:"SF Pro Display","SF Pro Icons","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-text:"SF Pro Text","SF Pro Icons","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-text);
+  background:var(--black);
+  color:var(--white);
+  font-size:17px; line-height:1.47; letter-spacing:-0.374px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+:focus-visible{outline:2px solid var(--apple-blue); outline-offset:2px;}
+
+/* NAV GLASS */
+.nav{
+  position:sticky; top:0; z-index:9999; height:48px;
+  background:var(--nav-glass);
+  -webkit-backdrop-filter:var(--nav-blur); backdrop-filter:var(--nav-blur);
+  display:flex; align-items:center; justify-content:center;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav__inner{
+  width:100%; max-width:1024px; padding:0 22px;
+  display:flex; align-items:center; gap:32px;
+}
+.nav__logo{color:#fff; display:inline-flex; align-items:center;}
+.nav__links{display:flex; gap:28px; flex:1; justify-content:center;}
+.nav a{
+  font-family:var(--font-text);
+  font-size:12px; font-weight:400; letter-spacing:-0.12px;
+  color:#fff; opacity:0.82; text-decoration:none;
+  transition:opacity .24s ease;
+}
+.nav a:hover{opacity:1;}
+.nav__right{display:flex; gap:16px; color:#fff; opacity:0.82;}
+
+/* DARK SECTIONS (the whole page is dark) */
+.section{width:100%; padding:120px 22px; text-align:center;}
+.section--hero{background:var(--black);}
+.section--surface{background:var(--dark-surface-3);}
+.section--deep{background:var(--dark-surface-5);}
+.section__inner{max-width:980px; margin:0 auto;}
+
+/* HERO MODULE */
+.hero-module{
+  min-height:82vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:56px 22px 48px;
+}
+.hero-module__eyebrow{
+  font-family:var(--font-display);
+  font-size:21px; font-weight:600; line-height:1.19; letter-spacing:0.011em;
+  margin-bottom:4px; color:var(--text-secondary-dark);
+}
+.hero-module__title{
+  font-family:var(--font-display);
+  font-size:56px; font-weight:600; line-height:1.07; letter-spacing:-0.28px;
+  margin-bottom:8px;
+}
+.hero-module__subtitle{
+  font-family:var(--font-display);
+  font-size:21px; font-weight:400; line-height:1.19; letter-spacing:0.011em;
+  color:var(--text-secondary-dark);
+  margin-bottom:28px; max-width:640px;
+}
+.hero-module__ctas{display:flex; gap:20px; flex-wrap:wrap; justify-content:center;}
+.hero-module__stage{
+  margin-top:48px;
+  width:100%; max-width:520px; aspect-ratio:1/1;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff;
+}
+
+/* SECTION HEADING */
+.section-heading{
+  font-family:var(--font-display);
+  font-size:40px; font-weight:600; line-height:1.10; letter-spacing:-0.24px;
+  margin-bottom:12px;
+}
+.section-subtitle{
+  font-family:var(--font-display);
+  font-size:21px; font-weight:400; line-height:1.19; letter-spacing:0.011em;
+  color:var(--text-secondary-dark);
+  margin:0 auto 44px;
+  max-width:640px;
+}
+
+/* BUTTONS */
+.btn-pill{
+  display:inline-flex; align-items:center; gap:4px;
+  font-family:var(--font-text); font-size:17px; font-weight:400; line-height:1;
+  padding:12px 22px; border-radius:var(--r-pill);
+  border:1px solid var(--bright-blue); color:var(--bright-blue); background:transparent;
+  text-decoration:none; transition:background .24s ease, color .24s ease;
+  cursor:pointer;
+}
+.btn-pill:hover{background:var(--bright-blue); color:var(--black);}
+.btn-pill--outline{border-color:#fff; color:#fff;}
+.btn-pill--outline:hover{background:#fff; color:var(--black);}
+
+.btn-filled{
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:var(--font-text); font-size:17px; font-weight:400; line-height:1;
+  padding:12px 22px; border-radius:var(--r-std);
+  border:1px solid transparent;
+  background:var(--apple-blue); color:#fff;
+  text-decoration:none; transition:background .24s ease; cursor:pointer;
+}
+.btn-filled:hover{background:#0077ed;}
+
+.link-learn{
+  display:inline-flex; align-items:center; gap:5px;
+  font-family:var(--font-text); font-size:17px; line-height:1.47; letter-spacing:-0.374px;
+  color:var(--bright-blue); text-decoration:none;
+}
+.link-learn:hover{text-decoration:underline;}
+
+.learn-more-row{display:flex; gap:28px; justify-content:center; flex-wrap:wrap; margin-top:28px;}
+
+/* PRODUCT GRID */
+.product-grid{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;
+  margin-top:40px;
+}
+.tile{
+  background:var(--dark-surface-1);
+  border-radius:var(--r-std);
+  padding:44px 28px 32px;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  box-shadow:var(--card-shadow);
+  color:#fff;
+}
+.tile__image{
+  width:100%; aspect-ratio:1/1;
+  background:var(--dark-surface-3); border-radius:var(--r-std);
+  margin-bottom:22px;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff;
+}
+.tile__title{
+  font-family:var(--font-display);
+  font-size:24px; font-weight:600; line-height:1.14; letter-spacing:0.011em;
+  margin-bottom:4px;
+}
+.tile__desc{
+  font-family:var(--font-text);
+  font-size:14px; line-height:1.29; letter-spacing:-0.224px;
+  color:var(--text-secondary-dark); margin-bottom:16px;
+  max-width:220px;
+}
+.tile__price{
+  font-family:var(--font-text); font-size:12px; letter-spacing:-0.12px;
+  color:var(--text-tertiary-dark); margin-bottom:16px;
+}
+.tile__links{display:flex; gap:16px;}
+.tile__links .link-learn{font-size:14px; letter-spacing:-0.224px;}
+
+/* MEDIA CONTROL */
+.hero-media{display:flex; gap:12px; margin-top:36px;}
+.media-ctrl{
+  width:44px; height:44px; border-radius:50%;
+  background:rgba(255,255,255,0.16); color:rgba(255,255,255,0.72);
+  border:none; display:inline-flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:transform .12s ease, background .24s ease;
+}
+.media-ctrl:hover{background:rgba(255,255,255,0.24);}
+.media-ctrl:active{transform:scale(0.9);}
+
+/* CTA */
+.cta-section{padding:96px 22px;}
+.cta-section .section-heading{font-size:48px; letter-spacing:-0.24px; line-height:1.08;}
+
+/* FOOTER (dark variant) */
+.footer{
+  background:var(--black); color:var(--text-secondary-dark);
+  padding:28px 22px 36px;
+  font-family:var(--font-text);
+  font-size:12px; line-height:1.33; letter-spacing:-0.12px;
+  border-top:1px solid rgba(255,255,255,0.12);
+}
+.footer__inner{max-width:980px; margin:0 auto;}
+.footer__cols{
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;
+  padding:12px 0 24px;
+}
+.footer__col h4{
+  font-family:var(--font-text); font-size:12px; font-weight:600;
+  letter-spacing:-0.12px; color:#fff; margin-bottom:8px;
+}
+.footer__col a{
+  display:block; color:var(--text-secondary-dark); text-decoration:none;
+  padding:4px 0;
+}
+.footer__col a:hover{text-decoration:underline; color:#fff;}
+.footer__bottom{
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  padding-top:20px; border-top:1px solid rgba(255,255,255,0.12);
+}
+.footer__legal a{color:var(--text-secondary-dark); text-decoration:none; margin-right:16px;}
+.footer__legal a:hover{text-decoration:underline; color:#fff;}
+
+/* RESPONSIVE */
+@media (max-width:834px){
+  .product-grid{grid-template-columns:repeat(2, 1fr);}
+  .hero-module__title{font-size:40px; letter-spacing:-0.2px;}
+  .section{padding:80px 22px;}
+  .footer__cols{grid-template-columns:repeat(2, 1fr);}
+}
+@media (max-width:640px){
+  .product-grid{grid-template-columns:1fr;}
+  .hero-module__title{font-size:32px; letter-spacing:-0.16px;}
+  .hero-module__subtitle{font-size:19px;}
+  .nav__links{gap:14px;}
+  .cta-section .section-heading{font-size:32px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="#" class="nav__logo" aria-label="Apple">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 44" width="14" height="44" aria-hidden="true">
+        <path fill="currentColor" d="M13.0729 17.5542C12.9896 17.6188 11.5271 18.4417 11.5271 20.275C11.5271 22.3938 13.3917 23.1438 13.4479 23.1625C13.4396 23.2083 13.1521 24.1896 12.4667 25.1896C11.8563 26.0688 11.2208 26.9479 10.2521 26.9479C9.28333 26.9479 9.03333 26.3813 7.91458 26.3813C6.82708 26.3813 6.44375 26.9667 5.55833 26.9667C4.67292 26.9667 4.05625 26.1521 3.34375 25.1521C2.52292 23.9813 1.85833 22.1729 1.85833 20.4563C1.85833 17.6875 3.66458 16.2083 5.44167 16.2083C6.38542 16.2083 7.17292 16.8292 7.76667 16.8292C8.33125 16.8292 9.21042 16.1708 10.2844 16.1708C10.6917 16.1708 12.1521 16.2083 13.0729 17.5542ZM9.77708 14.9896C10.2208 14.4646 10.5333 13.7354 10.5333 13.0063C10.5333 12.9042 10.525 12.8021 10.5063 12.7188C9.78333 12.7458 8.92292 13.2021 8.40417 13.8396C7.99792 14.3021 7.61875 15.0313 7.61875 15.7708C7.61875 15.8813 7.6375 15.9917 7.64583 16.0271C7.69167 16.0354 7.76667 16.0458 7.84167 16.0458C8.49167 16.0458 9.30833 15.6104 9.77708 14.9896Z"/>
+      </svg>
+    </a>
+    <div class="nav__links">
+      <a href="#">Store</a>
+      <a href="#">Mac</a>
+      <a href="#">iPad</a>
+      <a href="#">iPhone</a>
+      <a href="#">Watch</a>
+      <a href="#">AirPods</a>
+      <a href="#">TV &amp; Home</a>
+      <a href="#">Entertainment</a>
+      <a href="#">Accessories</a>
+      <a href="#">Support</a>
+    </div>
+    <div class="nav__right">
+      <a href="#" aria-label="Search">
+        <svg viewBox="0 0 15 44" width="15" height="44" aria-hidden="true"><circle cx="7.5" cy="22" r="3.5" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="24.5" x2="12.5" y2="27" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </a>
+      <a href="#" aria-label="Bag">
+        <svg viewBox="0 0 15 44" width="15" height="44" aria-hidden="true"><path d="M11.3535 16.0283H10.0205C9.9502 14.4453 8.59961 13.1807 6.94043 13.1807C5.28125 13.1807 3.93066 14.4453 3.86035 16.0283H2.52734C2.28906 16.0283 2.09961 16.2207 2.09961 16.459V26.4219C2.09961 27.6514 3.10547 28.6572 4.33496 28.6572H9.5459C10.7754 28.6572 11.7812 27.6514 11.7812 26.4219V16.459C11.7812 16.2207 11.5918 16.0283 11.3535 16.0283ZM6.94043 14.04C8.12109 14.04 9.09082 14.918 9.16113 16.0283H4.71875C4.79004 14.918 5.75977 14.04 6.94043 14.04Z" fill="currentColor"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="section section--hero">
+  <div class="hero-module">
+    <div class="hero-module__eyebrow">Introducing</div>
+    <h1 class="hero-module__title">Atlas Pro</h1>
+    <p class="hero-module__subtitle">A mind-blowingly precise machine. Engineered to disappear into the work.</p>
+    <div class="hero-module__ctas">
+      <a href="#" class="btn-pill btn-pill--outline">Learn more</a>
+      <a href="#" class="btn-filled">Buy</a>
+    </div>
+    <div class="hero-module__stage" aria-hidden="true">
+      <svg viewBox="0 0 240 360" width="240" height="360">
+        <rect x="8" y="8" width="224" height="344" rx="36" fill="none" stroke="#ffffff" stroke-width="1.6" opacity="0.9"/>
+        <rect x="20" y="24" width="200" height="320" rx="24" fill="#ffffff" opacity="0.04"/>
+        <rect x="92" y="14" width="56" height="8" rx="4" fill="#ffffff" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="hero-media">
+      <button class="media-ctrl" aria-label="Previous">
+        <svg viewBox="0 0 7 12" width="7" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M6 1 L1 6 L6 11"/></svg>
+      </button>
+      <button class="media-ctrl" aria-label="Pause">
+        <svg viewBox="0 0 10 12" width="10" height="12" aria-hidden="true"><rect x="1" y="1" width="2.6" height="10" rx="0.5" fill="currentColor"/><rect x="6.4" y="1" width="2.6" height="10" rx="0.5" fill="currentColor"/></svg>
+      </button>
+      <button class="media-ctrl" aria-label="Next">
+        <svg viewBox="0 0 7 12" width="7" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- LINEUP ON DARK SURFACE -->
+<section class="section section--surface">
+  <div class="section__inner">
+    <h2 class="section-heading">Get to know the lineup.</h2>
+    <p class="section-subtitle">Three new models. Every detail considered. Every surface refined.</p>
+    <div class="product-grid">
+      <article class="tile">
+        <div class="tile__image" aria-hidden="true">
+          <svg viewBox="0 0 120 240" width="100" height="200"><rect x="6" y="6" width="108" height="228" rx="22" fill="none" stroke="currentColor" stroke-width="2" opacity="0.88"/><rect x="14" y="18" width="92" height="204" rx="14" fill="currentColor" opacity="0.06"/><rect x="46" y="12" width="28" height="5" rx="2.5" fill="currentColor" opacity="0.5"/></svg>
+        </div>
+        <h3 class="tile__title">Atlas</h3>
+        <p class="tile__desc">Built for everyone who makes things.</p>
+        <p class="tile__price">From $799</p>
+        <div class="tile__links">
+          <a href="#" class="link-learn">Learn more <svg viewBox="0 0 7 12" width="6" height="10" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg></a>
+          <a href="#" class="link-learn">Buy <svg viewBox="0 0 7 12" width="6" height="10" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg></a>
+        </div>
+      </article>
+      <article class="tile">
+        <div class="tile__image" aria-hidden="true">
+          <svg viewBox="0 0 120 240" width="100" height="200"><rect x="6" y="6" width="108" height="228" rx="22" fill="none" stroke="currentColor" stroke-width="2" opacity="0.88"/><rect x="14" y="18" width="92" height="204" rx="14" fill="currentColor" opacity="0.08"/><rect x="46" y="12" width="28" height="5" rx="2.5" fill="currentColor" opacity="0.5"/></svg>
+        </div>
+        <h3 class="tile__title">Atlas Pro</h3>
+        <p class="tile__desc">The most advanced model we've made.</p>
+        <p class="tile__price">From $1,299</p>
+        <div class="tile__links">
+          <a href="#" class="link-learn">Learn more <svg viewBox="0 0 7 12" width="6" height="10" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg></a>
+          <a href="#" class="link-learn">Buy <svg viewBox="0 0 7 12" width="6" height="10" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg></a>
+        </div>
+      </article>
+      <article class="tile">
+        <div class="tile__image" aria-hidden="true">
+          <svg viewBox="0 0 120 240" width="100" height="200"><rect x="6" y="6" width="108" height="228" rx="22" fill="none" stroke="currentColor" stroke-width="2" opacity="0.88"/><rect x="14" y="18" width="92" height="204" rx="14" fill="currentColor" opacity="0.04"/><rect x="46" y="12" width="28" height="5" rx="2.5" fill="currentColor" opacity="0.5"/></svg>
+        </div>
+        <h3 class="tile__title">Atlas mini</h3>
+        <p class="tile__desc">Small. Mighty. Delightfully portable.</p>
+        <p class="tile__price">From $599</p>
+        <div class="tile__links">
+          <a href="#" class="link-learn">Learn more <svg viewBox="0 0 7 12" width="6" height="10" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg></a>
+          <a href="#" class="link-learn">Buy <svg viewBox="0 0 7 12" width="6" height="10" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="section section--deep cta-section">
+  <div class="section__inner">
+    <h2 class="section-heading">Designed for what's next.</h2>
+    <p class="section-subtitle">The new chip. The new display. A whole new way to create.</p>
+    <div class="learn-more-row">
+      <a href="#" class="link-learn">Learn more about Atlas Pro <svg viewBox="0 0 7 12" width="7" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg></a>
+      <a href="#" class="link-learn">Compare the models <svg viewBox="0 0 7 12" width="7" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M1 1 L6 6 L1 11"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__cols">
+      <div class="footer__col">
+        <h4>Shop &amp; Learn</h4>
+        <a href="#">Store</a>
+        <a href="#">Mac</a>
+        <a href="#">iPad</a>
+        <a href="#">iPhone</a>
+        <a href="#">Watch</a>
+      </div>
+      <div class="footer__col">
+        <h4>Services</h4>
+        <a href="#">Apple Music</a>
+        <a href="#">Apple TV+</a>
+        <a href="#">Apple Fitness+</a>
+        <a href="#">iCloud</a>
+      </div>
+      <div class="footer__col">
+        <h4>Account</h4>
+        <a href="#">Manage your ID</a>
+        <a href="#">Apple Store Account</a>
+        <a href="#">iCloud.com</a>
+      </div>
+      <div class="footer__col">
+        <h4>About</h4>
+        <a href="#">Newsroom</a>
+        <a href="#">Leadership</a>
+        <a href="#">Career Opportunities</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div>Copyright &copy; 2026 Example, Inc. All rights reserved.</div>
+      <div class="footer__legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Sales Policy</a>
+        <a href="#">Legal</a>
+        <a href="#">Site Map</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

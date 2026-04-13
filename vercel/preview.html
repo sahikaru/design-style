@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vercel — Your complete platform for the web</title>
+<style>
+  :root {
+    --vercel-black:       #171717;
+    --true-black:         #000000;
+    --pure-white:         #ffffff;
+    --gray-900:           #171717;
+    --gray-600:           #4d4d4d;
+    --gray-500:           #666666;
+    --gray-400:           #808080;
+    --gray-100:           #ebebeb;
+    --gray-50:            #fafafa;
+    --develop-text:       #0a72ef;
+    --preview-text:       #de1d8d;
+    --ship-text:          #ff5b4f;
+    --link-blue:          #0072f5;
+    --focus-color:        hsla(212, 100%, 48%, 1);
+    --badge-blue-bg:      #ebf5ff;
+    --badge-blue-text:    #0068d6;
+    --shadow-border:      rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    --shadow-border-light:rgb(235, 235, 235) 0px 0px 0px 1px;
+    --shadow-card-full:
+      rgba(0,0,0,0.08) 0px 0px 0px 1px,
+      rgba(0,0,0,0.04) 0px 2px 2px,
+      rgba(0,0,0,0.04) 0px 8px 8px -8px,
+      #fafafa 0px 0px 0px 1px;
+    --radius-standard: 6px;
+    --radius-card:     8px;
+    --radius-pill:     9999px;
+  }
+
+  /* Geist — remote. Fallback keeps geometry; drops -2.4px compression gracefully. */
+  @font-face {
+    font-family: "Geist";
+    src: url("https://assets.vercel.com/raw/upload/fonts/2/v9vaurrfg4l0y6hb2zyt.woff2") format("woff2");
+    font-weight: 100 900; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("https://assets.vercel.com/raw/upload/fonts/2/kq7d2q8umc9jnyw8f3fm.woff2") format("woff2");
+    font-weight: 100 900; font-style: normal; font-display: swap;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Geist", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
+    font-feature-settings: "liga" 1;
+    background: var(--pure-white);
+    color: var(--vercel-black);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  :focus-visible { outline: 2px solid var(--focus-color); outline-offset: 2px; border-radius: var(--radius-standard); }
+  a { color: inherit; text-decoration: none; }
+
+  /* ===== Nav ===== */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; gap: 32px;
+    height: 64px; padding: 0 32px;
+    background: var(--pure-white);
+    box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.08);
+  }
+  .nav-logo { display: inline-flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 600; color: var(--vercel-black); letter-spacing: -0.4px; }
+  .nav-logo svg { width: 22px; height: 20px; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 24px; margin-left: 8px; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--gray-600); transition: color 0.15s ease; }
+  .nav-links a:hover { color: var(--vercel-black); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .nav-right .login { font-size: 14px; font-weight: 500; color: var(--gray-600); padding: 8px 12px; }
+  .nav-right .login:hover { color: var(--vercel-black); }
+
+  /* ===== Buttons ===== */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px; font-family: inherit; font-size: 14px; font-weight: 500;
+    line-height: 1; padding: 10px 16px; border: 0;
+    border-radius: var(--radius-standard); cursor: pointer;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+    text-decoration: none; white-space: nowrap;
+  }
+  .btn-dark  { background: var(--vercel-black); color: var(--pure-white); }
+  .btn-dark:hover { background: #2a2a2a; }
+  .btn-ghost { background: var(--pure-white); color: var(--vercel-black); box-shadow: var(--shadow-border-light); }
+  .btn-ghost:hover { box-shadow: var(--shadow-border); }
+  .btn-pill-dark {
+    background: var(--vercel-black); color: var(--pure-white);
+    border-radius: var(--radius-pill);
+    padding: 8px 16px; font-size: 14px; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-pill-dark:hover { background: #2a2a2a; }
+  .btn-pill-dark svg { width: 12px; height: 12px; }
+
+  /* ===== Pill badge ===== */
+  .pill-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--badge-blue-bg); color: var(--badge-blue-text);
+    font-size: 12px; font-weight: 500;
+    padding: 6px 12px; border-radius: var(--radius-pill);
+  }
+  .pill-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--badge-blue-text); }
+
+  /* ===== Hero ===== */
+  .hero-wrap { position: relative; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  }
+  .hero {
+    position: relative; z-index: 1;
+    padding: 120px 32px 88px;
+    text-align: center;
+    max-width: 1040px; margin: 0 auto;
+  }
+  .hero-eyebrow { margin-bottom: 32px; display: inline-flex; }
+  .hero-title {
+    font-size: 64px; font-weight: 600; line-height: 1.00;
+    letter-spacing: -2.88px; color: var(--vercel-black);
+    margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto;
+  }
+  .hero-subtitle {
+    font-size: 20px; font-weight: 400; line-height: 1.60;
+    color: var(--gray-600); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-cta-row { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  /* ===== Mono label ===== */
+  .t-mono-label {
+    font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px; font-weight: 500; line-height: 1;
+    text-transform: uppercase;
+  }
+
+  /* ===== Workflow ===== */
+  .workflow-section { padding: 96px 32px 96px; }
+  .workflow-header { max-width: 720px; margin: 0 auto 64px; text-align: center; }
+  .workflow-header h2 {
+    font-size: 40px; font-weight: 600; line-height: 1.1;
+    letter-spacing: -2.4px; color: var(--vercel-black); margin-bottom: 16px;
+  }
+  .workflow-header p { font-size: 18px; line-height: 1.56; color: var(--gray-600); }
+
+  .workflow {
+    display: grid;
+    grid-template-columns: 1fr 32px 1fr 32px 1fr;
+    align-items: start; gap: 24px;
+    max-width: 1040px; margin: 0 auto;
+  }
+  .workflow-step .t-mono-label { display: block; margin-bottom: 20px; }
+  .workflow-step .step-title {
+    font-size: 24px; font-weight: 600; line-height: 1.33;
+    letter-spacing: -0.96px; color: var(--vercel-black); margin-bottom: 12px;
+  }
+  .workflow-step .step-desc { font-size: 16px; line-height: 1.56; color: var(--gray-600); }
+  .workflow-step.develop .t-mono-label { color: var(--develop-text); }
+  .workflow-step.preview .t-mono-label { color: var(--preview-text); }
+  .workflow-step.ship    .t-mono-label { color: var(--ship-text); }
+  .workflow-connector { display: flex; align-items: center; justify-content: flex-start; padding-top: 28px; color: var(--gray-400); }
+
+  /* ===== Cards ===== */
+  .cards-section { padding: 32px 0 120px; }
+  .cards-header { max-width: 720px; margin: 0 auto 56px; text-align: center; padding: 0 32px; }
+  .cards-header h2 {
+    font-size: 40px; font-weight: 600; line-height: 1.1;
+    letter-spacing: -2.4px; color: var(--vercel-black); margin-bottom: 16px;
+  }
+  .cards-header p { font-size: 18px; line-height: 1.56; color: var(--gray-600); }
+
+  .card-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; max-width: 1200px; margin: 0 auto; padding: 0 32px;
+  }
+  .card {
+    background: var(--pure-white);
+    border-radius: var(--radius-card);
+    padding: 32px;
+    box-shadow: var(--shadow-card-full);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover {
+    box-shadow:
+      rgba(0,0,0,0.12) 0px 0px 0px 1px,
+      rgba(0,0,0,0.06) 0px 4px 4px,
+      rgba(0,0,0,0.06) 0px 12px 12px -8px,
+      #fafafa 0px 0px 0px 1px;
+    transform: translateY(-1px);
+  }
+  .card-icon {
+    width: 40px; height: 40px; border-radius: var(--radius-standard);
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--gray-50); box-shadow: var(--shadow-border-light);
+    margin-bottom: 20px; color: var(--vercel-black);
+  }
+  .card-title {
+    font-size: 24px; font-weight: 600; line-height: 1.33;
+    letter-spacing: -0.96px; color: var(--vercel-black); margin-bottom: 12px;
+  }
+  .card-body { font-size: 16px; font-weight: 400; line-height: 1.56; color: var(--gray-600); }
+
+  /* ===== Trust bar ===== */
+  .trust-wrap { padding: 16px 0 80px; }
+  .trust-label {
+    display: block; text-align: center; margin-bottom: 32px;
+    font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+    font-size: 12px; font-weight: 500; text-transform: uppercase;
+    color: var(--gray-500);
+  }
+  .trust-bar {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 56px;
+    max-width: 1200px; margin: 0 auto; padding: 0 32px;
+  }
+  .trust-logo {
+    font-size: 20px; font-weight: 600; letter-spacing: -0.6px;
+    color: var(--gray-400); filter: grayscale(1);
+    transition: color 0.2s ease;
+  }
+  .trust-logo:hover { color: var(--vercel-black); }
+
+  /* ===== Footer ===== */
+  .section-divider { border: 0; border-bottom: 1px solid var(--vercel-black); margin: 0; }
+  .footer { padding: 64px 32px 48px; max-width: 1200px; margin: 0 auto; color: var(--gray-500); font-size: 14px; }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 32px; padding-bottom: 48px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--vercel-black); font-size: 18px; letter-spacing: -0.4px; }
+  .footer-col h4 {
+    font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+    font-size: 12px; font-weight: 500; text-transform: uppercase;
+    color: var(--vercel-black); margin-bottom: 16px;
+  }
+  .footer-col a { display: block; font-size: 14px; color: var(--gray-600); padding: 4px 0; }
+  .footer-col a:hover { color: var(--vercel-black); }
+  .footer-bottom {
+    border-top: 1px solid var(--gray-100);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    font-size: 13px; color: var(--gray-500);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1024px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .workflow  { grid-template-columns: 1fr; }
+    .workflow-connector { display: none; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 72px 20px 56px; }
+    .hero-title { font-size: 40px; letter-spacing: -1.8px; }
+    .workflow-header h2, .cards-header h2 { font-size: 32px; letter-spacing: -1.6px; }
+    .card-grid { grid-template-columns: 1fr; padding: 0 20px; }
+    .nav { padding: 0 16px; gap: 16px; }
+    .nav-links { display: none; }
+    .nav-right .login { display: none; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <a class="nav-logo" href="#">
+    <svg viewBox="0 0 24 20" xmlns="http://www.w3.org/2000/svg" aria-label="Vercel" role="img">
+      <path d="M12 0L24 20H0L12 0Z" fill="#000000"/>
+    </svg>
+    Vercel
+  </a>
+  <div class="nav-links">
+    <a href="#">Products</a>
+    <a href="#">Solutions</a>
+    <a href="#">Resources</a>
+    <a href="#">Enterprise</a>
+    <a href="#">Docs</a>
+    <a href="#">Pricing</a>
+  </div>
+  <div class="nav-right">
+    <a href="#" class="login">Log In</a>
+    <a href="#" class="btn-pill-dark">
+      Start Deploying
+      <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 6h6M6 3l3 3-3 3"/>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero-wrap">
+  <svg class="hero-bg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <pattern id="dotgrid" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#171717" fill-opacity="0.06"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#dotgrid)"/>
+  </svg>
+
+  <section class="hero">
+    <span class="hero-eyebrow">
+      <span class="pill-badge"><span class="dot"></span> Fluid Compute is now generally available</span>
+    </span>
+    <h1 class="hero-title">Your complete platform for the web.</h1>
+    <p class="hero-subtitle">
+      Vercel provides the developer tools and cloud infrastructure to build, scale,
+      and secure a faster, more personalized web.
+    </p>
+    <div class="hero-cta-row">
+      <a href="#" class="btn btn-dark">Start Deploying</a>
+      <a href="#" class="btn btn-ghost">Get a Demo</a>
+    </div>
+  </section>
+</div>
+
+<!-- ===== WORKFLOW ===== -->
+<section class="workflow-section">
+  <div class="workflow-header">
+    <h2>How it works.</h2>
+    <p>Three steps from localhost to live. The pipeline is the product.</p>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-step develop">
+      <span class="t-mono-label">Develop</span>
+      <div class="step-title">Start with code.</div>
+      <p class="step-desc">Git-connected deploys from localhost to globally-available in seconds. Zero config for Next.js, SvelteKit, Nuxt, Astro, and more.</p>
+    </div>
+    <div class="workflow-connector">
+      <svg viewBox="0 0 32 12" width="32" height="12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="0" y1="6" x2="26" y2="6" stroke="#808080" stroke-width="1"/>
+        <path d="M22 2 L28 6 L22 10" stroke="#808080" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+    <div class="workflow-step preview">
+      <span class="t-mono-label">Preview</span>
+      <div class="step-title">Every push, previewed.</div>
+      <p class="step-desc">Immutable preview URLs for every commit. Share, review, and iterate with your team before merging a single line.</p>
+    </div>
+    <div class="workflow-connector">
+      <svg viewBox="0 0 32 12" width="32" height="12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="0" y1="6" x2="26" y2="6" stroke="#808080" stroke-width="1"/>
+        <path d="M22 2 L28 6 L22 10" stroke="#808080" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+    <div class="workflow-step ship">
+      <span class="t-mono-label">Ship</span>
+      <div class="step-title">Deploy to production.</div>
+      <p class="step-desc">Promote any preview to production in one click. Instant rollback is always one click away. Your pipeline, frictionless.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CARDS ===== -->
+<section class="cards-section">
+  <div class="cards-header">
+    <h2>Built for scale, designed for speed.</h2>
+    <p>The infrastructure underneath is boring on purpose — so your team can focus on the interesting problems.</p>
+  </div>
+  <div class="card-grid">
+    <article class="card">
+      <div class="card-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"/>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+        </svg>
+      </div>
+      <h3 class="card-title">Instant rollbacks.</h3>
+      <p class="card-body">Every deployment is immutable. If something breaks, one click restores any previous version. Production is never stuck.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </div>
+      <h3 class="card-title">Edge everywhere.</h3>
+      <p class="card-body">Your code runs close to every user — automatically, in every region. No config, no tuning, no cold-start tax.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <path d="M7 14l4-4 4 4 5-6"/>
+        </svg>
+      </div>
+      <h3 class="card-title">Observability built in.</h3>
+      <p class="card-body">Logs, traces, analytics, and Web Vitals for every deployment — with zero instrumentation. See what shipped and what it cost.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===== TRUST BAR ===== -->
+<section class="trust-wrap">
+  <span class="trust-label">Trusted by the most ambitious teams</span>
+  <div class="trust-bar">
+    <span class="trust-logo">Perplexity</span>
+    <span class="trust-logo">Notion</span>
+    <span class="trust-logo">Cursor</span>
+    <span class="trust-logo">Linear</span>
+    <span class="trust-logo">Ramp</span>
+    <span class="trust-logo">Runway</span>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<hr class="section-divider" />
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <svg viewBox="0 0 24 20" width="22" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 0L24 20H0L12 0Z" fill="#171717"/>
+        </svg>
+        Vercel
+      </div>
+      <p style="margin-top:16px;max-width:260px;color:var(--gray-500);">Built by frontend developers, for frontend developers.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="#">Previews</a>
+      <a href="#">AI</a>
+      <a href="#">Edge Functions</a>
+      <a href="#">Analytics</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Docs</a>
+      <a href="#">Guides</a>
+      <a href="#">Changelog</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+      <a href="#">Press</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">DPA</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Vercel Inc. All rights reserved.</span>
+    <span>Deploy 37 — sha 4f2e9c1</span>
+  </div>
+</footer>
+
+</body>
+</html>
