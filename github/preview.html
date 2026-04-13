@@ -528,6 +528,67 @@ button{font-family:inherit;}
   transform: scale(0.98);
   transition: transform 0.12s cubic-bezier(0.33, 1, 0.68, 1);
 }
+
+/* PRIMER §12 COMPLIANCE — accessibility primitives sourced from primer.style
+   §12.8 Responsive: minimum interactive target = 24px (WCAG AA), 44px (AAA)
+   §12.10 Color: WCAG 2.2 AA contrast targets — never AAA chase, never APCA
+   §12.11 Focus: every interactive element MUST have a visible focus indicator
+   See github/design-system.md §12 for the full authoritative reference. */
+
+/* §12.11 — global focus indicator. Uses the brand neon for marketing surfaces;
+   would use --color-accent-fg #1f6feb in product UI per §12.11. */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--brand-accent, #5fed83);
+  outline-offset: 2px;
+  border-radius: inherit;
+  /* The 2px stroke + 2px offset matches Primer's --focus-outlineOffset and
+     remains visible on both dark and light surfaces. */
+}
+/* For elements that already render a custom border / shadow ring on focus,
+   suppress the global outline to avoid double rings. */
+.btn:focus-visible,
+.nav-pill:focus-visible {
+  outline: 2px solid var(--brand-accent, #5fed83);
+  outline-offset: 3px;
+}
+
+/* §12.8 — guarantee 24px minimum interactive target on any clickable.
+   This is a SAFEGUARD: where component sizing already exceeds 24px the rule
+   is inert; it only kicks in for tiny inline links / icon buttons. */
+a, button, [role="button"], [data-clickable],
+.nav-pill, .accordion-trigger, .accordion__trigger,
+.faq-trigger {
+  min-height: 24px;
+}
+
+/* §12.10 — explicit forced-colors mode support. Primer guidance: keep system
+   colors when forced-colors is active; never override system tokens. */
+@media (forced-colors: active) {
+  .btn, .nav-pill, .glass-card, .pillar-card, .pricing-card {
+    border: 1px solid CanvasText;
+  }
+  :focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+
+/* §12.8 — guarantee 24px minimum interactive target on STANDALONE clickables.
+   Inline text links inside paragraphs are exempt per WCAG 2.5.5 + Primer guidance. */
+nav a, header a, footer a,
+.btn, button[type], [role="button"], [data-clickable],
+.nav-pill, .accordion-trigger, .accordion__trigger, .faq-trigger,
+.pricecard, .pillar-card, .price-card, .feature-card, .org-card, .compare-card {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+}
+/* Cards that are block-level use min-height alone; restore block layout. */
+.pricecard, .pillar-card, .price-card, .feature-card, .org-card, .compare-card,
+.accordion-trigger, .accordion__trigger, .faq-trigger {
+  display: block;
+  min-height: 44px; /* card-class clickables target the AAA 44px tier */
+}
 </style>
 </head>
 <body>
