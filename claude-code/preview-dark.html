@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Design System — Dark Theme Preview</title>
+<style>
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Base (Dark) ── */
+  body {
+    background: #141413;
+    color: #faf9f5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 80px 0; }
+  section + section { border-top: 1px solid #30302e; }
+
+  /* ── Typography ── */
+  h1, h2, h3, h4, h5 { font-family: Georgia, 'Times New Roman', serif; font-weight: 500; color: #faf9f5; }
+  h1 { font-size: 64px; line-height: 1.10; margin-bottom: 16px; }
+  h2 { font-size: 36px; line-height: 1.30; margin-bottom: 32px; }
+  h3 { font-size: 25px; line-height: 1.20; margin-bottom: 20px; }
+  p.subtitle { font-size: 20px; line-height: 1.60; color: #b0aea5; max-width: 640px; }
+  p.body { font-size: 16px; line-height: 1.60; color: #b0aea5; }
+  .section-label {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.12px;
+    text-transform: uppercase; color: #87867f; margin-bottom: 12px;
+  }
+
+  /* ── Hero ── */
+  .hero { padding: 100px 0 80px; text-align: center; }
+  .hero h1 { margin-bottom: 24px; }
+  .hero .subtitle { margin: 0 auto; text-align: center; }
+  .hero .badge {
+    display: inline-block; background: #30302e; border: 1px solid #4d4c48;
+    border-radius: 32px; padding: 6px 20px; font-size: 14px; color: #b0aea5;
+    margin-bottom: 32px;
+  }
+
+  /* ── Color Swatches ── */
+  .swatch-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .swatch-card {
+    background: #30302e; border: 1px solid #4d4c48; border-radius: 12px;
+    overflow: hidden; transition: box-shadow 0.2s ease;
+  }
+  .swatch-card:hover { box-shadow: rgba(0,0,0,0.3) 0px 4px 24px; }
+  .swatch-color { height: 96px; position: relative; }
+  .swatch-color.dark-blend::after {
+    content: ''; position: absolute; inset: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .swatch-info { padding: 14px 16px; }
+  .swatch-name {
+    font-family: Georgia, serif; font-weight: 500; font-size: 15px;
+    margin-bottom: 4px; color: #faf9f5;
+  }
+  .swatch-hex {
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px;
+    color: #87867f; letter-spacing: -0.3px;
+  }
+
+  /* ── Type Scale ── */
+  .type-row {
+    display: flex; align-items: baseline; gap: 32px;
+    padding: 24px 0; border-bottom: 1px solid #30302e;
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta {
+    flex: 0 0 180px; font-size: 13px; color: #87867f;
+    font-family: 'SF Mono', 'Fira Code', monospace; line-height: 1.5;
+  }
+  .type-sample { flex: 1; min-width: 0; color: #faf9f5; }
+  .type-sample.serif { font-family: Georgia, 'Times New Roman', serif; font-weight: 500; }
+  .type-sample.sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+
+  /* ── Buttons ── */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-pair { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .btn-label { font-size: 12px; color: #87867f; letter-spacing: 0.12px; text-transform: uppercase; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 16px; font-weight: 500; border: none; cursor: pointer;
+    transition: all 0.15s ease; position: relative;
+  }
+
+  .btn-terracotta {
+    background: #c96442; color: #faf9f5; padding: 10px 20px; border-radius: 10px;
+    box-shadow: #c96442 0px 0px 0px 0px, #c96442 0px 0px 0px 1px;
+  }
+  .btn-terracotta:hover { background: #d97757; box-shadow: #d97757 0px 0px 0px 0px, #d97757 0px 0px 0px 1px; }
+
+  .btn-dark-primary {
+    background: #141413; color: #b0aea5; padding: 9.6px 16.8px; border-radius: 12px;
+    border: 1px solid #30302e;
+  }
+  .btn-dark-primary:hover { color: #faf9f5; border-color: #4d4c48; }
+
+  .btn-dark-surface {
+    background: #30302e; color: #faf9f5; padding: 10px 20px; border-radius: 8px;
+    box-shadow: #30302e 0px 0px 0px 0px, #4d4c48 0px 0px 0px 1px;
+  }
+  .btn-dark-surface:hover { background: #3d3d3a; }
+
+  .btn-ghost {
+    background: transparent; color: #b0aea5; padding: 10px 20px; border-radius: 8px;
+    border: 1px solid #4d4c48;
+  }
+  .btn-ghost:hover { color: #faf9f5; border-color: #87867f; }
+
+  .btn-coral {
+    background: transparent; color: #d97757; padding: 10px 20px; border-radius: 8px;
+    border: 1px solid #d97757;
+  }
+  .btn-coral:hover { background: rgba(217, 119, 87, 0.1); }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+  .card {
+    background: #30302e; border: 1px solid #30302e; border-radius: 8px;
+    padding: 32px; transition: box-shadow 0.2s ease;
+  }
+  .card:hover { box-shadow: rgba(0,0,0,0.3) 0px 4px 24px; }
+  .card h3 { font-size: 25px; margin-bottom: 12px; color: #faf9f5; }
+  .card p { font-size: 16px; line-height: 1.60; color: #b0aea5; }
+  .card-featured { border-radius: 16px; }
+  .card-tag {
+    display: inline-block; background: #4d4c48; color: #b0aea5;
+    border-radius: 24px; padding: 4px 14px; font-size: 13px; margin-top: 16px;
+  }
+
+  /* ── Border Radius ── */
+  .radius-grid { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; }
+  .radius-item { text-align: center; }
+  .radius-box {
+    background: #30302e; border: 1px solid #4d4c48; display: flex;
+    align-items: center; justify-content: center; margin-bottom: 12px;
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 14px; color: #b0aea5;
+  }
+  .radius-label { font-size: 13px; color: #87867f; }
+
+  /* ── Shadows ── */
+  .shadow-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+  .shadow-card {
+    background: #30302e; padding: 32px; border-radius: 12px;
+    text-align: center;
+  }
+  .shadow-card h4 {
+    font-family: Georgia, serif; font-weight: 500; font-size: 17px;
+    margin-bottom: 8px; color: #faf9f5;
+  }
+  .shadow-card p { font-size: 13px; color: #87867f; }
+  .shadow-flat { border: 1px solid #4d4c48; }
+  .shadow-ring { box-shadow: 0px 0px 0px 1px #4d4c48; }
+  .shadow-whisper { box-shadow: rgba(0,0,0,0.3) 0px 4px 24px; }
+  .shadow-deep-ring { box-shadow: 0px 0px 0px 1px #5e5d59; }
+  .shadow-inset { box-shadow: inset 0px 0px 0px 1px rgba(255,255,255,0.1); }
+
+  /* ── Light Section (embedded) ── */
+  .section-light {
+    background: #f5f4ed; color: #141413;
+    margin: 0 -9999px; padding: 80px 9999px;
+    border-top: none;
+  }
+  .section-light h2 { color: #141413; }
+  .section-light .section-label { color: #87867f; }
+  .section-light p.body { color: #5e5d59; }
+  .section-light .card {
+    background: #faf9f5; border-color: #f0eee6; color: #141413;
+  }
+  .section-light .card h3 { color: #141413; }
+  .section-light .card p { color: #5e5d59; }
+  .section-light .card-tag { background: #f0eee6; color: #5e5d59; }
+
+  /* ── Alternation Demo ── */
+  .alt-strip {
+    display: grid; grid-template-columns: 1fr 1fr; border-radius: 16px;
+    overflow: hidden; border: 1px solid #30302e;
+  }
+  .alt-dark {
+    background: #141413; padding: 48px 32px; text-align: center;
+    color: #faf9f5;
+  }
+  .alt-surface {
+    background: #30302e; padding: 48px 32px; text-align: center;
+    color: #faf9f5;
+  }
+  .alt-dark h3 { color: #faf9f5; }
+  .alt-surface h3 { color: #faf9f5; }
+  .alt-dark p { color: #b0aea5; }
+  .alt-surface p { color: #b0aea5; }
+
+  /* ── Comparison Table ── */
+  .comparison-table {
+    width: 100%; border-collapse: collapse; margin-top: 24px;
+  }
+  .comparison-table th {
+    text-align: left; font-family: -apple-system, system-ui, sans-serif;
+    font-size: 12px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.12px; color: #87867f; padding: 12px 16px;
+    border-bottom: 1px solid #30302e;
+  }
+  .comparison-table td {
+    padding: 14px 16px; border-bottom: 1px solid #30302e;
+    font-size: 15px; color: #b0aea5; vertical-align: middle;
+  }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .color-dot {
+    display: inline-block; width: 20px; height: 20px; border-radius: 50%;
+    vertical-align: middle; margin-right: 10px; border: 1px solid rgba(255,255,255,0.1);
+  }
+  .comparison-table code {
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px;
+    background: #1a1a19; padding: 2px 8px; border-radius: 4px; color: #d97757;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    h1 { font-size: 36px; }
+    h2 { font-size: 28px; }
+    .swatch-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .card-grid { grid-template-columns: 1fr; }
+    .type-row { flex-direction: column; gap: 8px; }
+    .type-meta { flex: none; }
+    .alt-strip { grid-template-columns: 1fr; }
+    .radius-grid { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="container">
+  <div class="hero">
+    <div class="badge">Dark Theme Preview</div>
+    <h1>Claude Design System</h1>
+    <p class="subtitle">The same components and tokens rendered on dark surfaces. Near Black (#141413) background, Warm Silver text, Dark Surface containers.</p>
+  </div>
+</div>
+
+<!-- ═══════════ COLOR PALETTE ═══════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">01 / Color Palette on Dark</p>
+    <h2>Colors on Dark Surfaces</h2>
+    <p class="body" style="margin-bottom: 40px;">The same warm palette adapts to dark backgrounds. Warm undertones persist even in the darkest values.</p>
+
+    <h3 style="margin-bottom: 20px;">Primary & Accent</h3>
+    <div class="swatch-grid" style="margin-bottom: 40px;">
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #141413;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Near Black</div>
+          <div class="swatch-hex">#141413</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #c96442;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Terracotta Brand</div>
+          <div class="swatch-hex">#c96442</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #d97757;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Coral Accent</div>
+          <div class="swatch-hex">#d97757</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #b53333;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Error Crimson</div>
+          <div class="swatch-hex">#b53333</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom: 20px;">Surfaces & Backgrounds</h3>
+    <div class="swatch-grid" style="margin-bottom: 40px;">
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #f5f4ed;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Parchment</div>
+          <div class="swatch-hex">#f5f4ed</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #faf9f5;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ivory</div>
+          <div class="swatch-hex">#faf9f5</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color dark-blend" style="background: #30302e;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Dark Surface</div>
+          <div class="swatch-hex">#30302e</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #e8e6dc;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Warm Sand</div>
+          <div class="swatch-hex">#e8e6dc</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom: 20px;">Neutrals & Text</h3>
+    <div class="swatch-grid" style="margin-bottom: 40px;">
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #5e5d59;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Olive Gray</div>
+          <div class="swatch-hex">#5e5d59</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #87867f;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Stone Gray</div>
+          <div class="swatch-hex">#87867f</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #b0aea5;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Warm Silver</div>
+          <div class="swatch-hex">#b0aea5</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #4d4c48;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Charcoal Warm</div>
+          <div class="swatch-hex">#4d4c48</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom: 20px;">Borders & Rings</h3>
+    <div class="swatch-grid">
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #f0eee6;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Border Cream</div>
+          <div class="swatch-hex">#f0eee6</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #e8e6dc;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Border Warm</div>
+          <div class="swatch-hex">#e8e6dc</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #d1cfc5;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ring Warm</div>
+          <div class="swatch-hex">#d1cfc5</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #c2c0b6;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ring Deep</div>
+          <div class="swatch-hex">#c2c0b6</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DARK ADAPTATION TABLE ═══════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">02 / Dark Adaptation</p>
+    <h2>Light to Dark Mapping</h2>
+    <p class="body" style="margin-bottom: 32px;">How each role adapts when switching from Parchment to Near Black surfaces.</p>
+
+    <div style="background: #30302e; border-radius: 12px; overflow: hidden;">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Light Theme</th>
+            <th>Dark Theme</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Page Background</td>
+            <td><span class="color-dot" style="background: #f5f4ed;"></span><code>#f5f4ed</code> Parchment</td>
+            <td><span class="color-dot" style="background: #141413;"></span><code>#141413</code> Near Black</td>
+          </tr>
+          <tr>
+            <td>Card Surface</td>
+            <td><span class="color-dot" style="background: #faf9f5;"></span><code>#faf9f5</code> Ivory</td>
+            <td><span class="color-dot" style="background: #30302e;"></span><code>#30302e</code> Dark Surface</td>
+          </tr>
+          <tr>
+            <td>Primary Text</td>
+            <td><span class="color-dot" style="background: #141413;"></span><code>#141413</code> Near Black</td>
+            <td><span class="color-dot" style="background: #faf9f5;"></span><code>#faf9f5</code> Ivory</td>
+          </tr>
+          <tr>
+            <td>Secondary Text</td>
+            <td><span class="color-dot" style="background: #5e5d59;"></span><code>#5e5d59</code> Olive Gray</td>
+            <td><span class="color-dot" style="background: #b0aea5;"></span><code>#b0aea5</code> Warm Silver</td>
+          </tr>
+          <tr>
+            <td>Tertiary Text</td>
+            <td><span class="color-dot" style="background: #87867f;"></span><code>#87867f</code> Stone Gray</td>
+            <td><span class="color-dot" style="background: #87867f;"></span><code>#87867f</code> Stone Gray</td>
+          </tr>
+          <tr>
+            <td>Borders</td>
+            <td><span class="color-dot" style="background: #f0eee6;"></span><code>#f0eee6</code> Border Cream</td>
+            <td><span class="color-dot" style="background: #30302e;"></span><code>#30302e</code> Border Dark</td>
+          </tr>
+          <tr>
+            <td>Brand CTA</td>
+            <td><span class="color-dot" style="background: #c96442;"></span><code>#c96442</code> Terracotta</td>
+            <td><span class="color-dot" style="background: #c96442;"></span><code>#c96442</code> Terracotta</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TYPOGRAPHY ═══════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">03 / Typography on Dark</p>
+    <h2>Type Scale</h2>
+    <p class="body" style="margin-bottom: 40px;">Ivory text on Near Black. The same serif hierarchy with adapted contrast.</p>
+
+    <h3 style="margin-bottom: 24px;">Heading Scale (Georgia / Serif, weight 500)</h3>
+
+    <div class="type-row">
+      <div class="type-meta">Display<br>64px / 1.10</div>
+      <div class="type-sample serif" style="font-size: 64px; line-height: 1.10;">Thoughtful companion</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Section<br>52px / 1.20</div>
+      <div class="type-sample serif" style="font-size: 52px; line-height: 1.20;">Feature anchors</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Sub-heading<br>36px / 1.30</div>
+      <div class="type-sample serif" style="font-size: 36px; line-height: 1.30;">Secondary markers</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Sub-heading Sm<br>25px / 1.20</div>
+      <div class="type-sample serif" style="font-size: 25px; line-height: 1.20;">Smaller section titles</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Feature Title<br>20px / 1.20</div>
+      <div class="type-sample serif" style="font-size: 20.8px; line-height: 1.20;">Small feature headings</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Body Serif<br>17px / 1.60</div>
+      <div class="type-sample serif" style="font-size: 17px; line-height: 1.60; font-weight: 400; color: #b0aea5;">Claude's interface is a literary salon reimagined as a product page -- warm, unhurried, and quietly intellectual.</div>
+    </div>
+
+    <h3 style="margin-top: 48px; margin-bottom: 24px;">Body Scale (System Sans-Serif)</h3>
+
+    <div class="type-row">
+      <div class="type-meta">Body Large<br>20px / 1.60</div>
+      <div class="type-sample sans" style="font-size: 20px; line-height: 1.60; color: #b0aea5;">Intro paragraphs use this generous size for comfortable reading.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Body Standard<br>16px / 1.60</div>
+      <div class="type-sample sans" style="font-size: 16px; line-height: 1.60; color: #b0aea5;">Standard body text using Warm Silver (#b0aea5) on dark surfaces.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Caption<br>14px / 1.43</div>
+      <div class="type-sample sans" style="font-size: 14px; line-height: 1.43; color: #87867f;">Metadata and supporting information in Stone Gray.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Coral Link<br>17px / 1.60</div>
+      <div class="type-sample sans" style="font-size: 17px; line-height: 1.60; color: #d97757;">Links use Coral Accent (#d97757) on dark surfaces for emphasis.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ BUTTONS ═══════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">04 / Buttons on Dark</p>
+    <h2>Button Variants</h2>
+    <p class="body" style="margin-bottom: 40px;">Dark-adapted buttons. Terracotta remains the primary CTA. Ghost and Coral variants are dark-exclusive.</p>
+
+    <div class="btn-grid" style="margin-bottom: 48px;">
+      <div class="btn-pair">
+        <span class="btn-label">Terracotta Brand</span>
+        <button class="btn btn-terracotta">Get started</button>
+      </div>
+      <div class="btn-pair">
+        <span class="btn-label">Dark Primary</span>
+        <button class="btn btn-dark-primary">Primary action</button>
+      </div>
+      <div class="btn-pair">
+        <span class="btn-label">Dark Surface</span>
+        <button class="btn btn-dark-surface">Surface button</button>
+      </div>
+      <div class="btn-pair">
+        <span class="btn-label">Ghost</span>
+        <button class="btn btn-ghost">Ghost action</button>
+      </div>
+      <div class="btn-pair">
+        <span class="btn-label">Coral Outline</span>
+        <button class="btn btn-coral">Coral accent</button>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom: 20px;">Dark Button Specifications</h3>
+    <div class="card-grid">
+      <div class="card">
+        <h3 style="font-size: 20px; color: #c96442;">Terracotta Brand</h3>
+        <p style="font-size: 14px; margin-top: 8px;">
+          Background: <span style="color: #d97757;"><code>#c96442</code></span><br>
+          Text: Ivory <code>#faf9f5</code><br>
+          Radius: 8-12px<br>
+          Unchanged on dark surfaces
+        </p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: 20px;">Dark Primary</h3>
+        <p style="font-size: 14px; margin-top: 8px;">
+          Background: <code>#141413</code><br>
+          Text: Warm Silver <code>#b0aea5</code><br>
+          Border: 1px solid <code>#30302e</code><br>
+          Radius: 12px
+        </p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: 20px;">Ghost</h3>
+        <p style="font-size: 14px; margin-top: 8px;">
+          Background: transparent<br>
+          Text: Warm Silver <code>#b0aea5</code><br>
+          Border: 1px solid <code>#4d4c48</code><br>
+          Hover: text brightens to Ivory
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CARDS ═══════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">05 / Cards on Dark</p>
+    <h2>Card Components</h2>
+    <p class="body" style="margin-bottom: 40px;">Dark Surface (#30302e) containers with matching borders. Warm Silver body text.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Standard Card</h3>
+        <p>Dark Surface (#30302e) background with same-value border. Warm Silver (#b0aea5) body text. Hover for shadow.</p>
+        <div class="card-tag">8px radius</div>
+      </div>
+      <div class="card card-featured">
+        <h3>Featured Card</h3>
+        <p>16px radius for featured containers. Tags use Charcoal Warm (#4d4c48) background for subtle distinction.</p>
+        <div class="card-tag">16px radius</div>
+      </div>
+      <div class="card" style="border-radius: 32px;">
+        <h3>Hero Card</h3>
+        <p>Maximum 32px radius. Same warm personality in dark mode, just inverted luminance.</p>
+        <div class="card-tag">32px radius</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 48px; margin-bottom: 20px;">Model Comparison on Dark</h3>
+    <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="card" style="border-top: 2px solid #4d4c48;">
+        <p class="section-label" style="margin-bottom: 8px;">Most Capable</p>
+        <h3>Opus</h3>
+        <p>Extended thinking and complex reasoning tasks.</p>
+        <div class="card-tag">Research</div>
+      </div>
+      <div class="card" style="border-top: 2px solid #c96442;">
+        <p class="section-label" style="margin-bottom: 8px; color: #d97757;">Best Balance</p>
+        <h3>Sonnet</h3>
+        <p>The ideal balance of intelligence and speed.</p>
+        <div class="card-tag">General</div>
+      </div>
+      <div class="card" style="border-top: 2px solid #4d4c48;">
+        <p class="section-label" style="margin-bottom: 8px;">Fastest</p>
+        <h3>Haiku</h3>
+        <p>Near-instant responses for lightweight tasks.</p>
+        <div class="card-tag">Speed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ BORDER RADIUS ═══════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">06 / Border Radius</p>
+    <h2>Radius Scale</h2>
+    <p class="body" style="margin-bottom: 40px;">Same radius scale, rendered on dark surfaces with subdued borders.</p>
+
+    <div class="radius-grid">
+      <div class="radius-item">
+        <div class="radius-box" style="width: 72px; height: 72px; border-radius: 8px;">8</div>
+        <div class="radius-label">8px<br>Comfortable</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="width: 88px; height: 88px; border-radius: 12px;">12</div>
+        <div class="radius-label">12px<br>Generous</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="width: 104px; height: 104px; border-radius: 16px;">16</div>
+        <div class="radius-label">16px<br>Very Rounded</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="width: 128px; height: 128px; border-radius: 32px;">32</div>
+        <div class="radius-label">32px<br>Maximum</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 48px; margin-bottom: 20px;">Full Radius Scale (Terracotta on Dark)</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;">
+      <div style="text-align: center;">
+        <div style="width: 48px; height: 48px; background: #c96442; border-radius: 4px; margin: 0 auto 8px;"></div>
+        <span style="font-size: 12px; color: #87867f;">4px Sharp</span>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 48px; height: 48px; background: #c96442; border-radius: 6px; margin: 0 auto 8px;"></div>
+        <span style="font-size: 12px; color: #87867f;">6px Subtle</span>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 48px; height: 48px; background: #c96442; border-radius: 8px; margin: 0 auto 8px;"></div>
+        <span style="font-size: 12px; color: #87867f;">8px Comfy</span>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 48px; height: 48px; background: #c96442; border-radius: 12px; margin: 0 auto 8px;"></div>
+        <span style="font-size: 12px; color: #87867f;">12px Generous</span>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 48px; height: 48px; background: #c96442; border-radius: 16px; margin: 0 auto 8px;"></div>
+        <span style="font-size: 12px; color: #87867f;">16px Very</span>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 48px; height: 48px; background: #c96442; border-radius: 24px; margin: 0 auto 8px;"></div>
+        <span style="font-size: 12px; color: #87867f;">24px Highly</span>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 48px; height: 48px; background: #c96442; border-radius: 32px; margin: 0 auto 8px;"></div>
+        <span style="font-size: 12px; color: #87867f;">32px Max</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SHADOWS ═══════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">07 / Depth & Elevation on Dark</p>
+    <h2>Shadow System</h2>
+    <p class="body" style="margin-bottom: 40px;">On dark surfaces, ring shadows use lighter warm grays. Drop shadows deepen to maintain perceived lift.</p>
+
+    <div class="shadow-grid">
+      <div class="shadow-card shadow-flat">
+        <h4>Contained</h4>
+        <p style="margin-top: 8px;">Border at Dark Surface level. Subtle containment.</p>
+        <p style="margin-top: 12px; font-family: monospace; font-size: 12px; color: #87867f;">1px solid #4d4c48</p>
+      </div>
+      <div class="shadow-card shadow-ring">
+        <h4>Ring</h4>
+        <p style="margin-top: 8px;">Ring shadow with Charcoal Warm. Interactive states.</p>
+        <p style="margin-top: 12px; font-family: monospace; font-size: 12px; color: #87867f;">0px 0px 0px 1px #4d4c48</p>
+      </div>
+      <div class="shadow-card shadow-whisper">
+        <h4>Whisper (Dark)</h4>
+        <p style="margin-top: 8px;">Deeper opacity on dark for visible lift.</p>
+        <p style="margin-top: 12px; font-family: monospace; font-size: 12px; color: #87867f;">rgba(0,0,0,0.3) 0px 4px 24px</p>
+      </div>
+      <div class="shadow-card shadow-deep-ring">
+        <h4>Deep Ring</h4>
+        <p style="margin-top: 8px;">Stronger ring for active/pressed states.</p>
+        <p style="margin-top: 12px; font-family: monospace; font-size: 12px; color: #87867f;">0px 0px 0px 1px #5e5d59</p>
+      </div>
+      <div class="shadow-card shadow-inset">
+        <h4>Inset</h4>
+        <p style="margin-top: 8px;">Pressed button state with inverted shadow.</p>
+        <p style="margin-top: 12px; font-family: monospace; font-size: 12px; color: #87867f;">inset 0px 0px 0px 1px<br>rgba(255,255,255,0.1)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LIGHT SECTION (embedded demo) ═══════════ -->
+<div class="section-light">
+  <div class="container">
+    <p class="section-label">08 / Alternation from Dark</p>
+    <h2>Light Section Embedded in Dark Page</h2>
+    <p class="body" style="margin-bottom: 40px;">When alternating sections appear on a dark page, the contrast is even more dramatic. Each section feels like entering a different room.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Light Card</h3>
+        <p>Ivory surface with Border Cream border. The warmth of the light palette contrasts sharply against the surrounding dark.</p>
+        <div class="card-tag">Light theme</div>
+      </div>
+      <div class="card">
+        <h3>Chapter Break</h3>
+        <p>These light sections serve as chapter breaks in the page rhythm, providing visual relief and emphasis.</p>
+        <div class="card-tag">Parchment</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SURFACE COMPARISON ═══════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">09 / Surface Comparison</p>
+    <h2>Dark Surface Layers</h2>
+    <p class="body" style="margin-bottom: 40px;">Three levels of dark surface, each with the same olive-warm undertone.</p>
+
+    <div class="alt-strip">
+      <div class="alt-dark">
+        <h3 style="margin-bottom: 8px;">Near Black</h3>
+        <p style="font-size: 15px;">Background #141413<br>Page-level surface<br>Deepest layer</p>
+      </div>
+      <div class="alt-surface">
+        <h3 style="margin-bottom: 8px;">Dark Surface</h3>
+        <p style="font-size: 15px;">Background #30302e<br>Card-level surface<br>Elevated container</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px; padding: 32px; background: #30302e; border: 1px solid #4d4c48; border-radius: 12px;">
+      <h3 style="margin-bottom: 12px;">Dark Theme Principles</h3>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 10px 0; border-bottom: 1px solid #3d3d3a; color: #b0aea5; font-size: 15px;">Near Black (#141413) replaces Parchment as the ambient background</li>
+        <li style="padding: 10px 0; border-bottom: 1px solid #3d3d3a; color: #b0aea5; font-size: 15px;">Dark Surface (#30302e) replaces Ivory as the elevated container surface</li>
+        <li style="padding: 10px 0; border-bottom: 1px solid #3d3d3a; color: #b0aea5; font-size: 15px;">Ivory (#faf9f5) replaces Near Black as the primary text color</li>
+        <li style="padding: 10px 0; border-bottom: 1px solid #3d3d3a; color: #b0aea5; font-size: 15px;">Warm Silver (#b0aea5) serves as body text -- warm, never cool gray</li>
+        <li style="padding: 10px 0; border-bottom: 1px solid #3d3d3a; color: #b0aea5; font-size: 15px;">Coral (#d97757) replaces Near Black for links and text accents</li>
+        <li style="padding: 10px 0; color: #b0aea5; font-size: 15px;">Terracotta (#c96442) remains unchanged -- the constant across both themes</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer style="padding: 48px 0; text-align: center; border-top: 1px solid #30302e;">
+  <div class="container">
+    <p style="font-family: Georgia, serif; font-weight: 500; font-size: 17px; color: #87867f;">Claude Design System — Dark Theme Preview</p>
+    <p style="font-size: 13px; color: #5e5d59; margin-top: 8px;">Reference implementation using Georgia (serif fallback) and system sans-serif</p>
+  </div>
+</footer>
+
+</body>
+</html>
