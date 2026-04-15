@@ -232,22 +232,180 @@
   .hero__sub { margin-bottom: 36px; }
   .hero__cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-  .hero__media {
+  /* ============================================================
+     Hero media — replicates github.com/features/copilot structure:
+       .hero__visual      — outer positioning context (overflow visible so the
+                            agent head can poke above the frame)
+       .hero__container   — 20px radius frame with shadow-border (replaces CSS
+                            border per §11.3 Vercel/Primer-brand convention)
+       .hero__glass       — inner layer carrying the signature radial bloom
+                            (mint #5fed83 → muted purple → transparent).
+                            Values match the live site formula.
+       .hero__media       — the 16px-radius video window inside the glass
+       .hero__agent       — 400×400 SVG mascot, absolute-positioned to peek
+                            above the top-right corner. Original art, NOT a
+                            clone of GitHub's Mona/Copilot character —
+                            respects trademark while preserving composition.
+  ============================================================ */
+  .hero__visual {
     margin: 72px auto 0;
-    max-width: 1080px;
+    max-width: 1105px; /* matches live .lp-Hero-videoContainer width */
+    position: relative;
+    /* Do NOT clip — agent head overflows the container by design. */
+    overflow: visible;
+  }
+  .hero__container {
     position: relative;
     border-radius: 20px;
+    /* §11.3 shadow-border technique (1px inner hairline, no CSS border) */
+    box-shadow: rgba(255, 255, 255, 0.08) 0 0 0 1px;
+    padding: 5px; /* gap that reveals the glass layer behind */
+    background: var(--gh-bg-subtle, #0d1117);
+  }
+  .hero__glass {
+    position: relative;
+    border-radius: 16px;
+    /* Background FILL — a soft radial bloom behind the video.
+       Formula lifted from the live Copilot hero:
+       radial-gradient(92.7% 88.72% at 50% -1.19%,
+         #5fed83 0%, rgba(131, 66, 250, 0.1) 28.6%, transparent 100%) */
+    background-image:
+      radial-gradient(
+        92.7% 88.72% at 50% -1.19%,
+        #5fed83 0%,
+        rgba(131, 66, 250, 0.1) 28.6%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    padding: 5px;  /* keeps the glass gradient visible under the video */
+  }
+  /* Multi-gradient BORDER LIGHT — matches .lp-Hero-glass::before on the
+     live site. Two stacked radials give a rainbow rim (white → mint →
+     sky-blue → faint purple → white haze) across the container edge.
+     The `mask: ... exclude` pattern punches out the content rectangle so
+     only the border region shows — a gradient-border trick. */
+  .hero__glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 6px solid transparent;
+    background-image:
+      radial-gradient(at 50% 100%,
+        #ffffff 1%,
+        #5fed83 13%,
+        #4bb1ff 51%,
+        rgba(131, 66, 250, 0.1) 76%,
+        rgba(255, 255, 255, 0.1) 96%),
+      radial-gradient(at 45% 55%,
+        #ffffff 1%,
+        #5fed83 13%,
+        #4bb1ff 51%,
+        rgba(131, 66, 250, 0.1) 76%,
+        rgba(255, 255, 255, 0.1) 96%);
+    /* Border-mask technique: render only the border band, hide fill.
+       Cross-browser: Safari's -webkit-mask-composite uses `xor`
+       whereas the standard mask-composite uses `exclude`. */
+    -webkit-mask-image:
+      linear-gradient(#000 0 0),
+      linear-gradient(#000 0 0);
+    -webkit-mask-clip: padding-box, border-box;
+    -webkit-mask-composite: xor;
+    mask-image:
+      linear-gradient(#000 0 0),
+      linear-gradient(#000 0 0);
+    mask-clip: padding-box, border-box;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero__media {
+    position: relative;
+    border-radius: 12px;
     overflow: hidden;
-    background: var(--gh-glass);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    box-shadow: var(--gh-shadow-bloom-lg);
     aspect-ratio: 16 / 9;
+    margin: 0;
+    /* Subtle inner shadow keeps the video edge crisp against the bloom */
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   }
   .hero__media video {
     width: 100%; height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  /* Play-state affordance — small circular button bottom-right of the video,
+     matches .lp-Hero-videoPlayerButton live-site position. */
+  .hero__playbtn {
+    position: absolute;
+    bottom: 16px; right: 16px;
+    width: 44px; height: 44px; /* §12.8 AAA 44px target */
+    border-radius: 50%;
+    border: none;
+    background: rgba(13, 17, 23, 0.72);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    display: grid; place-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s var(--gh-ease);
+    z-index: 2;
+  }
+  .hero__playbtn:hover { background: rgba(13, 17, 23, 0.92); }
+
+  /* ============================================================
+     .hero__agent — the "AI companion" that peeks above the hero.
+     400×400, absolute, top:-190px / right:-170px — precisely
+     mirrors the live-site .lp-Hero-head positioning numbers.
+     The character is original SVG art (simple geometric capsule
+     with a pair of blinking dot eyes) — deliberately NOT a
+     reproduction of the GitHub Copilot mascot.
+  ============================================================ */
+  .hero__agent {
+    position: absolute;
+    /* Match live-site .lp-Hero-head: 400×400 box, top:-190px right:-170px.
+       The BOX is large but the drawn art inside the viewBox occupies only
+       the lower-left quadrant, producing the "small head peeks from the
+       top-right corner of the frame" visual we see on the live site. */
+    top: -190px;
+    right: -170px;
+    width: 400px; height: 400px;
+    pointer-events: none;
+    opacity: 0; transform: translateY(20px) scale(0.96);
+    transition: opacity 0.8s var(--gh-ease), transform 0.8s var(--gh-ease);
+    transition-delay: 0.5s;
+    z-index: 3;
+  }
+  .hero__visual.is-in .hero__agent { opacity: 1; transform: none; }
+  .hero__agent svg { width: 100%; height: 100%; }
+  /* blink keyframes — the eye dots scale to 0.05 vertical twice per 6s loop */
+  @keyframes agentBlink {
+    0%, 42%, 48%, 92%, 98%, 100% { transform: scaleY(1); }
+    45%, 95% { transform: scaleY(0.05); }
+  }
+  .hero__agent .eye {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: agentBlink 6s var(--gh-ease) infinite;
+  }
+  .hero__agent .eye--right { animation-delay: 0.05s; }
+  /* glossy specular highlight on the head — slow drift */
+  @keyframes agentShine {
+    0%   { transform: translate(0, 0); opacity: 0.35; }
+    50%  { transform: translate(-6px, -4px); opacity: 0.55; }
+    100% { transform: translate(0, 0); opacity: 0.35; }
+  }
+  .hero__agent .shine { animation: agentShine 7s var(--gh-ease) infinite; }
+
+  /* §12.10 + §11.4 — reduced-motion respects the live site's
+     .hide-reduced-motion pattern: hide the animated agent entirely. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero__agent { display: none; }
+  }
+  @media (max-width: 768px) {
+    /* On mobile, the overflowing head creates layout noise — tuck it. */
+    .hero__agent { width: 240px; height: 240px; top: -110px; right: -80px; }
+  }
+  @media (max-width: 480px) {
+    .hero__agent { display: none; }
   }
 
   /* ============================================================
@@ -803,14 +961,84 @@ nav a, header a, footer a,
       </div>
     </div>
 
-    <div class="hero__media" data-reveal data-reveal-delay="3" aria-label="Copilot product animation">
-      <video
-        autoplay muted loop playsinline preload="metadata"
-        poster="https://images.ctfassets.net/8aevphvgewt8/7xenBC7iqpKfe5tXk9TKby/caf78ec4e1918cf82681613fcb7e9468/hero-poster-lg.webp"
-        aria-label="Copilot interface animation showcasing code completion and chat"
-      >
-        <source src="https://videos.ctfassets.net/8aevphvgewt8/5R57iyx96ENtWp4nOHBsAl/f935b264e79099bd8ed54e2d74db7ab5/hero-animation-lg.mp4" type="video/mp4"/>
-      </video>
+    <div class="hero__visual" data-reveal data-reveal-delay="3" aria-label="Copilot product animation">
+      <div class="hero__container">
+        <div class="hero__glass">
+          <div class="hero__media">
+            <video
+              autoplay muted loop playsinline preload="metadata"
+              poster="https://images.ctfassets.net/8aevphvgewt8/7xenBC7iqpKfe5tXk9TKby/caf78ec4e1918cf82681613fcb7e9468/hero-poster-lg.webp"
+              aria-label="Copilot interface animation showcasing code completion and chat"
+            >
+              <source src="https://videos.ctfassets.net/8aevphvgewt8/5R57iyx96ENtWp4nOHBsAl/f935b264e79099bd8ed54e2d74db7ab5/hero-animation-lg.mp4" type="video/mp4"/>
+            </video>
+            <button type="button" class="hero__playbtn" aria-label="Pause hero animation" data-play-toggle>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+                <rect x="3" y="2" width="3" height="10" rx="1"/>
+                <rect x="8" y="2" width="3" height="10" rx="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           Hero agent — ORIGINAL SVG illustration, not a reproduction of
+           GitHub's Copilot mascot. Capsule-shaped "AI companion" with
+           blinking dot eyes, a soft specular highlight, and a neon
+           accent ring. Positioning matches the live-site layout
+           (.lp-Hero-head: 400px, top:-190px, right:-170px).
+      ============================================================ -->
+      <div class="hero__agent" aria-hidden="true">
+        <!--
+          The art inside this 400×400 viewBox is deliberately small
+          (~160px) and positioned in the LOWER-LEFT quadrant. Since the
+          whole container is shifted top:-190 right:-170, the visible
+          art ends up as a compact head peeking from the top-right corner
+          of the hero frame — matching the live site's visual balance.
+          The character is original geometry (round body, antenna, two
+          eye dots) — not a reproduction of GitHub's trademarked mascot.
+        -->
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="agentBodyGrad" cx="50%" cy="35%" r="60%">
+              <stop offset="0%"   stop-color="#7bf39b"/>
+              <stop offset="60%"  stop-color="#3fc864"/>
+              <stop offset="100%" stop-color="#1a7f37"/>
+            </radialGradient>
+            <filter id="agentGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="10" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Soft ambient neon halo, smaller and centered on the head -->
+          <circle cx="155" cy="285" r="95" fill="#5fed83" opacity="0.22" filter="url(#agentGlow)"/>
+
+          <!-- Antenna — thin line to a neon sphere (compact, above head) -->
+          <line x1="155" y1="222" x2="155" y2="200"
+                stroke="#5fed83" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="155" cy="193" r="7" fill="#5fed83" filter="url(#agentGlow)"/>
+
+          <!-- Main head — ~160px round ball in the lower-left quadrant.
+               Visible position on screen ≈ top-right of the hero frame. -->
+          <circle cx="155" cy="285" r="80"
+                  fill="url(#agentBodyGrad)"
+                  stroke="#5fed83" stroke-width="1.5" stroke-opacity="0.6"/>
+
+          <!-- Small "ears" to hint at a friendly creature (abstract, not feline) -->
+          <path d="M 95 230 L 110 268 L 130 248 Z" fill="#3fc864"/>
+          <path d="M 215 230 L 200 268 L 180 248 Z" fill="#3fc864"/>
+
+          <!-- Eyes — two dark dots that blink via the .eye CSS keyframe -->
+          <ellipse class="eye eye--left"  cx="130" cy="285" rx="7" ry="9" fill="#0d1117"/>
+          <ellipse class="eye eye--right" cx="180" cy="285" rx="7" ry="9" fill="#0d1117"/>
+
+          <!-- Specular highlight — drifts slowly via .shine keyframe -->
+          <ellipse class="shine" cx="128" cy="255" rx="14" ry="7"
+                   fill="#ffffff" opacity="0.35" transform="rotate(-20 128 255)"/>
+        </svg>
+      </div>
     </div>
   </div>
 </section>
@@ -1167,6 +1395,26 @@ nav a, header a, footer a,
       });
     }, { threshold: 0.35 });
     videos.forEach(function(v){ vidObserver.observe(v); });
+  }
+
+  // Hero play/pause toggle — matches the live .lp-Hero-videoPlayerButton affordance.
+  var toggleBtn = document.querySelector('[data-play-toggle]');
+  var heroVid = document.querySelector('.hero__media video');
+  if (toggleBtn && heroVid) {
+    var setIcon = function(playing){
+      toggleBtn.innerHTML = playing
+        // Pause glyph (two bars) — shown when the video is playing
+        ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3" height="10" rx="1"/><rect x="8" y="2" width="3" height="10" rx="1"/></svg>'
+        // Play glyph (triangle) — shown when paused
+        : '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M4 2.5 L11 7 L4 11.5 Z"/></svg>';
+      toggleBtn.setAttribute('aria-label', playing ? 'Pause hero animation' : 'Play hero animation');
+    };
+    toggleBtn.addEventListener('click', function(){
+      if (heroVid.paused) { heroVid.play().catch(function(){}); setIcon(true); }
+      else { heroVid.pause(); setIcon(false); }
+    });
+    heroVid.addEventListener('play',  function(){ setIcon(true);  });
+    heroVid.addEventListener('pause', function(){ setIcon(false); });
   }
 })();
 </script>

@@ -738,6 +738,72 @@ Primer Brand uses Mona Sans as a **variable font** and hits weights that static 
 .brand-hero { font-family: "Mona Sans VF", "Mona Sans", -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 425; letter-spacing: -0.035em; }
 ```
 
+### 10.3a Copilot Hero Pattern (Signature Composition)
+
+The github.com/features/copilot hero is the most distinctive composition Primer Brand ships. Four layered elements together create the effect, and the formula below is observed verbatim from the live site:
+
+**Layer stack (outermost → innermost)**:
+
+1. **Hero visual** — positioning context; `overflow: visible` so the agent mascot can extend beyond the frame.
+2. **Container** — 20px radius, `padding: 5px`, shadow-border `rgba(255,255,255,0.08) 0 0 0 1px`. The 5px padding creates the visible "gap" that reveals the glass bloom behind the video.
+3. **Glass** — 16px radius, carries TWO stacked gradient systems:
+
+   **Fill gradient** (main background, soft bloom behind the video):
+   ```css
+   background-image: radial-gradient(
+     92.7% 88.72% at 50% -1.19%,
+     #5fed83 0%,                      /* neon mint core, above top edge */
+     rgba(131, 66, 250, 0.1) 28.6%,   /* muted purple falloff */
+     rgba(0, 0, 0, 0) 100%            /* fade to canvas */
+   );
+   ```
+
+   **Multi-color rim** (`::before` pseudo-element with gradient-border mask):
+   ```css
+   .hero__glass::before {
+     content: ""; position: absolute; inset: 0;
+     border: 6px solid transparent;  /* thick border — the colored band */
+     border-radius: inherit;
+     background-image:
+       radial-gradient(at 50% 100%,
+         #ffffff 1%, #5fed83 13%, #4bb1ff 51%,
+         rgba(131, 66, 250, 0.1) 76%, rgba(255, 255, 255, 0.1) 96%),
+       radial-gradient(at 45% 55%,
+         #ffffff 1%, #5fed83 13%, #4bb1ff 51%,
+         rgba(131, 66, 250, 0.1) 76%, rgba(255, 255, 255, 0.1) 96%);
+     /* Gradient-border mask: render ONLY the border ring, punch out the fill. */
+     -webkit-mask-image:
+       linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+     -webkit-mask-clip: padding-box, border-box;
+     -webkit-mask-composite: xor;     /* Safari keyword */
+     mask-image:
+       linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+     mask-clip: padding-box, border-box;
+     mask-composite: exclude;          /* Standard keyword */
+     pointer-events: none;
+   }
+   ```
+
+   The rim's color stops read as a **rainbow band**: white core → mint → **sky-blue (`#4bb1ff`)** → faint purple → white haze. Two radials (one anchored at bottom-center, one at mid-left) overlap to distribute the band unevenly — the green settles on top-left, the blue on the right, the purple in corners. This rainbow rim + the green fill bloom together are what make the Copilot hero visually unmistakable.
+4. **Media** — 12px radius, aspect-ratio 16/9, holds the autoplay video with a 44px circular play/pause button bottom-right (`rgba(13,17,23,0.72)` + `backdrop-filter: blur(12px)`).
+
+**Agent character** — a 400×400 element absolute-positioned to peek from the top-right corner:
+```css
+.hero__agent {
+  position: absolute;
+  top: -190px; right: -170px;
+  width: 400px; height: 400px;
+}
+@media (prefers-reduced-motion: reduce) { .hero__agent { display: none; } }
+```
+On the live site this is a `<canvas>` that draws a procedural character with blinking eyes (class `.lp-Hero-head` + `.lp-Hero-headBlink`, hidden under `.hide-reduced-motion`). Reproductions MUST:
+- Use **original illustration** for the character — do not clone GitHub's mascot; it is trademarked.
+- Preserve the **400×400 / top:-190px / right:-170px** positioning — the overflow peek is the compositional point.
+- Preserve the **blink loop** (CSS keyframes `transform: scaleY(1) ↔ scaleY(0.05)` at ~6s cadence).
+- Respect `prefers-reduced-motion` — hide the animated character, never replace with a static image (the live site follows the same rule via `.hide-reduced-motion`).
+
+A working non-infringing reference implementation ships in `github/preview-copilot.html`. The character there is a generic capsule-shape AI agent with antenna — same composition, different identity.
+
 ### 10.3 Glass & Ambient Glow
 
 Flagship product pages (especially /copilot) use two compositing techniques rarely seen in Primer product UI:
