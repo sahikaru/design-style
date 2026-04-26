@@ -1,5 +1,17 @@
 # Design System: GitHub — Primer + Primer Brand
 
+> ⚠️ **2026-04-26 拆分通知**：本文件 1603 行已超 25K Read 限制。Agent 优先读拆分版：
+> - 总入口决策树：[`../DESIGN.md`](../DESIGN.md)
+> - 双系统概览：[`design-system/00-overview.md`](design-system/00-overview.md)
+> - Primer 产品 UI（本文件 Section 1-9）：[`design-system/01-primer-product.md`](design-system/01-primer-product.md)
+> - Primer Brand 营销（Section 10）：[`design-system/02-primer-brand.md`](design-system/02-primer-brand.md)
+> - 跨系统硬规则（Section 11）：[`design-system/03-hard-rules.md`](design-system/03-hard-rules.md)
+> - 官方权威参考（Section 12-13）：[`design-system/04-authoritative-reference.md`](design-system/04-authoritative-reference.md)
+>
+> 本文件保留作为 single-file fallback / archive，但**不再是首选阅读入口**。
+
+---
+
 GitHub ships **two design languages under one roof**, and knowing which one to use is half the job:
 
 - **Primer** (this doc's original focus) — the **product UI** system: light canvas `#ffffff`, blue accent `#0969da`, **system font stack** (NOT Mona Sans — see correction in Section 1 / authoritative Section 12.5), dense information architecture. Used across all logged-in product surfaces — repos, issues, PRs, settings, dashboards.

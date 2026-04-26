@@ -1,6 +1,17 @@
 # HTML Template Reference
 
-> Aligned with GitHub Primer design system — see design-system.md
+> ⚠️ **2026-04-26 状态提醒**：本文件是早期 DeepWiki-style 文档站模板，**仅服务于 GitHub Primer 产品 UI 一种特定子场景**（文档站页面）。
+>
+> 它**不是** 营销页 / 仓库页 / 产品页 / Brand 系统的 HTML 模板。如果你要做：
+> - **Primer Brand 营销页** → 参考 `previews/brand-homepage.html` / `brand-copilot.html` / `brand-enterprise.html`
+> - **Primer 产品 UI 通用 token 展示** → 参考 `previews/primer-product-light.html` / `primer-product-dark.html`
+> - **完整规范 / 决策树** → `DESIGN.md` + `design-system/00-overview.md`
+>
+> 本文件早期色值（如 `#0550ae`）跟权威 Primer token（`#0969da` 等）有出入，使用前请用 `design-system/01-primer-product.md` 的 token 表校准。
+>
+> ⏳ **PR 5 计划**：把本文件升级为完整的 `templates/` 目录（DeepWiki 模板 + repo 页模板 + issue/PR 模板 + brand 营销模板各一份），同时全部对齐新 token 命名。
+
+---
 
 This file contains the exact CSS values, HTML patterns, and component markup for generating DeepWiki-style documentation pages.
 
