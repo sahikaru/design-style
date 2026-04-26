@@ -24,7 +24,8 @@ GitHub 实际上运营两套并行的设计语言：
 
 **Primer（产品 UI）** —— 冷静、密集、为开发者而生的工具型界面：
 - 纯白画布 `#ffffff` + 冷灰 `#f6f8fa`，蓝色主交互 `#0969da`
-- Mona Sans 变量字体，语义化状态色（成功/危险/警告/完成）
+- **System 字体栈**（非 Mona Sans —— Mona Sans 只在 Brand 营销用）+ 语义化状态色（成功/危险/警告/完成）
+- Token 前缀 `--gh-product-*`，亮/暗双主题：`previews/primer-product-light.html` / `primer-product-dark.html`
 - 适合：登录后产品界面、repo/issue/PR、dashboard、管理后台
 
 **Primer Brand（营销门面）** —— 深色戏剧化画布 + 霓虹薄荷：
@@ -32,11 +33,14 @@ GitHub 实际上运营两套并行的设计语言：
 - Mona Sans VF **可变字重 425 / 440 / 460**（"just-past-regular"——静态字体达不到的微妙字重）
 - 签名手法：玻璃卡 `backdrop-filter: blur(40px) saturate(180%)` + 径向薄荷光晕 + shadow-border + neon bloom
 - 动效：`cubic-bezier(0.33, 1, 0.68, 1)` ease-out quad，比 Apple 更干脆；metrics count-up 动画
+- Token 前缀 `--gh-brand-*`
 - **三个页面范式（对应 Apple 的 iPhone/Mac/Vision Pro）**：
-  - `preview.html` → github.com 首页 —— 品牌 landing（64px/425/-2.24px 压缩 hero + autoplay 视频 + 手风琴）
-  - `preview-copilot.html` → github.com/features/copilot —— 旗舰产品（玻璃卡 + 光晕 + scroll-play 视频）
-  - `preview-enterprise.html` → github.com/enterprise —— B2B 权威（20 行功能对比表 + metrics 滚数 + FAQ）
+  - `previews/brand-homepage.html` → github.com 首页 —— 品牌 landing（64px/425/-2.24px 压缩 hero + autoplay 视频 + 手风琴）
+  - `previews/brand-copilot.html` → github.com/features/copilot —— 旗舰产品（玻璃卡 + 光晕 + scroll-play 视频）
+  - `previews/brand-enterprise.html` → github.com/enterprise —— B2B 权威（20 行功能对比表 + metrics 滚数 + FAQ）
 - 适合：开发者工具营销、SaaS 落地页、AI 产品高端叙事、企业级信息架构
+
+> ⚠️ GitHub 目录结构与其他风格不同（多一层 `previews/` 子目录 + `DESIGN.md` 入口 + `assets/` 真实资产）。Agent 接入前请先读 `github/DESIGN.md`。
 
 ### `apple/` — Apple 风格
 

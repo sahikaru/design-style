@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Tooling outputs (screenshot diffs, browser artifacts)
+.compare/
+.playwright-mcp/
+
+# Editor / OS
+*.swp
+*.swo
+.idea/
+.vscode/
