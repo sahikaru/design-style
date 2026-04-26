@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primer Product Page · Template</title>
+<!--
+  Minimal Primer 产品 UI page skeleton.
+  Light + dark via prefers-color-scheme.
+  Token prefix: --gh-product-* (see DESIGN.md §7).
+  Logo: assets/logo/octocat-mark.svg (auto color via currentColor).
+-->
+<style>
+  :root {
+    /* Primer Light tokens */
+    --gh-product-canvas-default: #ffffff;
+    --gh-product-canvas-subtle: #f6f8fa;
+    --gh-product-canvas-emphasis: #25292e;
+    --gh-product-fg-default: #1f2328;
+    --gh-product-fg-muted: #59636e;
+    --gh-product-fg-accent: #0969da;
+    --gh-product-fg-success: #1a7f37;
+    --gh-product-fg-danger: #d1242f;
+    --gh-product-border-default: #d1d9e0;
+    --gh-product-accent-emphasis: #0969da;
+    --gh-product-accent-muted: #ddf4ff;
+    --gh-product-success-emphasis: #1f883d;
+    --gh-product-danger-emphasis: #cf222e;
+    --gh-product-done-emphasis: #8250df;
+
+    /* Utilities (cross-system) */
+    --gh-product-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --gh-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --gh-radius: 6px;
+    --gh-ease: cubic-bezier(0.33, 1, 0.68, 1);
+    --gh-dur-fast: 0.15s;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --gh-product-canvas-default: #141413;
+      --gh-product-canvas-subtle: #1c1c1b;
+      --gh-product-fg-default: #e6edf3;
+      --gh-product-fg-muted: #8b949e;
+      --gh-product-fg-accent: #58a6ff;
+      --gh-product-fg-success: #3fb950;
+      --gh-product-fg-danger: #f85149;
+      --gh-product-border-default: #30363d;
+      --gh-product-accent-emphasis: #1f6feb;
+      --gh-product-accent-muted: #121d2f;
+      --gh-product-success-emphasis: #238636;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--gh-product-font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--gh-product-fg-default);
+    background: var(--gh-product-canvas-default);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a { color: var(--gh-product-fg-accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ===== Header (top bar) ===== */
+  .gh-header {
+    height: 64px;
+    border-bottom: 1px solid var(--gh-product-border-default);
+    background: var(--gh-product-canvas-emphasis);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+  .gh-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .gh-header__logo {
+    color: #ffffff;
+    display: inline-flex;
+    cursor: pointer;
+  }
+  .gh-header__logo img { width: 32px; height: 32px; }
+  .gh-header__nav {
+    display: flex; gap: 16px; flex: 1;
+    list-style: none;
+  }
+  .gh-header__nav a {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 8px;
+    border-radius: var(--gh-radius);
+    cursor: pointer;
+    transition: background var(--gh-dur-fast) var(--gh-ease);
+  }
+  .gh-header__nav a:hover { background: rgba(255,255,255,0.1); text-decoration: none; }
+
+  /* ===== Layout ===== */
+  .gh-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+  }
+  .gh-sidebar {
+    border-right: 1px solid var(--gh-product-border-default);
+    padding-right: 16px;
+  }
+  .gh-sidebar__item {
+    display: block;
+    padding: 6px 8px;
+    border-radius: var(--gh-radius);
+    color: var(--gh-product-fg-default);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background var(--gh-dur-fast) var(--gh-ease);
+  }
+  .gh-sidebar__item:hover { background: var(--gh-product-canvas-subtle); text-decoration: none; }
+  .gh-sidebar__item--active { background: var(--gh-product-accent-muted); color: var(--gh-product-fg-accent); font-weight: 600; }
+
+  /* ===== Content ===== */
+  .gh-content h1 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .gh-content p { color: var(--gh-product-fg-muted); margin-bottom: 16px; }
+
+  /* ===== Components: Buttons ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 16px;
+    border-radius: var(--gh-radius);
+    border: 1px solid var(--gh-product-border-default);
+    background: var(--gh-product-canvas-default);
+    color: var(--gh-product-fg-default);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--gh-dur-fast) var(--gh-ease);
+  }
+  .btn:hover { background: var(--gh-product-canvas-subtle); }
+  .btn--primary {
+    background: var(--gh-product-success-emphasis);
+    color: #ffffff;
+    border-color: rgba(0,0,0,0.1);
+  }
+  .btn--primary:hover { background: #1a7f37; }
+
+  /* ===== Components: State badges (issue/PR/done) ===== */
+  .state {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 980px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .state--open    { background: var(--gh-product-success-emphasis); }
+  .state--closed  { background: var(--gh-product-danger-emphasis); }
+  .state--merged  { background: var(--gh-product-done-emphasis); }
+  .state--draft   { background: var(--gh-product-fg-muted); }
+
+  /* ===== Code block (uses code-highlighting.md tokens) ===== */
+  .code-block {
+    background: var(--gh-product-canvas-subtle);
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
+    padding: 16px;
+    font-family: var(--gh-font-mono);
+    font-size: 12px;
+    line-height: 1.45;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+</style>
+</head>
+<body>
+  <header class="gh-header">
+    <div class="gh-header__inner">
+      <a href="/" class="gh-header__logo" aria-label="GitHub">
+        <img src="../assets/logo/octocat-mark-white.svg" alt="GitHub" />
+      </a>
+      <ul class="gh-header__nav">
+        <li><a href="#">Pull requests</a></li>
+        <li><a href="#">Issues</a></li>
+        <li><a href="#">Marketplace</a></li>
+        <li><a href="#">Explore</a></li>
+      </ul>
+      <a href="#" class="btn btn--primary">Sign in</a>
+    </div>
+  </header>
+
+  <div class="gh-page">
+    <aside class="gh-sidebar">
+      <a href="#" class="gh-sidebar__item gh-sidebar__item--active">Overview</a>
+      <a href="#" class="gh-sidebar__item">Repositories</a>
+      <a href="#" class="gh-sidebar__item">Projects</a>
+      <a href="#" class="gh-sidebar__item">Packages</a>
+      <a href="#" class="gh-sidebar__item">Stars</a>
+    </aside>
+
+    <main class="gh-content">
+      <h1>Page title goes here</h1>
+      <p>Replace this paragraph with your page-specific content. Keep paragraphs short — Primer optimizes for 8-hour reading sessions, so use info density without visual fatigue.</p>
+
+      <div style="display: flex; gap: 8px; margin-bottom: 24px;">
+        <span class="state state--open">Open</span>
+        <span class="state state--closed">Closed</span>
+        <span class="state state--merged">Merged</span>
+        <span class="state state--draft">Draft</span>
+      </div>
+
+      <div class="code-block"><span style="color: #6e7781;">// Example code block</span>
+<span style="color: #cf222e;">const</span> <span style="color: #1f2328;">message</span> = <span style="color: #0a3069;">"Use code-highlighting.md token classes (.pl-c, .pl-k, .pl-s) in real usage"</span>;</div>
+
+      <div style="display: flex; gap: 8px;">
+        <a href="#" class="btn">Cancel</a>
+        <a href="#" class="btn btn--primary">Save changes</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
