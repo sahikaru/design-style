@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://github.githubassets.com" crossorigin/>
 <link rel="preconnect" href="https://images.ctfassets.net" crossorigin/>
 <link rel="preconnect" href="https://videos.ctfassets.net" crossorigin/>
-<link rel="preload" as="font" href="https://github.githubassets.com/assets/mona-sans-8b1fb7b74e59.woff2" type="font/woff2" crossorigin/>
+<link rel="preload" as="font" href="../assets/fonts/mona-sans-vf.woff2" type="font/woff2" crossorigin/>
 <style>
   /* ============================================================
      Primer brand tokens — Copilot flagship palette
@@ -20,34 +20,34 @@
   ============================================================ */
   :root {
     /* Brand canvas & surfaces */
-    --gh-canvas: #000000;
-    --gh-canvas-subtle: #0d1117;
-    --gh-canvas-inset: #151b23;
+    --gh-brand-canvas: #000000;
+    --gh-brand-canvas-subtle: #0d1117;
+    --gh-brand-canvas-inset: #151b23;
 
     /* Text */
-    --gh-fg: #ffffff;
-    --gh-fg-muted: #9198a1;
-    --gh-fg-subtle: #656d76;
+    --gh-brand-fg: #ffffff;
+    --gh-brand-fg-muted: #9198a1;
+    --gh-brand-fg-subtle: #656d76;
 
     /* Accent — neon mint (Copilot signature) */
-    --gh-accent: #5fed83;
-    --gh-accent-strong: #7cffa0;
-    --gh-accent-deep: #1a7f37;
-    --gh-accent-wash: rgba(95, 237, 131, 0.15);
+    --gh-brand-accent: #5fed83;
+    --gh-brand-accent-strong: #7cffa0;
+    --gh-brand-accent-deep: #1a7f37;
+    --gh-brand-accent-wash: rgba(95, 237, 131, 0.15);
 
     /* Primer blue (secondary) */
     --gh-blue: #1f6feb;
 
     /* Borders & glass */
-    --gh-border: rgba(255, 255, 255, 0.08);
-    --gh-border-strong: rgba(255, 255, 255, 0.16);
-    --gh-glass: rgba(21, 27, 35, 0.6);
-    --gh-glass-strong: rgba(21, 27, 35, 0.82);
+    --gh-brand-border: rgba(255, 255, 255, 0.08);
+    --gh-brand-border-strong: rgba(255, 255, 255, 0.16);
+    --gh-brand-glass: rgba(21, 27, 35, 0.6);
+    --gh-brand-glass-strong: rgba(21, 27, 35, 0.82);
 
     /* Shadow-border */
-    --gh-shadow-border: 0 0 0 1px var(--gh-border);
-    --gh-shadow-bloom:  0 0 0 1px var(--gh-border), 0 0 80px rgba(95, 237, 131, 0.10);
-    --gh-shadow-bloom-lg: 0 0 0 1px var(--gh-border-strong), 0 40px 120px rgba(95, 237, 131, 0.18);
+    --gh-brand-shadow-border: 0 0 0 1px var(--gh-brand-border);
+    --gh-brand-shadow-bloom:  0 0 0 1px var(--gh-brand-border), 0 0 80px rgba(95, 237, 131, 0.10);
+    --gh-brand-shadow-bloom-lg: 0 0 0 1px var(--gh-brand-border-strong), 0 40px 120px rgba(95, 237, 131, 0.18);
 
     /* Motion */
     --gh-ease: cubic-bezier(0.33, 1, 0.68, 1);
@@ -55,7 +55,7 @@
     --gh-dur-reveal: 0.4s;
 
     /* Type */
-    --gh-font-sans: "Mona Sans VF", "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --gh-brand-font-sans: "Mona Sans VF", "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     --gh-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   }
 
@@ -63,10 +63,10 @@
 
   html { scroll-behavior: smooth; }
   body {
-    font-family: var(--gh-font-sans);
+    font-family: var(--gh-brand-font-sans);
     font-feature-settings: "ss01", "ss02", "cv01";
-    background: var(--gh-canvas);
-    color: var(--gh-fg);
+    background: var(--gh-brand-canvas);
+    color: var(--gh-brand-fg);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -93,14 +93,14 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gh-accent);
+    color: var(--gh-brand-accent);
   }
 
-  .h-hero { font-size: 56px; font-weight: 440; line-height: 1.1; letter-spacing: -0.01em; color: var(--gh-fg); }
-  .h-section { font-size: 40px; font-weight: 460; line-height: 1.2; letter-spacing: -0.005em; color: var(--gh-fg); }
-  .h-card { font-size: 24px; font-weight: 440; line-height: 1.3; color: var(--gh-fg); }
-  .p-lead { font-size: 20px; font-weight: 400; line-height: 1.5; color: var(--gh-fg-muted); }
-  .p-body { font-size: 16px; font-weight: 400; line-height: 1.6; color: var(--gh-fg-muted); }
+  .h-hero { font-size: 56px; font-weight: 440; line-height: 1.1; letter-spacing: -0.01em; color: var(--gh-brand-fg); }
+  .h-section { font-size: 40px; font-weight: 460; line-height: 1.2; letter-spacing: -0.005em; color: var(--gh-brand-fg); }
+  .h-card { font-size: 24px; font-weight: 440; line-height: 1.3; color: var(--gh-brand-fg); }
+  .p-lead { font-size: 20px; font-weight: 400; line-height: 1.5; color: var(--gh-brand-fg-muted); }
+  .p-body { font-size: 16px; font-weight: 400; line-height: 1.6; color: var(--gh-brand-fg-muted); }
 
   /* ============================================================
      Buttons
@@ -125,15 +125,15 @@
   }
   .btn:active { transform: scale(0.98); }
   .btn-primary {
-    background: var(--gh-accent);
+    background: var(--gh-brand-accent);
     color: #041c0b;
     box-shadow: 0 0 0 1px rgba(95, 237, 131, 0.4), 0 8px 40px rgba(95, 237, 131, 0.25);
   }
-  .btn-primary:hover { background: var(--gh-accent-strong); box-shadow: 0 0 0 1px rgba(124, 255, 160, 0.6), 0 10px 50px rgba(95, 237, 131, 0.35); }
+  .btn-primary:hover { background: var(--gh-brand-accent-strong); box-shadow: 0 0 0 1px rgba(124, 255, 160, 0.6), 0 10px 50px rgba(95, 237, 131, 0.35); }
   .btn-ghost {
     background: transparent;
-    color: var(--gh-fg);
-    border-color: var(--gh-border-strong);
+    color: var(--gh-brand-fg);
+    border-color: var(--gh-brand-border-strong);
   }
   .btn-ghost:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.28); }
 
@@ -155,7 +155,7 @@
     background: rgba(13, 17, 23, 0.72);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom-color: var(--gh-border);
+    border-bottom-color: var(--gh-brand-border);
   }
   .gnav__inner {
     display: flex;
@@ -165,7 +165,7 @@
   .gnav__logo {
     display: inline-flex;
     align-items: center;
-    color: var(--gh-fg);
+    color: var(--gh-brand-fg);
     cursor: pointer;
   }
   .gnav__logo svg { width: 32px; height: 32px; }
@@ -181,22 +181,22 @@
     padding: 8px 12px;
     font-size: 14px;
     font-weight: 500;
-    color: var(--gh-fg-muted);
+    color: var(--gh-brand-fg-muted);
     border-radius: 8px;
     cursor: pointer;
     transition: color var(--gh-dur-fast) var(--gh-ease),
                 background-color var(--gh-dur-fast) var(--gh-ease);
   }
-  .gnav__link:hover { color: var(--gh-fg); background: rgba(255, 255, 255, 0.06); }
-  .gnav__link.is-active { color: var(--gh-fg); }
+  .gnav__link:hover { color: var(--gh-brand-fg); background: rgba(255, 255, 255, 0.06); }
+  .gnav__link.is-active { color: var(--gh-brand-fg); }
   .gnav__link.is-active::after {
     content: "";
     display: inline-block;
     width: 6px; height: 6px;
     margin-left: 8px;
-    background: var(--gh-accent);
+    background: var(--gh-brand-accent);
     border-radius: 50%;
-    box-shadow: 0 0 12px var(--gh-accent);
+    box-shadow: 0 0 12px var(--gh-brand-accent);
   }
   .gnav__actions { display: flex; align-items: center; gap: 8px; }
   .gnav__actions .btn { padding: 8px 16px; font-size: 14px; border-radius: 8px; }
@@ -218,13 +218,13 @@
     background:
       radial-gradient(ellipse 80% 60% at 50% 0%, rgba(95, 237, 131, 0.22), transparent 55%),
       url("https://github.githubassets.com/assets/hero-bg-desktop-3043dc2aac662165.webp") center top / cover no-repeat,
-      var(--gh-canvas);
+      var(--gh-brand-canvas);
   }
   .hero__bg::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 75%, var(--gh-canvas) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 75%, var(--gh-brand-canvas) 100%);
     pointer-events: none;
   }
   .hero__copy { max-width: 760px; text-align: center; margin: 0 auto; }
@@ -260,7 +260,7 @@
     /* §11.3 shadow-border technique (1px inner hairline, no CSS border) */
     box-shadow: rgba(255, 255, 255, 0.08) 0 0 0 1px;
     padding: 5px; /* gap that reveals the glass layer behind */
-    background: var(--gh-bg-subtle, #0d1117);
+    background: var(--gh-brand-canvas-subtle, #0d1117);
   }
   .hero__glass {
     position: relative;
@@ -418,7 +418,7 @@
   }
   .editors__label {
     font-size: 14px;
-    color: var(--gh-fg-muted);
+    color: var(--gh-brand-fg-muted);
     letter-spacing: 0.05em;
     text-transform: uppercase;
     margin-bottom: 28px;
@@ -477,12 +477,12 @@
     gap: 20px;
   }
   .feature-card {
-    background: var(--gh-glass);
+    background: var(--gh-brand-glass);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: var(--gh-shadow-bloom);
+    box-shadow: var(--gh-brand-shadow-bloom);
     transition: transform var(--gh-dur-fast) var(--gh-ease),
                 box-shadow var(--gh-dur-fast) var(--gh-ease);
     cursor: pointer;
@@ -491,7 +491,7 @@
   }
   .feature-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 0 0 1px var(--gh-border-strong), 0 0 120px rgba(95, 237, 131, 0.22);
+    box-shadow: 0 0 0 1px var(--gh-brand-border-strong), 0 0 120px rgba(95, 237, 131, 0.22);
   }
   .feature-card:active { transform: translateY(-2px) scale(0.99); }
   .feature-card__media {
@@ -508,7 +508,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--gh-accent);
+    color: var(--gh-brand-accent);
     margin-bottom: 12px;
   }
 
@@ -530,18 +530,18 @@
     gap: 20px;
   }
   .org-card {
-    background: var(--gh-glass);
+    background: var(--gh-brand-glass);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
     border-radius: 16px;
     padding: 32px 28px;
-    box-shadow: var(--gh-shadow-bloom);
+    box-shadow: var(--gh-brand-shadow-bloom);
     transition: transform var(--gh-dur-fast) var(--gh-ease), box-shadow var(--gh-dur-fast) var(--gh-ease);
     cursor: pointer;
   }
   .org-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 0 1px var(--gh-border-strong), 0 0 100px rgba(95, 237, 131, 0.18);
+    box-shadow: 0 0 0 1px var(--gh-brand-border-strong), 0 0 100px rgba(95, 237, 131, 0.18);
   }
   .org-card:active { transform: translateY(-1px) scale(0.99); }
   .org-card__icon {
@@ -550,7 +550,7 @@
     background: rgba(95, 237, 131, 0.12);
     display: inline-flex;
     align-items: center; justify-content: center;
-    color: var(--gh-accent);
+    color: var(--gh-brand-accent);
     margin-bottom: 20px;
   }
   .org-card__icon svg { width: 22px; height: 22px; }
@@ -558,11 +558,11 @@
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 8px;
-    color: var(--gh-fg);
+    color: var(--gh-brand-fg);
   }
   .org-card__body {
     font-size: 14px;
-    color: var(--gh-fg-muted);
+    color: var(--gh-brand-fg-muted);
     line-height: 1.55;
   }
 
@@ -586,12 +586,12 @@
     gap: 24px;
   }
   .flight-panel {
-    background: var(--gh-glass);
+    background: var(--gh-brand-glass);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
     border-radius: 20px;
     padding: 36px 32px 32px;
-    box-shadow: var(--gh-shadow-bloom);
+    box-shadow: var(--gh-brand-shadow-bloom);
     cursor: pointer;
     transition: transform var(--gh-dur-fast) var(--gh-ease), box-shadow var(--gh-dur-fast) var(--gh-ease);
     display: flex;
@@ -600,7 +600,7 @@
   }
   .flight-panel:hover {
     transform: translateY(-4px);
-    box-shadow: 0 0 0 1px var(--gh-border-strong), 0 0 110px rgba(95, 237, 131, 0.22);
+    box-shadow: 0 0 0 1px var(--gh-brand-border-strong), 0 0 110px rgba(95, 237, 131, 0.22);
   }
   .flight-panel:active { transform: translateY(-2px) scale(0.99); }
   .flight-panel__inset {
@@ -608,14 +608,14 @@
     border-radius: 12px;
     position: relative;
     overflow: hidden;
-    box-shadow: inset 0 0 0 1px var(--gh-border);
+    box-shadow: inset 0 0 0 1px var(--gh-brand-border);
   }
   .flight-panel__inset--a { background: radial-gradient(circle at 30% 20%, rgba(95,237,131,0.35), transparent 55%), linear-gradient(135deg, #0d1117, #151b23); }
   .flight-panel__inset--b { background: radial-gradient(circle at 70% 30%, rgba(31,111,235,0.35), transparent 55%), linear-gradient(135deg, #0d1117, #151b23); }
   .flight-panel__inset--c { background: radial-gradient(circle at 50% 80%, rgba(130,80,223,0.3), transparent 55%), linear-gradient(135deg, #0d1117, #151b23); }
-  .flight-panel__eyebrow { font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gh-accent); }
-  .flight-panel__title { font-size: 32px; font-weight: 440; line-height: 1.2; color: var(--gh-fg); }
-  .flight-panel__body { font-size: 16px; color: var(--gh-fg-muted); line-height: 1.6; }
+  .flight-panel__eyebrow { font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gh-brand-accent); }
+  .flight-panel__title { font-size: 32px; font-weight: 440; line-height: 1.2; color: var(--gh-brand-fg); }
+  .flight-panel__body { font-size: 16px; color: var(--gh-brand-fg-muted); line-height: 1.6; }
 
   /* ============================================================
      Customer case
@@ -628,12 +628,12 @@
   .case-card {
     max-width: 1100px;
     margin: 0 auto;
-    background: var(--gh-glass);
+    background: var(--gh-brand-glass);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
     border-radius: 24px;
     padding: 48px;
-    box-shadow: var(--gh-shadow-bloom-lg);
+    box-shadow: var(--gh-brand-shadow-bloom-lg);
     display: grid;
     grid-template-columns: 1.1fr 1fr;
     gap: 48px;
@@ -642,18 +642,18 @@
   .case-card__image {
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px var(--gh-border);
+    box-shadow: 0 0 0 1px var(--gh-brand-border);
   }
   .case-card__image img { width: 100%; height: 100%; object-fit: cover; }
   .case-card__quote {
     font-size: 26px;
     font-weight: 440;
     line-height: 1.35;
-    color: var(--gh-fg);
+    color: var(--gh-brand-fg);
     margin: 20px 0 24px;
   }
-  .case-card__attr { font-size: 14px; color: var(--gh-fg-muted); }
-  .case-card__attr strong { color: var(--gh-fg); font-weight: 600; }
+  .case-card__attr { font-size: 14px; color: var(--gh-brand-fg-muted); }
+  .case-card__attr strong { color: var(--gh-brand-fg); font-weight: 600; }
 
   /* ============================================================
      Pricing
@@ -669,12 +669,12 @@
     gap: 20px;
   }
   .price-card {
-    background: var(--gh-glass);
+    background: var(--gh-brand-glass);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
     border-radius: 20px;
     padding: 36px 32px;
-    box-shadow: var(--gh-shadow-bloom);
+    box-shadow: var(--gh-brand-shadow-bloom);
     cursor: pointer;
     transition: transform var(--gh-dur-fast) var(--gh-ease), box-shadow var(--gh-dur-fast) var(--gh-ease);
     position: relative;
@@ -684,7 +684,7 @@
   }
   .price-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 0 0 1px var(--gh-border-strong), 0 0 120px rgba(95, 237, 131, 0.2);
+    box-shadow: 0 0 0 1px var(--gh-brand-border-strong), 0 0 120px rgba(95, 237, 131, 0.2);
   }
   .price-card:active { transform: translateY(-2px) scale(0.99); }
   .price-card--popular {
@@ -694,7 +694,7 @@
     position: absolute;
     top: -12px; left: 50%;
     transform: translateX(-50%);
-    background: var(--gh-accent);
+    background: var(--gh-brand-accent);
     color: #041c0b;
     font-size: 12px;
     font-weight: 700;
@@ -703,13 +703,13 @@
     padding: 5px 12px;
     border-radius: 999px;
   }
-  .price-card__name { font-size: 20px; font-weight: 500; color: var(--gh-fg); }
-  .price-card__price { font-size: 44px; font-weight: 440; line-height: 1.1; color: var(--gh-fg); }
-  .price-card__price small { font-size: 14px; font-weight: 400; color: var(--gh-fg-muted); }
+  .price-card__name { font-size: 20px; font-weight: 500; color: var(--gh-brand-fg); }
+  .price-card__price { font-size: 44px; font-weight: 440; line-height: 1.1; color: var(--gh-brand-fg); }
+  .price-card__price small { font-size: 14px; font-weight: 400; color: var(--gh-brand-fg-muted); }
   .price-card__list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   .price-card__list li {
     font-size: 14px;
-    color: var(--gh-fg-muted);
+    color: var(--gh-brand-fg-muted);
     display: flex;
     gap: 10px;
     line-height: 1.5;
@@ -719,7 +719,7 @@
     flex-shrink: 0;
     width: 16px; height: 16px;
     margin-top: 3px;
-    background: var(--gh-accent);
+    background: var(--gh-brand-accent);
     -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'/></svg>") center/contain no-repeat;
             mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'/></svg>") center/contain no-repeat;
   }
@@ -751,7 +751,7 @@
   }
   .cta-rail p {
     font-size: 20px;
-    color: var(--gh-fg-muted);
+    color: var(--gh-brand-fg-muted);
     margin-bottom: 36px;
     max-width: 640px;
     margin-left: auto; margin-right: auto;
@@ -762,9 +762,9 @@
      Footer
   ============================================================ */
   .footer {
-    border-top: 1px solid var(--gh-border);
+    border-top: 1px solid var(--gh-brand-border);
     padding: 72px 0 48px;
-    background: var(--gh-canvas);
+    background: var(--gh-brand-canvas);
   }
   .footer__grid {
     display: grid;
@@ -772,31 +772,31 @@
     gap: 48px;
     margin-bottom: 56px;
   }
-  .footer__brand .gh-mark { width: 36px; height: 36px; color: var(--gh-fg); }
-  .footer__brand p { font-size: 13px; color: var(--gh-fg-muted); margin-top: 16px; max-width: 260px; line-height: 1.6; }
-  .footer__col h4 { font-size: 13px; font-weight: 600; color: var(--gh-fg); margin-bottom: 14px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .footer__brand .gh-mark { width: 36px; height: 36px; color: var(--gh-brand-fg); }
+  .footer__brand p { font-size: 13px; color: var(--gh-brand-fg-muted); margin-top: 16px; max-width: 260px; line-height: 1.6; }
+  .footer__col h4 { font-size: 13px; font-weight: 600; color: var(--gh-brand-fg); margin-bottom: 14px; letter-spacing: 0.04em; text-transform: uppercase; }
   .footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   .footer__col a {
     font-size: 13px;
-    color: var(--gh-fg-muted);
+    color: var(--gh-brand-fg-muted);
     cursor: pointer;
     transition: color var(--gh-dur-fast) var(--gh-ease);
   }
-  .footer__col a:hover { color: var(--gh-fg); }
+  .footer__col a:hover { color: var(--gh-brand-fg); }
   .footer__bottom {
-    border-top: 1px solid var(--gh-border);
+    border-top: 1px solid var(--gh-brand-border);
     padding-top: 24px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 16px;
     font-size: 12px;
-    color: var(--gh-fg-subtle);
+    color: var(--gh-brand-fg-subtle);
   }
   .footer__disclaimer {
     max-width: 860px;
     font-size: 11px;
-    color: var(--gh-fg-subtle);
+    color: var(--gh-brand-fg-subtle);
     line-height: 1.6;
     margin-top: 24px;
   }
@@ -867,7 +867,7 @@
    would use --color-accent-fg #1f6feb in product UI per §12.11. */
 :focus { outline: none; }
 :focus-visible {
-  outline: 2px solid var(--brand-accent, #5fed83);
+  outline: 2px solid var(--gh-brand-accent, #5fed83);
   outline-offset: 2px;
   border-radius: inherit;
   /* The 2px stroke + 2px offset matches Primer's --focus-outlineOffset and
@@ -877,7 +877,7 @@
    suppress the global outline to avoid double rings. */
 .btn:focus-visible,
 .nav-pill:focus-visible {
-  outline: 2px solid var(--brand-accent, #5fed83);
+  outline: 2px solid var(--gh-brand-accent, #5fed83);
   outline-offset: 3px;
 }
 

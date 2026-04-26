@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Primer Design System — Visual Preview (Light)</title>
+<style>
+  :root {
+    /* Light theme tokens (GitHub Primer Light default — official) */
+    --gh-product-fg-default: #1f2328;
+    --gh-product-fg-muted: #59636e;
+    --gh-product-fg-disabled: #818b98;
+    --gh-product-fg-accent: #0969da;
+    --gh-product-fg-success: #1a7f37;
+    --gh-product-fg-danger: #d1242f;
+    --gh-product-fg-attention: #9a6700;
+    --gh-product-fg-done: #8250df;
+    --gh-product-fg-sponsors: #bf3989;
+    --gh-product-canvas-default: #ffffff;
+    --gh-product-canvas-subtle: #f6f8fa;
+    --gh-product-canvas-inset: #f6f8fa;
+    --gh-product-canvas-emphasis: #25292e;
+    --gh-product-border-default: #d1d9e0;
+    --gh-product-border-muted: #d1d9e0b3;
+    --gh-product-border-emphasis: #818b98;
+    --gh-product-success-emphasis: #1f883d;
+    --gh-product-success-muted: #dafbe1;
+    --gh-product-danger-emphasis: #cf222e;
+    --gh-product-danger-muted: #ffebe9;
+    --gh-product-attention-emphasis: #9a6700;
+    --gh-product-attention-muted: #fff8c5;
+    --gh-product-done-emphasis: #8250df;
+    --gh-product-done-muted: #fbefff;
+    --gh-product-sponsors-emphasis: #bf3989;
+    --gh-product-sponsors-muted: #ffeff7;
+    --gh-product-accent-emphasis: #0969da;
+    --gh-product-accent-muted: #ddf4ff;
+    --gh-product-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --gh-font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    --gh-radius: 6px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--gh-product-font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--gh-product-fg-default);
+    background-color: var(--gh-product-canvas-default);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Page header */
+  .page-header {
+    border-bottom: 1px solid var(--gh-product-border-default);
+    padding: 32px 0 24px;
+    margin-bottom: 40px;
+  }
+  .page-header h1 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--gh-product-fg-default);
+    margin: 0;
+  }
+  .page-header p {
+    font-size: 16px;
+    color: var(--gh-product-fg-muted);
+    margin-top: 8px;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1012px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--gh-product-fg-default);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gh-product-border-default);
+  }
+  .section-desc {
+    color: var(--gh-product-fg-muted);
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  .subsection-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--gh-product-fg-default);
+    margin-bottom: 16px;
+    margin-top: 24px;
+  }
+
+  /* Swatch grid */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .swatch {
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
+    overflow: hidden;
+    background: var(--gh-product-canvas-subtle);
+  }
+  .swatch-color {
+    height: 64px;
+    border-bottom: 1px solid var(--gh-product-border-default);
+  }
+  .swatch-info {
+    padding: 8px 12px;
+  }
+  .swatch-hex {
+    font-family: var(--gh-font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gh-product-fg-default);
+  }
+  .swatch-token {
+    font-size: 12px;
+    color: var(--gh-product-fg-muted);
+    word-break: break-all;
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  /* Type scale */
+  .type-sample {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    background: var(--gh-product-canvas-subtle);
+  }
+  .type-label {
+    font-size: 12px;
+    font-family: var(--gh-font-mono);
+    color: var(--gh-product-fg-muted);
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+
+  /* Buttons */
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--gh-product-font-sans);
+    line-height: 20px;
+    border-radius: var(--gh-radius);
+    cursor: pointer;
+    transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+    transition-property: color, background-color, box-shadow, border-color;
+    white-space: nowrap;
+  }
+  .btn-default {
+    background-color: #d1d9e0;
+    color: #1f2328;
+    border: 1px solid var(--gh-product-border-default);
+  }
+  .btn-default:hover {
+    background-color: #d1d9e0;
+    border-color: #59636e;
+  }
+  .btn-primary {
+    background-color: #1f883d;
+    color: #ffffff;
+    border: 1px solid rgba(240, 246, 252, 0.1);
+  }
+  .btn-primary:hover {
+    background-color: #2ea043;
+  }
+  .btn-danger {
+    background-color: #d1d9e0;
+    color: #d1242f;
+    border: 1px solid var(--gh-product-border-default);
+  }
+  .btn-danger:hover {
+    background-color: #cf222e;
+    color: #ffffff;
+    border-color: #d1242f;
+  }
+  .btn-outline {
+    background-color: transparent;
+    color: #0969da;
+    border: 1px solid var(--gh-product-border-default);
+  }
+  .btn-outline:hover {
+    background-color: var(--gh-product-accent-muted);
+    border-color: #0969da;
+  }
+  .btn-invisible {
+    background-color: transparent;
+    color: #1f2328;
+    border: 1px solid transparent;
+  }
+  .btn-invisible:hover {
+    background-color: #d1d9e0;
+  }
+  .btn-sm {
+    font-size: 12px;
+    padding: 3px 12px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--gh-product-canvas-subtle);
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
+    padding: 16px;
+    max-width: 400px;
+  }
+  .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: var(--gh-product-fg-default);
+  }
+  .card-body {
+    font-size: 14px;
+    color: var(--gh-product-fg-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .card-meta {
+    font-size: 12px;
+    color: var(--gh-product-fg-disabled);
+  }
+
+  /* Form */
+  .form-group {
+    max-width: 400px;
+    margin-bottom: 16px;
+  }
+  .form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--gh-product-fg-default);
+  }
+  .form-input {
+    width: 100%;
+    padding: 5px 12px;
+    font-size: 14px;
+    font-family: var(--gh-product-font-sans);
+    line-height: 20px;
+    color: var(--gh-product-fg-default);
+    background-color: #ffffff;
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
+    outline: none;
+    transition: border-color 80ms, box-shadow 80ms;
+  }
+  .form-input:focus {
+    border-color: #0969da;
+    box-shadow: inset 0 0 0 1px #0969da;
+  }
+  .form-input::placeholder {
+    color: var(--gh-product-fg-disabled);
+  }
+  .form-hint {
+    font-size: 12px;
+    color: var(--gh-product-fg-muted);
+    margin-top: 4px;
+  }
+
+  /* Labels */
+  .label-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .label {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .label-open {
+    background-color: #1f883d;
+    color: #ffffff;
+  }
+  .label-closed {
+    background-color: #cf222e;
+    color: #ffffff;
+  }
+  .label-draft {
+    background-color: var(--gh-product-fg-disabled);
+    color: #1f2328;
+  }
+  .label-done {
+    background-color: #8250df;
+    color: #ffffff;
+  }
+  .label-attention {
+    background-color: var(--gh-product-attention-muted);
+    color: var(--gh-product-fg-attention);
+    border: 1px solid #9a670033;
+  }
+  .label-accent {
+    background-color: var(--gh-product-accent-muted);
+    color: var(--gh-product-fg-accent);
+  }
+  .label-sponsors {
+    background-color: var(--gh-product-sponsors-muted);
+    color: var(--gh-product-fg-sponsors);
+  }
+  .label-success-muted {
+    background-color: var(--gh-product-success-muted);
+    color: var(--gh-product-fg-success);
+  }
+  .label-danger-muted {
+    background-color: var(--gh-product-danger-muted);
+    color: var(--gh-product-fg-danger);
+  }
+
+  /* Radius */
+  .radius-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-end;
+  }
+  .radius-item {
+    text-align: center;
+  }
+  .radius-box {
+    width: 72px;
+    height: 72px;
+    border: 2px solid var(--gh-product-fg-accent);
+    background-color: var(--gh-product-accent-muted);
+    margin-bottom: 8px;
+  }
+  .radius-value {
+    font-size: 12px;
+    font-family: var(--gh-font-mono);
+    color: var(--gh-product-fg-muted);
+  }
+  .radius-token {
+    font-size: 11px;
+    color: var(--gh-product-fg-disabled);
+  }
+
+  /* Shadow */
+  .shadow-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-end;
+    margin-bottom: 8px;
+  }
+  .shadow-item {
+    text-align: center;
+  }
+  .shadow-box {
+    width: 96px;
+    height: 72px;
+    background-color: var(--gh-product-canvas-subtle);
+    border-radius: var(--gh-radius);
+    margin-bottom: 8px;
+  }
+  .shadow-label {
+    font-size: 11px;
+    font-family: var(--gh-font-mono);
+    color: var(--gh-product-fg-muted);
+    max-width: 96px;
+    word-break: break-all;
+  }
+
+  /* Spacing */
+  .spacing-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-end;
+  }
+  .spacing-item {
+    text-align: center;
+  }
+  .spacing-bar {
+    background-color: var(--gh-product-accent-emphasis);
+    border-radius: 2px;
+    margin: 0 auto 8px;
+    opacity: 0.85;
+  }
+  .spacing-value {
+    font-size: 12px;
+    font-family: var(--gh-font-mono);
+    color: var(--gh-product-fg-muted);
+  }
+  .spacing-token {
+    font-size: 11px;
+    color: var(--gh-product-fg-disabled);
+  }
+
+  /* Nav */
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--gh-product-border-default);
+    margin-bottom: 16px;
+  }
+  .nav-tab {
+    padding: 8px 16px;
+    font-size: 14px;
+    color: var(--gh-product-fg-muted);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 80ms, border-color 80ms;
+  }
+  .nav-tab:hover {
+    color: var(--gh-product-fg-default);
+  }
+  .nav-tab.active {
+    color: var(--gh-product-fg-default);
+    font-weight: 600;
+    border-bottom-color: #f78166;
+  }
+
+  /* Inline code */
+  .inline-code {
+    font-family: var(--gh-font-mono);
+    font-size: 0.9285em;
+    background-color: #2d333b;
+    padding: 0.2em 0.4em;
+    border-radius: var(--gh-radius);
+    color: var(--gh-product-fg-default);
+  }
+
+  /* Code block */
+  .code-block {
+    font-family: var(--gh-font-mono);
+    font-size: 13px;
+    background-color: #f6f8fa;
+    padding: 16px;
+    border-radius: var(--gh-radius);
+    border: 1px solid var(--gh-product-border-default);
+    color: var(--gh-product-fg-default);
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+
+  /* Alert */
+  .alert {
+    padding: 16px;
+    border-radius: var(--gh-radius);
+    font-size: 14px;
+    margin-bottom: 12px;
+    max-width: 500px;
+  }
+  .alert-success {
+    background-color: var(--gh-product-success-muted);
+    border: 1px solid #1f883d33;
+    color: var(--gh-product-fg-success);
+  }
+  .alert-danger {
+    background-color: var(--gh-product-danger-muted);
+    border: 1px solid #cf222e33;
+    color: var(--gh-product-fg-danger);
+  }
+  .alert-attention {
+    background-color: var(--gh-product-attention-muted);
+    border: 1px solid #9a670033;
+    color: var(--gh-product-fg-attention);
+  }
+  .alert-accent {
+    background-color: var(--gh-product-accent-muted);
+    border: 1px solid #0969da33;
+    color: var(--gh-product-fg-accent);
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid var(--gh-product-border-default);
+    padding: 24px 0;
+    margin-top: 48px;
+    color: var(--gh-product-fg-muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* Two column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>GitHub Primer Design System &mdash; Visual Preview</h1>
+    <p>Complete visual catalog of colors, typography, components, and spacing tokens. Light theme.</p>
+  </div>
+
+  <!-- ==================== COLORS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Color Palette</h2>
+    <p class="section-desc">Light mode tokens. Colors adapt semantically &mdash; same roles, different values.</p>
+
+    <!-- Core Surfaces -->
+    <h3 class="subsection-title">Core Surfaces</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #ffffff;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#ffffff</div>
+          <div class="swatch-token">--bgColor-default</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #f6f8fa;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#f6f8fa</div>
+          <div class="swatch-token">--bgColor-muted</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #25292e;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#25292e</div>
+          <div class="swatch-token">--bgColor-emphasis</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #f6f8fa;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#f6f8fa</div>
+          <div class="swatch-token">--bgColor-inset</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text Colors -->
+    <h3 class="subsection-title">Text / Foreground</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #1f2328;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#1f2328</div>
+          <div class="swatch-token">--fgColor-default</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #59636e;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#59636e</div>
+          <div class="swatch-token">--fgColor-muted</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #818b98;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#818b98</div>
+          <div class="swatch-token">--fgColor-disabled</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accent Blue -->
+    <h3 class="subsection-title">Accent / Interactive Blue</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #0969da;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#0969da</div>
+          <div class="swatch-token">--bgColor-accent-emphasis</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #ddf4ff;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#ddf4ff</div>
+          <div class="swatch-token">--bgColor-accent-muted</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #0969da;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#0969da</div>
+          <div class="swatch-token">--fgColor-accent</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success / Open -->
+    <h3 class="subsection-title">Success / Open</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #1a7f37;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#1a7f37</div>
+          <div class="swatch-token">--fgColor-success</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #1f883d;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#1f883d</div>
+          <div class="swatch-token">--bgColor-success-emphasis</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #dafbe1;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#dafbe1</div>
+          <div class="swatch-token">--bgColor-success-muted</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Danger / Closed -->
+    <h3 class="subsection-title">Danger / Closed</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #d1242f;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#d1242f</div>
+          <div class="swatch-token">--fgColor-danger</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #cf222e;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#cf222e</div>
+          <div class="swatch-token">--bgColor-danger-emphasis</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #ffebe9;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#ffebe9</div>
+          <div class="swatch-token">--bgColor-danger-muted</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attention / Warning -->
+    <h3 class="subsection-title">Attention / Warning</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #9a6700;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#9a6700</div>
+          <div class="swatch-token">--fgColor-attention</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #fff8c5;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#fff8c5</div>
+          <div class="swatch-token">--bgColor-attention-muted</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Done / Purple -->
+    <h3 class="subsection-title">Done / Purple</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #8250df;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#8250df</div>
+          <div class="swatch-token">--fgColor-done</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #fbefff;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#fbefff</div>
+          <div class="swatch-token">--bgColor-done-muted</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sponsors / Pink -->
+    <h3 class="subsection-title">Sponsors / Pink</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #bf3989;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#bf3989</div>
+          <div class="swatch-token">--fgColor-sponsors</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #ffeff7;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#ffeff7</div>
+          <div class="swatch-token">--bgColor-sponsors-muted</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Borders -->
+    <h3 class="subsection-title">Borders</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #d1d9e0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#d1d9e0</div>
+          <div class="swatch-token">--borderColor-default</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #59636e;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#59636e</div>
+          <div class="swatch-token">--borderColor-emphasis</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background-color: #d1d9e0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-hex">#d1d9e0</div>
+          <div class="swatch-token">--borderColor-muted</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TYPOGRAPHY ==================== -->
+  <div class="section">
+    <h2 class="section-title">Typography</h2>
+    <p class="section-desc">System font stack. Hierarchy through size and weight (600 semibold) only. 14px default body.</p>
+
+    <h3 class="subsection-title">Heading Scale</h3>
+
+    <div class="type-sample">
+      <span class="type-label">h1 &middot; 32px/600</span>
+      <span style="font-size: 32px; font-weight: 600; line-height: 1.25;">The quick brown fox</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">h2 &middot; 24px/600</span>
+      <span style="font-size: 24px; font-weight: 600; line-height: 1.25;">The quick brown fox</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">h3 &middot; 20px/600</span>
+      <span style="font-size: 20px; font-weight: 600; line-height: 1.25;">The quick brown fox</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">h4 &middot; 16px/600</span>
+      <span style="font-size: 16px; font-weight: 600; line-height: 1.25;">The quick brown fox</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">h5 &middot; 14px/600</span>
+      <span style="font-size: 14px; font-weight: 600; line-height: 1.25;">The quick brown fox</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">h6 &middot; 12px/600</span>
+      <span style="font-size: 12px; font-weight: 600; line-height: 1.25; color: #59636e;">The quick brown fox</span>
+    </div>
+
+    <h3 class="subsection-title">Body &amp; Utility Text</h3>
+
+    <div class="type-sample">
+      <span class="type-label">body &middot; 14px/400</span>
+      <span style="font-size: 14px; font-weight: 400; line-height: 1.5;">Default body text at 14px. GitHub optimizes for information density.</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">body-lg &middot; 16px/400</span>
+      <span style="font-size: 16px; font-weight: 400; line-height: 1.5;">Large body text at 16px for markdown content.</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">caption &middot; 12px/400</span>
+      <span style="font-size: 12px; font-weight: 400; line-height: 1.25; color: #59636e;">Caption text, metadata, and timestamps</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">code &middot; 13px/400</span>
+      <span style="font-size: 13px; font-weight: 400; line-height: 1.5; font-family: var(--gh-font-mono);">const greeting = "Hello, world!";</span>
+    </div>
+    <div class="type-sample">
+      <span class="type-label">inline code</span>
+      <span style="font-size: 14px;">Use <code class="inline-code">git commit -m "message"</code> to save changes.</span>
+    </div>
+  </div>
+
+  <!-- ==================== BUTTONS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Buttons</h2>
+    <p class="section-desc">Five button variants adapted for dark surfaces. Hover to preview states.</p>
+
+    <h3 class="subsection-title">Standard Size</h3>
+    <div class="btn-row">
+      <button class="btn btn-default">Default</button>
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-danger">Danger</button>
+      <button class="btn btn-outline">Outline</button>
+      <button class="btn btn-invisible">Invisible</button>
+    </div>
+
+    <h3 class="subsection-title">Small Size (12px)</h3>
+    <div class="btn-row">
+      <button class="btn btn-default btn-sm">Default</button>
+      <button class="btn btn-primary btn-sm">Primary</button>
+      <button class="btn btn-danger btn-sm">Danger</button>
+      <button class="btn btn-outline btn-sm">Outline</button>
+      <button class="btn btn-invisible btn-sm">Invisible</button>
+    </div>
+
+    <h3 class="subsection-title">With Icons (simulated)</h3>
+    <div class="btn-row">
+      <button class="btn btn-primary"><span style="margin-right: 6px;">+</span> New repository</button>
+      <button class="btn btn-danger"><span style="margin-right: 6px;">&#10005;</span> Delete branch</button>
+      <button class="btn btn-outline"><span style="margin-right: 6px;">&#9733;</span> Star</button>
+    </div>
+  </div>
+
+  <!-- ==================== CARDS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Cards &amp; Containers</h2>
+    <p class="section-desc">Border-driven containment on dark surfaces. Subtle background differentiation.</p>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Repository Card</div>
+        <div class="card-body">A card component on a subtle dark surface with 1px border and 6px radius. Internal padding is 16px.</div>
+        <div class="card-meta">Updated 3 hours ago &middot; MIT License</div>
+      </div>
+
+      <div class="card" style="background-color: #f6f8fa;">
+        <div class="card-title">Inset Card</div>
+        <div class="card-body">Same card structure on an inset (#f6f8fa) surface. Used for recessed content areas in light mode.</div>
+        <div class="card-meta">Background: --bgColor-inset</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FORM INPUTS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Form Inputs</h2>
+    <p class="section-desc">Dark input fields with deep backgrounds. Focus: inset blue shadow + blue border.</p>
+
+    <div class="two-col">
+      <div>
+        <div class="form-group">
+          <label class="form-label">Repository name</label>
+          <input type="text" class="form-input" placeholder="my-awesome-project" />
+          <div class="form-hint">Great repository names are short and memorable.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description <span style="font-weight: 400; color: #59636e;">(optional)</span></label>
+          <input type="text" class="form-input" placeholder="A short description of the repository" />
+        </div>
+      </div>
+
+      <div>
+        <div class="form-group">
+          <label class="form-label">Focused input</label>
+          <input type="text" class="form-input" value="This input has focus styling" style="border-color: #0969da; box-shadow: inset 0 0 0 1px #0969da;" />
+          <div class="form-hint">Focus ring: 1px inset #0969da shadow + blue border.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Disabled input</label>
+          <input type="text" class="form-input" disabled value="Cannot edit this" style="background-color: #f6f8fa; color: #818b98; cursor: not-allowed;" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== LABELS / BADGES ==================== -->
+  <div class="section">
+    <h2 class="section-title">Labels &amp; Badges</h2>
+    <p class="section-desc">Pill-shaped (border-radius 100px). 12px font, weight 600. Semantic color coding.</p>
+
+    <h3 class="subsection-title">Emphasis Labels (solid background)</h3>
+    <div class="label-row" style="margin-bottom: 16px;">
+      <span class="label label-open">Open</span>
+      <span class="label label-closed">Closed</span>
+      <span class="label label-draft">Draft</span>
+      <span class="label label-done">Done</span>
+      <span class="label" style="background-color: #0969da; color: #fff;">Accent</span>
+      <span class="label" style="background-color: #bf3989; color: #fff;">Sponsors</span>
+      <span class="label" style="background-color: #9a6700; color: #fff;">Attention</span>
+    </div>
+
+    <h3 class="subsection-title">Muted Labels (tinted background)</h3>
+    <div class="label-row" style="margin-bottom: 16px;">
+      <span class="label label-success-muted">Open</span>
+      <span class="label label-danger-muted">Closed</span>
+      <span class="label label-attention">Warning</span>
+      <span class="label label-accent">Info</span>
+      <span class="label label-sponsors">Sponsors</span>
+      <span class="label" style="background-color: #fbefff; color: #8250df;">Done</span>
+    </div>
+  </div>
+
+  <!-- ==================== ALERTS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Alerts</h2>
+    <p class="section-desc">Semantic alert boxes with dark muted backgrounds and subtle tinted borders.</p>
+
+    <div class="alert alert-success">
+      <strong>Success:</strong> Your changes have been saved successfully.
+    </div>
+    <div class="alert alert-danger">
+      <strong>Error:</strong> Unable to merge. This branch has conflicts that must be resolved.
+    </div>
+    <div class="alert alert-attention">
+      <strong>Warning:</strong> This action cannot be undone. Please proceed with caution.
+    </div>
+    <div class="alert alert-accent">
+      <strong>Note:</strong> You can configure these settings in your repository's Settings tab.
+    </div>
+  </div>
+
+  <!-- ==================== BORDER RADIUS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Border Radius Scale</h2>
+    <p class="section-desc">6px is the default. Used on buttons, cards, inputs, and most containers.</p>
+
+    <div class="radius-row">
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: 0;"></div>
+        <div class="radius-value">0px</div>
+        <div class="radius-token">.rounded-0</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: 4px;"></div>
+        <div class="radius-value">4px</div>
+        <div class="radius-token">.rounded-1</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: 6px;"></div>
+        <div class="radius-value">6px</div>
+        <div class="radius-token">.rounded-2 (default)</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: 8px;"></div>
+        <div class="radius-value">8px</div>
+        <div class="radius-token">.rounded-3</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: 100px; width: 120px;"></div>
+        <div class="radius-value">100vh (pill)</div>
+        <div class="radius-token">.rounded-full</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: 50%;"></div>
+        <div class="radius-value">50%</div>
+        <div class="radius-token">circle</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SHADOWS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Shadow Elevation Scale</h2>
+    <p class="section-desc">In light mode, shadows are subtle but layered to maintain visible elevation.</p>
+
+    <div class="shadow-row">
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: inset 0 1px 0 0 #1f23280a; border: 1px solid var(--gh-product-border-default);"></div>
+        <div class="shadow-label">inset</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: 0 1px 1px 0 #01040966;"></div>
+        <div class="shadow-label">resting-xsmall</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: 0 1px 1px 0 #01040966, 0 1px 3px 0 #01040966;"></div>
+        <div class="shadow-label">resting-small</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: 0 1px 1px 0 #01040966, 0 3px 6px 0 #01040966;"></div>
+        <div class="shadow-label">resting-medium</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: 0 0 0 1px #d1d9e0, 0 6px 12px -3px #01040999, 0 6px 18px 0 #01040999;"></div>
+        <div class="shadow-label">floating-small</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: 0 0 0 1px #d1d9e0, 0 8px 16px -4px #01040999, 0 4px 32px -4px #01040999;"></div>
+        <div class="shadow-label">floating-medium</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: 0 0 0 1px #d1d9e0, 0 40px 80px 0 #010409cc;"></div>
+        <div class="shadow-label">floating-large</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: 0 0 0 1px #d1d9e0, 0 56px 112px 0 #010409cc;"></div>
+        <div class="shadow-label">floating-xlarge</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SPACING ==================== -->
+  <div class="section">
+    <h2 class="section-title">Spacing Scale</h2>
+    <p class="section-desc">4px grid system. All spacing derives from multiples of 4.</p>
+
+    <div class="spacing-row">
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 4px; height: 4px;"></div>
+        <div class="spacing-value">4px</div>
+        <div class="spacing-token">--base-size-4</div>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 8px; height: 8px;"></div>
+        <div class="spacing-value">8px</div>
+        <div class="spacing-token">--base-size-8</div>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 12px; height: 12px;"></div>
+        <div class="spacing-value">12px</div>
+        <div class="spacing-token">--base-size-12</div>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 16px; height: 16px;"></div>
+        <div class="spacing-value">16px</div>
+        <div class="spacing-token">--base-size-16</div>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 24px; height: 24px;"></div>
+        <div class="spacing-value">24px</div>
+        <div class="spacing-token">--base-size-24</div>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 32px; height: 32px;"></div>
+        <div class="spacing-value">32px</div>
+        <div class="spacing-token">--base-size-32</div>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 40px; height: 40px;"></div>
+        <div class="spacing-value">40px</div>
+        <div class="spacing-token">--base-size-40</div>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 48px; height: 48px;"></div>
+        <div class="spacing-value">48px</div>
+        <div class="spacing-token">--base-size-48</div>
+      </div>
+      <div class="spacing-item">
+        <div class="spacing-bar" style="width: 64px; height: 64px;"></div>
+        <div class="spacing-value">64px</div>
+        <div class="spacing-token">--base-size-64</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title" style="margin-top: 32px;">Spacing Utility Classes</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;">
+      <div style="text-align: center;">
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 4px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div class="spacing-value" style="margin-top: 4px;">.p-1 (4px)</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 8px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div class="spacing-value" style="margin-top: 4px;">.p-2 (8px)</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 16px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div class="spacing-value" style="margin-top: 4px;">.p-3 (16px)</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 24px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div class="spacing-value" style="margin-top: 4px;">.p-4 (24px)</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 32px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div class="spacing-value" style="margin-top: 4px;">.p-5 (32px)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CODE BLOCKS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Code Blocks</h2>
+    <p class="section-desc">Monospace font, 13px, deep dark background, 6px radius, 16px padding.</p>
+
+    <pre class="code-block"><span style="color: #ff7b72;">const</span> <span style="color: #79c0ff;">config</span> = {
+  <span style="color: #79c0ff;">colors</span>: {
+    <span style="color: #79c0ff;">primary</span>: <span style="color: #a5d6ff;">'#0969da'</span>,
+    <span style="color: #79c0ff;">success</span>: <span style="color: #a5d6ff;">'#1f883d'</span>,
+    <span style="color: #79c0ff;">danger</span>:  <span style="color: #a5d6ff;">'#cf222e'</span>,
+  },
+  <span style="color: #79c0ff;">borderRadius</span>: <span style="color: #a5d6ff;">'6px'</span>,
+  <span style="color: #79c0ff;">fontSize</span>:     <span style="color: #a5d6ff;">'14px'</span>,
+};</pre>
+  </div>
+
+  <!-- ==================== NAV TABS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Navigation Tabs</h2>
+    <p class="section-desc">Bottom border indicator. 2px solid on active tab.</p>
+
+    <div class="nav-tabs">
+      <div class="nav-tab active">Code</div>
+      <div class="nav-tab">Issues</div>
+      <div class="nav-tab">Pull Requests</div>
+      <div class="nav-tab">Actions</div>
+      <div class="nav-tab">Projects</div>
+      <div class="nav-tab">Settings</div>
+    </div>
+  </div>
+
+  <!-- ==================== COMBINED DEMO ==================== -->
+  <div class="section">
+    <h2 class="section-title">Combined Component Demo</h2>
+    <p class="section-desc">A realistic composition using dark-mode Primer design tokens.</p>
+
+    <div style="border: 1px solid var(--gh-product-border-default); border-radius: var(--gh-radius); overflow: hidden; max-width: 600px;">
+      <!-- Header bar -->
+      <div style="background: var(--gh-product-canvas-subtle); padding: 12px 16px; border-bottom: 1px solid var(--gh-product-border-default); display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 16px;">primer/design-system</span>
+          <span class="label label-open" style="font-size: 11px;">Public</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline btn-sm">&#9733; Star</button>
+          <button class="btn btn-default btn-sm">Fork</button>
+        </div>
+      </div>
+      <!-- Content -->
+      <div style="padding: 16px;">
+        <p style="color: var(--gh-product-fg-muted); margin-bottom: 16px;">GitHub's design system for building UI components, patterns, and pages.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+          <span class="label label-accent">design-system</span>
+          <span class="label label-accent">css</span>
+          <span class="label label-accent">react</span>
+        </div>
+        <div style="display: flex; gap: 16px; font-size: 12px; color: var(--gh-product-fg-muted);">
+          <span><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #3178c6; vertical-align: middle; margin-right: 4px;"></span>TypeScript</span>
+          <span>MIT License</span>
+          <span>Updated 2 hours ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>GitHub Primer Design System &mdash; Visual Preview &middot; Light Theme</p>
+    <p style="margin-top: 4px;">Generated from design-system.md token reference</p>
+  </div>
+
+</div>
+
+</body>
+</html>

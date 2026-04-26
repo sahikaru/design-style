@@ -7,54 +7,54 @@
 <style>
   :root {
     /* Dark theme tokens (GitHub Dark default) */
-    --color-fg-default: #e6edf3;
-    --color-fg-muted: #8b949e;
-    --color-fg-disabled: #484f58;
-    --color-fg-accent: #58a6ff;
-    --color-fg-success: #3fb950;
-    --color-fg-danger: #f85149;
-    --color-fg-attention: #d29922;
-    --color-fg-done: #a371f7;
-    --color-fg-sponsors: #db61a2;
-    --color-canvas-default: #141413;
-    --color-canvas-subtle: #1c1c1b;
-    --color-canvas-inset: #161615;
-    --color-canvas-emphasis: #6e7681;
-    --color-border-default: #30363d;
-    --color-border-muted: #21262d;
-    --color-border-emphasis: #8b949e;
-    --color-success-emphasis: #238636;
-    --color-success-muted: #12261e;
-    --color-danger-emphasis: #da3633;
-    --color-danger-muted: #2d1214;
-    --color-attention-emphasis: #9e6a03;
-    --color-attention-muted: #272115;
-    --color-done-emphasis: #8957e5;
-    --color-done-muted: #211e34;
-    --color-sponsors-emphasis: #bf4b8a;
-    --color-sponsors-muted: #2d1524;
-    --color-accent-emphasis: #1f6feb;
-    --color-accent-muted: #121d2f;
-    --fontStack-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    --fontStack-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-    --border-radius: 6px;
+    --gh-product-fg-default: #e6edf3;
+    --gh-product-fg-muted: #8b949e;
+    --gh-product-fg-disabled: #484f58;
+    --gh-product-fg-accent: #58a6ff;
+    --gh-product-fg-success: #3fb950;
+    --gh-product-fg-danger: #f85149;
+    --gh-product-fg-attention: #d29922;
+    --gh-product-fg-done: #a371f7;
+    --gh-product-fg-sponsors: #db61a2;
+    --gh-product-canvas-default: #141413;
+    --gh-product-canvas-subtle: #1c1c1b;
+    --gh-product-canvas-inset: #161615;
+    --gh-product-canvas-emphasis: #6e7681;
+    --gh-product-border-default: #30363d;
+    --gh-product-border-muted: #21262d;
+    --gh-product-border-emphasis: #8b949e;
+    --gh-product-success-emphasis: #238636;
+    --gh-product-success-muted: #12261e;
+    --gh-product-danger-emphasis: #da3633;
+    --gh-product-danger-muted: #2d1214;
+    --gh-product-attention-emphasis: #9e6a03;
+    --gh-product-attention-muted: #272115;
+    --gh-product-done-emphasis: #8957e5;
+    --gh-product-done-muted: #211e34;
+    --gh-product-sponsors-emphasis: #bf4b8a;
+    --gh-product-sponsors-muted: #2d1524;
+    --gh-product-accent-emphasis: #1f6feb;
+    --gh-product-accent-muted: #121d2f;
+    --gh-product-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --gh-font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    --gh-radius: 6px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: var(--fontStack-sans);
+    font-family: var(--gh-product-font-sans);
     font-size: 14px;
     line-height: 1.5;
-    color: var(--color-fg-default);
-    background-color: var(--color-canvas-default);
+    color: var(--gh-product-fg-default);
+    background-color: var(--gh-product-canvas-default);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   /* Page header */
   .page-header {
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: 1px solid var(--gh-product-border-default);
     padding: 32px 0 24px;
     margin-bottom: 40px;
   }
@@ -62,12 +62,12 @@
     font-size: 32px;
     font-weight: 600;
     line-height: 1.25;
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
     margin: 0;
   }
   .page-header p {
     font-size: 16px;
-    color: var(--color-fg-muted);
+    color: var(--gh-product-fg-muted);
     margin-top: 8px;
   }
 
@@ -86,13 +86,13 @@
     font-size: 24px;
     font-weight: 600;
     line-height: 1.25;
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
     margin-bottom: 8px;
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: 1px solid var(--gh-product-border-default);
   }
   .section-desc {
-    color: var(--color-fg-muted);
+    color: var(--gh-product-fg-muted);
     margin-bottom: 24px;
     font-size: 14px;
   }
@@ -100,7 +100,7 @@
     font-size: 16px;
     font-weight: 600;
     line-height: 1.25;
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
     margin-bottom: 16px;
     margin-top: 24px;
   }
@@ -113,27 +113,27 @@
     margin-bottom: 24px;
   }
   .swatch {
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--border-radius);
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
     overflow: hidden;
-    background: var(--color-canvas-subtle);
+    background: var(--gh-product-canvas-subtle);
   }
   .swatch-color {
     height: 64px;
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: 1px solid var(--gh-product-border-default);
   }
   .swatch-info {
     padding: 8px 12px;
   }
   .swatch-hex {
-    font-family: var(--fontStack-mono);
+    font-family: var(--gh-font-mono);
     font-size: 13px;
     font-weight: 600;
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
   }
   .swatch-token {
     font-size: 12px;
-    color: var(--color-fg-muted);
+    color: var(--gh-product-fg-muted);
     word-break: break-all;
     line-height: 1.4;
     margin-top: 2px;
@@ -143,17 +143,17 @@
   .type-sample {
     margin-bottom: 16px;
     padding: 12px 16px;
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--border-radius);
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
     display: flex;
     align-items: baseline;
     gap: 16px;
-    background: var(--color-canvas-subtle);
+    background: var(--gh-product-canvas-subtle);
   }
   .type-label {
     font-size: 12px;
-    font-family: var(--fontStack-mono);
-    color: var(--color-fg-muted);
+    font-family: var(--gh-font-mono);
+    color: var(--gh-product-fg-muted);
     min-width: 100px;
     flex-shrink: 0;
   }
@@ -173,9 +173,9 @@
     padding: 5px 16px;
     font-size: 14px;
     font-weight: 500;
-    font-family: var(--fontStack-sans);
+    font-family: var(--gh-product-font-sans);
     line-height: 20px;
-    border-radius: var(--border-radius);
+    border-radius: var(--gh-radius);
     cursor: pointer;
     transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
     transition-property: color, background-color, box-shadow, border-color;
@@ -184,7 +184,7 @@
   .btn-default {
     background-color: #21262d;
     color: #c9d1d9;
-    border: 1px solid var(--color-border-default);
+    border: 1px solid var(--gh-product-border-default);
   }
   .btn-default:hover {
     background-color: #30363d;
@@ -201,7 +201,7 @@
   .btn-danger {
     background-color: #21262d;
     color: #f85149;
-    border: 1px solid var(--color-border-default);
+    border: 1px solid var(--gh-product-border-default);
   }
   .btn-danger:hover {
     background-color: #da3633;
@@ -211,10 +211,10 @@
   .btn-outline {
     background-color: transparent;
     color: #58a6ff;
-    border: 1px solid var(--color-border-default);
+    border: 1px solid var(--gh-product-border-default);
   }
   .btn-outline:hover {
-    background-color: var(--color-accent-muted);
+    background-color: var(--gh-product-accent-muted);
     border-color: #58a6ff;
   }
   .btn-invisible {
@@ -232,9 +232,9 @@
 
   /* Card */
   .card {
-    background: var(--color-canvas-subtle);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--border-radius);
+    background: var(--gh-product-canvas-subtle);
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
     padding: 16px;
     max-width: 400px;
   }
@@ -243,17 +243,17 @@
     font-weight: 600;
     line-height: 1.25;
     margin-bottom: 8px;
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
   }
   .card-body {
     font-size: 14px;
-    color: var(--color-fg-muted);
+    color: var(--gh-product-fg-muted);
     line-height: 1.5;
     margin-bottom: 16px;
   }
   .card-meta {
     font-size: 12px;
-    color: var(--color-fg-disabled);
+    color: var(--gh-product-fg-disabled);
   }
 
   /* Form */
@@ -266,18 +266,18 @@
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 4px;
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
   }
   .form-input {
     width: 100%;
     padding: 5px 12px;
     font-size: 14px;
-    font-family: var(--fontStack-sans);
+    font-family: var(--gh-product-font-sans);
     line-height: 20px;
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
     background-color: #0d1117;
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--border-radius);
+    border: 1px solid var(--gh-product-border-default);
+    border-radius: var(--gh-radius);
     outline: none;
     transition: border-color 80ms, box-shadow 80ms;
   }
@@ -286,11 +286,11 @@
     box-shadow: inset 0 0 0 1px #58a6ff;
   }
   .form-input::placeholder {
-    color: var(--color-fg-disabled);
+    color: var(--gh-product-fg-disabled);
   }
   .form-hint {
     font-size: 12px;
-    color: var(--color-fg-muted);
+    color: var(--gh-product-fg-muted);
     margin-top: 4px;
   }
 
@@ -320,7 +320,7 @@
     color: #ffffff;
   }
   .label-draft {
-    background-color: var(--color-fg-disabled);
+    background-color: var(--gh-product-fg-disabled);
     color: #e6edf3;
   }
   .label-done {
@@ -328,25 +328,25 @@
     color: #ffffff;
   }
   .label-attention {
-    background-color: var(--color-attention-muted);
-    color: var(--color-fg-attention);
+    background-color: var(--gh-product-attention-muted);
+    color: var(--gh-product-fg-attention);
     border: 1px solid #9e6a0333;
   }
   .label-accent {
-    background-color: var(--color-accent-muted);
-    color: var(--color-fg-accent);
+    background-color: var(--gh-product-accent-muted);
+    color: var(--gh-product-fg-accent);
   }
   .label-sponsors {
-    background-color: var(--color-sponsors-muted);
-    color: var(--color-fg-sponsors);
+    background-color: var(--gh-product-sponsors-muted);
+    color: var(--gh-product-fg-sponsors);
   }
   .label-success-muted {
-    background-color: var(--color-success-muted);
-    color: var(--color-fg-success);
+    background-color: var(--gh-product-success-muted);
+    color: var(--gh-product-fg-success);
   }
   .label-danger-muted {
-    background-color: var(--color-danger-muted);
-    color: var(--color-fg-danger);
+    background-color: var(--gh-product-danger-muted);
+    color: var(--gh-product-fg-danger);
   }
 
   /* Radius */
@@ -362,18 +362,18 @@
   .radius-box {
     width: 72px;
     height: 72px;
-    border: 2px solid var(--color-fg-accent);
-    background-color: var(--color-accent-muted);
+    border: 2px solid var(--gh-product-fg-accent);
+    background-color: var(--gh-product-accent-muted);
     margin-bottom: 8px;
   }
   .radius-value {
     font-size: 12px;
-    font-family: var(--fontStack-mono);
-    color: var(--color-fg-muted);
+    font-family: var(--gh-font-mono);
+    color: var(--gh-product-fg-muted);
   }
   .radius-token {
     font-size: 11px;
-    color: var(--color-fg-disabled);
+    color: var(--gh-product-fg-disabled);
   }
 
   /* Shadow */
@@ -390,14 +390,14 @@
   .shadow-box {
     width: 96px;
     height: 72px;
-    background-color: var(--color-canvas-subtle);
-    border-radius: var(--border-radius);
+    background-color: var(--gh-product-canvas-subtle);
+    border-radius: var(--gh-radius);
     margin-bottom: 8px;
   }
   .shadow-label {
     font-size: 11px;
-    font-family: var(--fontStack-mono);
-    color: var(--color-fg-muted);
+    font-family: var(--gh-font-mono);
+    color: var(--gh-product-fg-muted);
     max-width: 96px;
     word-break: break-all;
   }
@@ -413,64 +413,64 @@
     text-align: center;
   }
   .spacing-bar {
-    background-color: var(--color-accent-emphasis);
+    background-color: var(--gh-product-accent-emphasis);
     border-radius: 2px;
     margin: 0 auto 8px;
     opacity: 0.85;
   }
   .spacing-value {
     font-size: 12px;
-    font-family: var(--fontStack-mono);
-    color: var(--color-fg-muted);
+    font-family: var(--gh-font-mono);
+    color: var(--gh-product-fg-muted);
   }
   .spacing-token {
     font-size: 11px;
-    color: var(--color-fg-disabled);
+    color: var(--gh-product-fg-disabled);
   }
 
   /* Nav */
   .nav-tabs {
     display: flex;
     gap: 0;
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: 1px solid var(--gh-product-border-default);
     margin-bottom: 16px;
   }
   .nav-tab {
     padding: 8px 16px;
     font-size: 14px;
-    color: var(--color-fg-muted);
+    color: var(--gh-product-fg-muted);
     border-bottom: 2px solid transparent;
     cursor: pointer;
     transition: color 80ms, border-color 80ms;
   }
   .nav-tab:hover {
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
   }
   .nav-tab.active {
-    color: var(--color-fg-default);
+    color: var(--gh-product-fg-default);
     font-weight: 600;
     border-bottom-color: #f78166;
   }
 
   /* Inline code */
   .inline-code {
-    font-family: var(--fontStack-mono);
+    font-family: var(--gh-font-mono);
     font-size: 0.9285em;
     background-color: #2d333b;
     padding: 0.2em 0.4em;
-    border-radius: var(--border-radius);
-    color: var(--color-fg-default);
+    border-radius: var(--gh-radius);
+    color: var(--gh-product-fg-default);
   }
 
   /* Code block */
   .code-block {
-    font-family: var(--fontStack-mono);
+    font-family: var(--gh-font-mono);
     font-size: 13px;
     background-color: #161b22;
     padding: 16px;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--color-border-default);
-    color: var(--color-fg-default);
+    border-radius: var(--gh-radius);
+    border: 1px solid var(--gh-product-border-default);
+    color: var(--gh-product-fg-default);
     line-height: 1.5;
     overflow-x: auto;
   }
@@ -478,38 +478,38 @@
   /* Alert */
   .alert {
     padding: 16px;
-    border-radius: var(--border-radius);
+    border-radius: var(--gh-radius);
     font-size: 14px;
     margin-bottom: 12px;
     max-width: 500px;
   }
   .alert-success {
-    background-color: var(--color-success-muted);
+    background-color: var(--gh-product-success-muted);
     border: 1px solid #23863633;
-    color: var(--color-fg-success);
+    color: var(--gh-product-fg-success);
   }
   .alert-danger {
-    background-color: var(--color-danger-muted);
+    background-color: var(--gh-product-danger-muted);
     border: 1px solid #da363333;
-    color: var(--color-fg-danger);
+    color: var(--gh-product-fg-danger);
   }
   .alert-attention {
-    background-color: var(--color-attention-muted);
+    background-color: var(--gh-product-attention-muted);
     border: 1px solid #9e6a0333;
-    color: var(--color-fg-attention);
+    color: var(--gh-product-fg-attention);
   }
   .alert-accent {
-    background-color: var(--color-accent-muted);
+    background-color: var(--gh-product-accent-muted);
     border: 1px solid #1f6feb33;
-    color: var(--color-fg-accent);
+    color: var(--gh-product-fg-accent);
   }
 
   /* Footer */
   .footer {
-    border-top: 1px solid var(--color-border-default);
+    border-top: 1px solid var(--gh-product-border-default);
     padding: 24px 0;
     margin-top: 48px;
-    color: var(--color-fg-muted);
+    color: var(--gh-product-fg-muted);
     font-size: 12px;
     text-align: center;
   }
@@ -809,7 +809,7 @@
     </div>
     <div class="type-sample">
       <span class="type-label">code &middot; 13px/400</span>
-      <span style="font-size: 13px; font-weight: 400; line-height: 1.5; font-family: var(--fontStack-mono);">const greeting = "Hello, world!";</span>
+      <span style="font-size: 13px; font-weight: 400; line-height: 1.5; font-family: var(--gh-font-mono);">const greeting = "Hello, world!";</span>
     </div>
     <div class="type-sample">
       <span class="type-label">inline code</span>
@@ -994,7 +994,7 @@
 
     <div class="shadow-row">
       <div class="shadow-item">
-        <div class="shadow-box" style="box-shadow: inset 0 1px 0 0 #e6edf30a; border: 1px solid var(--color-border-default);"></div>
+        <div class="shadow-box" style="box-shadow: inset 0 1px 0 0 #e6edf30a; border: 1px solid var(--gh-product-border-default);"></div>
         <div class="shadow-label">inset</div>
       </div>
       <div class="shadow-item">
@@ -1084,23 +1084,23 @@
     <h3 class="subsection-title" style="margin-top: 32px;">Spacing Utility Classes</h3>
     <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;">
       <div style="text-align: center;">
-        <div style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 4px;"><div style="width: 24px; height: 24px; background: var(--color-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 4px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
         <div class="spacing-value" style="margin-top: 4px;">.p-1 (4px)</div>
       </div>
       <div style="text-align: center;">
-        <div style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 8px;"><div style="width: 24px; height: 24px; background: var(--color-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 8px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
         <div class="spacing-value" style="margin-top: 4px;">.p-2 (8px)</div>
       </div>
       <div style="text-align: center;">
-        <div style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 16px;"><div style="width: 24px; height: 24px; background: var(--color-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 16px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
         <div class="spacing-value" style="margin-top: 4px;">.p-3 (16px)</div>
       </div>
       <div style="text-align: center;">
-        <div style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 24px;"><div style="width: 24px; height: 24px; background: var(--color-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 24px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
         <div class="spacing-value" style="margin-top: 4px;">.p-4 (24px)</div>
       </div>
       <div style="text-align: center;">
-        <div style="background: var(--color-canvas-subtle); border: 1px solid var(--color-border-default); border-radius: 4px; padding: 32px;"><div style="width: 24px; height: 24px; background: var(--color-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
+        <div style="background: var(--gh-product-canvas-subtle); border: 1px solid var(--gh-product-border-default); border-radius: 4px; padding: 32px;"><div style="width: 24px; height: 24px; background: var(--gh-product-accent-emphasis); border-radius: 2px; opacity: 0.3;"></div></div>
         <div class="spacing-value" style="margin-top: 4px;">.p-5 (32px)</div>
       </div>
     </div>
@@ -1142,9 +1142,9 @@
     <h2 class="section-title">Combined Component Demo</h2>
     <p class="section-desc">A realistic composition using dark-mode Primer design tokens.</p>
 
-    <div style="border: 1px solid var(--color-border-default); border-radius: var(--border-radius); overflow: hidden; max-width: 600px;">
+    <div style="border: 1px solid var(--gh-product-border-default); border-radius: var(--gh-radius); overflow: hidden; max-width: 600px;">
       <!-- Header bar -->
-      <div style="background: var(--color-canvas-subtle); padding: 12px 16px; border-bottom: 1px solid var(--color-border-default); display: flex; align-items: center; justify-content: space-between;">
+      <div style="background: var(--gh-product-canvas-subtle); padding: 12px 16px; border-bottom: 1px solid var(--gh-product-border-default); display: flex; align-items: center; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 8px;">
           <span style="font-weight: 600; font-size: 16px;">primer/design-system</span>
           <span class="label label-open" style="font-size: 11px;">Public</span>
@@ -1156,13 +1156,13 @@
       </div>
       <!-- Content -->
       <div style="padding: 16px;">
-        <p style="color: var(--color-fg-muted); margin-bottom: 16px;">GitHub's design system for building UI components, patterns, and pages.</p>
+        <p style="color: var(--gh-product-fg-muted); margin-bottom: 16px;">GitHub's design system for building UI components, patterns, and pages.</p>
         <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
           <span class="label label-accent">design-system</span>
           <span class="label label-accent">css</span>
           <span class="label label-accent">react</span>
         </div>
-        <div style="display: flex; gap: 16px; font-size: 12px; color: var(--color-fg-muted);">
+        <div style="display: flex; gap: 16px; font-size: 12px; color: var(--gh-product-fg-muted);">
           <span><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #3178c6; vertical-align: middle; margin-right: 4px;"></span>TypeScript</span>
           <span>MIT License</span>
           <span>Updated 2 hours ago</span>
